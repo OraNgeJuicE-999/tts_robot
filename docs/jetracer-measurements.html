@@ -1,0 +1,572 @@
+<title>JetRacer — Measurement Reference</title>
+<meta name="description" content="Physical measurement reference for the JetRacer chassis, compiled for the jetracer.xacro rewrite.">
+<style>
+  @font-face {
+    font-family: 'ui-mono-fallback';
+    src: local('SF Mono'), local('Cascadia Code'), local('Roboto Mono');
+  }
+
+  :root {
+    --bg: #EDEEEA;
+    --bg-panel: #F8F9F6;
+    --bg-panel-2: #F1F2EE;
+    --ink: #1A1D1B;
+    --ink-muted: #5B6158;
+    --line: #C7CCC2;
+    --line-strong: #9BA398;
+    --accent: #D2600C;
+    --accent-soft: #F3DCC7;
+    --accent-2: #2E6E6B;
+    --accent-2-soft: #D8E7E5;
+    --radius: 3px;
+
+    --font-display: "Avenir Next Condensed", "Bahnschrift", "Arial Narrow", "Roboto Condensed", sans-serif;
+    --font-body: -apple-system, "Segoe UI", "Helvetica Neue", Roboto, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", "Consolas", monospace;
+
+    --fs-eyebrow: 0.68rem;
+    --fs-h1: clamp(1.7rem, 1.1rem + 2vw, 2.5rem);
+    --fs-h2: 1.05rem;
+    --fs-h3: 0.92rem;
+    --fs-body: 0.95rem;
+    --fs-small: 0.78rem;
+    --fs-data: 0.86rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14181A;
+      --bg-panel: #1B2022;
+      --bg-panel-2: #20272A;
+      --ink: #E9EBE5;
+      --ink-muted: #9AA39A;
+      --line: #333A37;
+      --line-strong: #4A534E;
+      --accent: #EC7E33;
+      --accent-soft: #3A2A1C;
+      --accent-2: #5CB3AC;
+      --accent-2-soft: #1C2E2C;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14181A;
+    --bg-panel: #1B2022;
+    --bg-panel-2: #20272A;
+    --ink: #E9EBE5;
+    --ink-muted: #9AA39A;
+    --line: #333A37;
+    --line-strong: #4A534E;
+    --accent: #EC7E33;
+    --accent-soft: #3A2A1C;
+    --accent-2: #5CB3AC;
+    --accent-2-soft: #1C2E2C;
+  }
+  :root[data-theme="light"] {
+    --bg: #EDEEEA;
+    --bg-panel: #F8F9F6;
+    --bg-panel-2: #F1F2EE;
+    --ink: #1A1D1B;
+    --ink-muted: #5B6158;
+    --line: #C7CCC2;
+    --line-strong: #9BA398;
+    --accent: #D2600C;
+    --accent-soft: #F3DCC7;
+    --accent-2: #2E6E6B;
+    --accent-2-soft: #D8E7E5;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+  }
+
+  /* ---- Title block ---- */
+  .titleblock {
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--bg-panel);
+    overflow: hidden;
+  }
+  .titleblock-main {
+    padding: 1.5rem 1.75rem 1.25rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin: 0 0 0.5rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: var(--fs-h1);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    margin: 0 0 0.35rem;
+    text-wrap: balance;
+  }
+  .subtitle {
+    color: var(--ink-muted);
+    font-size: var(--fs-body);
+    margin: 0;
+    max-width: 60ch;
+  }
+  .titleblock-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    font-family: var(--font-mono);
+    font-size: var(--fs-small);
+  }
+  .titleblock-meta > div {
+    padding: 0.6rem 1.1rem;
+    border-right: 1px solid var(--line);
+  }
+  .titleblock-meta > div:last-child { border-right: none; }
+  .titleblock-meta .k {
+    display: block;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.68rem;
+    margin-bottom: 0.2rem;
+  }
+  .titleblock-meta .v { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  /* ---- Quick specs strip ---- */
+  .quickspecs {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .quickspec {
+    background: var(--bg-panel);
+    padding: 0.85rem 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .quickspec .label {
+    font-size: 0.64rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-muted);
+  }
+  .quickspec .value {
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .quickspec .value small {
+    font-size: 0.68rem;
+    color: var(--ink-muted);
+    font-weight: 400;
+    margin-left: 0.15rem;
+  }
+
+  /* ---- Section headers ---- */
+  section { display: flex; flex-direction: column; gap: 0.9rem; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 0.45rem;
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0;
+    font-weight: 700;
+  }
+  .section-head .tag {
+    font-family: var(--font-mono);
+    font-size: var(--fs-small);
+    color: var(--ink-muted);
+  }
+
+  /* ---- Schematic ---- */
+  .schematic-wrap {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    overflow-x: auto;
+  }
+  .schematic-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 1.5rem;
+    min-width: 640px;
+  }
+  .schematic-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-small);
+    color: var(--ink-muted);
+    text-align: center;
+    margin-top: 0.4rem;
+  }
+  svg text { font-family: var(--font-mono); fill: var(--ink); }
+  svg .dim { stroke: var(--accent-2); fill: none; }
+  svg .dimtext { fill: var(--accent-2); font-size: 3.1px; font-variant-numeric: tabular-nums; }
+  svg .body-line { stroke: var(--ink); fill: none; }
+  svg .body-fill { fill: var(--bg-panel-2); stroke: var(--ink); }
+  svg .wheel-fill { fill: var(--ink-muted); stroke: var(--ink); opacity: 0.55; }
+  svg .ground { stroke: var(--line-strong); stroke-dasharray: 1.2 1.2; }
+  svg .angle-arc { stroke: var(--accent); fill: none; }
+  svg .angle-text { fill: var(--accent); font-size: 3.2px; }
+
+  /* ---- Spec tables ---- */
+  .spec-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .spec-table th {
+    text-align: left;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-muted);
+    font-weight: 600;
+    padding: 0.55rem 1rem;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .spec-table td {
+    padding: 0.55rem 1rem;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--fs-body);
+  }
+  .spec-table tr:last-child td { border-bottom: none; }
+  .spec-table td.num {
+    font-family: var(--font-mono);
+    font-size: var(--fs-data);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .spec-table td.note { color: var(--ink-muted); font-size: var(--fs-small); }
+  .spec-table .unresolved { color: var(--accent); }
+
+  /* ---- Derivation callouts ---- */
+  .derivation {
+    background: var(--accent-2-soft);
+    border: 1px solid var(--accent-2);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .derivation .k { font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-2); font-weight: 600; }
+  .derivation .formula { font-family: var(--font-mono); font-size: var(--fs-data); }
+  .derivation .result { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 600; color: var(--accent-2); font-variant-numeric: tabular-nums; }
+
+  /* ---- Notes / open items ---- */
+  .notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .note-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+  }
+  .note-panel h3 {
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.7rem;
+  }
+  .note-panel ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .note-panel li { font-size: var(--fs-small); color: var(--ink-muted); }
+  .note-panel li strong { color: var(--ink); font-weight: 600; }
+  .open-item::marker { color: var(--accent); }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 1rem;
+    font-size: var(--fs-small);
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+  }
+
+  @media (max-width: 640px) {
+    .titleblock-meta { grid-template-columns: repeat(2, 1fr); }
+    .quickspecs { grid-template-columns: repeat(2, 1fr); }
+    .schematic-grid { grid-template-columns: 1fr; }
+    .notes-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="page">
+
+  <div class="titleblock">
+    <div class="titleblock-main">
+      <p class="eyebrow">Dimensional Reference &mdash; Draft</p>
+      <h1>JetRacer Chassis Measurements</h1>
+      <p class="subtitle">Physical measurements of the JetRacer platform, taken by hand, compiled as the source of truth for rewriting <code>jetracer.xacro</code>. Values given as measured (cm) and converted for URDF (m).</p>
+    </div>
+    <div class="titleblock-meta">
+      <div><span class="k">Project</span><span class="v">tts_robot / navigation</span></div>
+      <div><span class="k">Rev</span><span class="v">1 &mdash; draft</span></div>
+      <div><span class="k">Units</span><span class="v">cm measured &rarr; m (URDF)</span></div>
+      <div><span class="k">Frame convention</span><span class="v">x-fwd / y-left / z-up</span></div>
+    </div>
+  </div>
+
+  <div class="quickspecs">
+    <div class="quickspec"><span class="label">Wheelbase</span><span class="value">17.5<small>cm</small></span></div>
+    <div class="quickspec"><span class="label">Track width</span><span class="value">11.0<small>cm</small></span></div>
+    <div class="quickspec"><span class="label">Wheel radius</span><span class="value">2.5<small>cm</small></span></div>
+    <div class="quickspec"><span class="label">Mass (total)</span><span class="value">1.65<small>kg</small></span></div>
+    <div class="quickspec"><span class="label">Steer limit</span><span class="value">&plusmn;18.4<small>&deg;</small></span></div>
+    <div class="quickspec"><span class="label">Cam pitch</span><span class="value">&asymp;20<small>&deg;</small></span></div>
+  </div>
+
+  <section>
+    <div class="section-head"><h2>Layout Schematic</h2><span class="tag">top &amp; side, to scale</span></div>
+    <div class="schematic-wrap">
+      <div class="schematic-grid">
+        <div>
+          <svg viewBox="-6 -11 34 22" width="100%" height="220" role="img" aria-label="Top-down schematic of the JetRacer chassis showing wheelbase and track width">
+            <defs>
+              <marker id="arrowL" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                <path d="M6,0 L0,3 L6,6 Z" fill="var(--accent-2)"/>
+              </marker>
+              <marker id="arrowR" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="var(--accent-2)"/>
+              </marker>
+            </defs>
+
+            <!-- back -->
+            <rect class="body-fill" x="-2" y="-3.5" width="2" height="7" rx="0.3"/>
+            <!-- base -->
+            <rect class="body-fill" x="0" y="-5.5" width="22" height="11" rx="0.4"/>
+            <!-- head -->
+            <ellipse class="body-fill" cx="23.2" cy="0" rx="2.3" ry="6.25"/>
+
+            <!-- rear wheels -->
+            <rect class="wheel-fill" x="-0.5" y="4.25" width="5" height="1.5" rx="0.3"/>
+            <rect class="wheel-fill" x="-0.5" y="-5.75" width="5" height="1.5" rx="0.3"/>
+            <!-- front wheels -->
+            <rect class="wheel-fill" x="17" y="4.25" width="5" height="1.5" rx="0.3"/>
+            <rect class="wheel-fill" x="17" y="-5.75" width="5" height="1.5" rx="0.3"/>
+
+            <!-- camera mount marker -->
+            <circle cx="19.5" cy="0" r="0.5" fill="var(--accent)"/>
+
+            <!-- wheelbase dimension -->
+            <line class="dim" x1="2" y1="-8.5" x2="19.5" y2="-8.5" marker-start="url(#arrowL)" marker-end="url(#arrowR)"/>
+            <line class="dim" x1="2" y1="-7.8" x2="2" y2="-8.5"/>
+            <line class="dim" x1="19.5" y1="-7.8" x2="19.5" y2="-8.5"/>
+            <text class="dimtext" x="10.75" y="-9.3" text-anchor="middle">wheelbase 17.5</text>
+
+            <!-- track width dimension -->
+            <line class="dim" x1="24.8" y1="-5.75" x2="24.8" y2="5.75" marker-start="url(#arrowL)" marker-end="url(#arrowR)"/>
+            <line class="dim" x1="24" y1="-5.75" x2="24.8" y2="-5.75"/>
+            <line class="dim" x1="24" y1="5.75" x2="24.8" y2="5.75"/>
+            <text class="dimtext" x="26.2" y="0.4" text-anchor="middle" transform="rotate(90 26.2 0.4)">track 11.0</text>
+
+            <text class="dimtext" x="10.5" y="-0.3" text-anchor="middle" fill="var(--ink-muted)">base 22 &times; 11</text>
+          </svg>
+          <div class="schematic-label">top view &mdash; cm, to scale</div>
+        </div>
+
+        <div>
+          <svg viewBox="-4 -16 22 22" width="100%" height="220" role="img" aria-label="Side elevation schematic showing ride height, wheel radius, and camera mount angle">
+            <line class="ground" x1="-4" y1="0" x2="18" y2="0"/>
+            <!-- wheel -->
+            <circle class="wheel-fill" cx="4" cy="-2.5" r="2.5"/>
+            <!-- base -->
+            <rect class="body-fill" x="-1" y="-3" width="16" height="2" rx="0.2"/>
+            <!-- mount mast -->
+            <line class="body-line" x1="12.5" y1="-3" x2="12.5" y2="-13" stroke-width="0.4"/>
+            <!-- camera body, pitched ~20deg -->
+            <g transform="rotate(20 12.5 -13)">
+              <rect class="body-fill" x="11.75" y="-14" width="1.5" height="2" rx="0.3"/>
+              <circle cx="12.5" cy="-14.6" r="0.75" fill="var(--accent)"/>
+            </g>
+            <path class="angle-arc" d="M 12.5 -11.5 A 2 2 0 0 1 13.9 -13.3"/>
+            <text class="angle-text" x="14.3" y="-11.6">~20&deg;</text>
+
+            <text class="dimtext" x="0.2" y="-4" text-anchor="start">axle z = r = 2.5</text>
+            <text class="dimtext" x="13.2" y="-8" text-anchor="start">mast 10</text>
+          </svg>
+          <div class="schematic-label">side view &mdash; ride height &amp; camera aim</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Base</h2><span class="tag">main body, ground reference</span></div>
+    <div class="spec-panel">
+      <table class="spec-table">
+        <thead><tr><th>Dimension</th><th>Measured</th><th>URDF (m)</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Length</td><td class="num">22 cm</td><td class="num">0.22</td><td class="note">x-axis</td></tr>
+          <tr><td>Width</td><td class="num">11 cm</td><td class="num">0.11</td><td class="note">y-axis</td></tr>
+          <tr><td>Thickness</td><td class="num">2 cm</td><td class="num">0.02</td><td class="note">z-axis</td></tr>
+          <tr><td>Height above ground</td><td class="num">1&ndash;3 cm</td><td class="num">0.01&ndash;0.03</td><td class="note">bottom face to top face</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Head</h2><span class="tag">front fairing, half-oval</span></div>
+    <div class="spec-panel">
+      <table class="spec-table">
+        <thead><tr><th>Dimension</th><th>Measured</th><th>URDF (m)</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Max length</td><td class="num">3.5 cm</td><td class="num">0.035</td><td class="note">forward of base front edge</td></tr>
+          <tr><td>Width</td><td class="num">12.5 cm</td><td class="num">0.125</td><td class="note">wider than base (11 cm)</td></tr>
+          <tr><td>Thickness</td><td class="num">1.2 cm</td><td class="num">0.012</td><td class="note">z: 1&ndash;2.2 cm above ground</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Back</h2><span class="tag">rear cap</span></div>
+    <div class="spec-panel">
+      <table class="spec-table">
+        <thead><tr><th>Dimension</th><th>Measured</th><th>URDF (m)</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Length</td><td class="num">2 cm</td><td class="num">0.02</td><td class="note">extends behind base</td></tr>
+          <tr><td>Width</td><td class="num">7 cm</td><td class="num">0.07</td><td class="note">narrower than base</td></tr>
+          <tr><td>Thickness</td><td class="num">2.8 cm</td><td class="num">0.028</td><td class="note">&mdash;</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Jetson Board Assembly</h2><span class="tag">board + stacked components, boxed as one</span></div>
+    <div class="spec-panel">
+      <table class="spec-table">
+        <thead><tr><th>Dimension</th><th>Measured</th><th>URDF (m)</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Length</td><td class="num">12.5 cm</td><td class="num">0.125</td><td class="note">&mdash;</td></tr>
+          <tr><td>Width</td><td class="num">10 cm</td><td class="num">0.10</td><td class="note">&mdash;</td></tr>
+          <tr><td>Height</td><td class="num">7.5 cm</td><td class="num">0.075</td><td class="note">includes heatsink / stacked hardware, approximated as one box</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Camera &amp; Mount</h2><span class="tag">mast + pitched camera body</span></div>
+    <div class="spec-panel">
+      <table class="spec-table">
+        <thead><tr><th>Dimension</th><th>Measured</th><th>URDF (m)</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Camera body (cylinder r)</td><td class="num">0.75 cm</td><td class="num">0.0075</td><td class="note">&mdash;</td></tr>
+          <tr><td>Camera body height</td><td class="num">2 cm</td><td class="num">0.02</td><td class="note">&mdash;</td></tr>
+          <tr><td>Mount mast height</td><td class="num">10 cm</td><td class="num">0.10</td><td class="note">measured from base top</td></tr>
+          <tr><td>Mount x-offset</td><td class="num">2.5 cm</td><td class="num">0.025</td><td class="note">from front edge of base</td></tr>
+          <tr><td>Mount cross-section</td><td class="num unresolved">~1 &times; 1 cm</td><td class="num unresolved">~0.01</td><td class="note">not measured &mdash; thin-plate approximation</td></tr>
+          <tr><td>Mount y-offset</td><td class="num unresolved">assumed 0</td><td class="num unresolved">assumed 0</td><td class="note">assumed centered &mdash; not explicitly confirmed</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="derivation">
+      <span class="k">Camera pitch &mdash; derivation</span>
+      <span class="formula">tan(&delta;) = 0.8 / 2.2 &nbsp;(sin/cos ratio cross-checked against measured triangle; robust to hypotenuse rounding)</span>
+      <span class="result">&delta; = arctan(0.8/2.2) &asymp; 19.98&deg; &asymp; 0.349 rad</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Wheels</h2><span class="tag">front &amp; rear identical geometry</span></div>
+    <div class="spec-panel">
+      <table class="spec-table">
+        <thead><tr><th>Dimension</th><th>Measured</th><th>URDF (m)</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Radius</td><td class="num">2.5 cm</td><td class="num">0.025</td><td class="note">all four wheels</td></tr>
+          <tr><td>Thickness</td><td class="num">1.5 cm</td><td class="num">0.015</td><td class="note">all four wheels</td></tr>
+          <tr><td>Front axle offset</td><td class="num">2.5 cm</td><td class="num">0.025</td><td class="note">from front edge of base</td></tr>
+          <tr><td>Rear axle offset</td><td class="num">2 cm</td><td class="num">0.02</td><td class="note">from rear edge of base</td></tr>
+          <tr><td>Wheelbase</td><td class="num">17.5 cm</td><td class="num">0.175</td><td class="note">front axle to rear axle</td></tr>
+          <tr><td>Track width (front &amp; rear)</td><td class="num">11 cm</td><td class="num">0.11</td><td class="note">wheel center to wheel center</td></tr>
+          <tr><td>Axle height (z)</td><td class="num">2.5 cm</td><td class="num">0.025</td><td class="note">= wheel radius, so wheel meets ground &mdash; not flush with base's own 1 cm clearance; wheel sits alongside/above base floor level</td></tr>
+          <tr><td>Rear steering</td><td class="num">fixed</td><td class="num">&mdash;</td><td class="note">confirmed &mdash; only front wheels steer</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="derivation">
+      <span class="k">Steering limit &mdash; derivation</span>
+      <span class="formula">tan(&delta;) = 1.1 / 3.3 &nbsp;(sin/cos ratio cross-checked; hypotenuse measurement had ~1.5% rounding error)</span>
+      <span class="result">&delta; = arctan(1.1/3.3) &asymp; 18.43&deg; &asymp; 0.322 rad &nbsp;&mdash;&nbsp; assumed symmetric: lower -0.322, upper 0.322</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Mass</h2><span class="tag">for &lt;inertial&gt; tags</span></div>
+    <div class="spec-panel">
+      <table class="spec-table">
+        <thead><tr><th>Quantity</th><th>Measured</th><th>URDF</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Total mass</td><td class="num">1.65 kg</td><td class="num">1.65</td><td class="note">whole vehicle</td></tr>
+          <tr><td>Per-link distribution</td><td class="num unresolved">not measured</td><td class="num unresolved">&mdash;</td><td class="note">open item &mdash; see below</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="notes-grid">
+    <div class="note-panel">
+      <h3>Modeling Notes</h3>
+      <ul>
+        <li><strong>Axis convention:</strong> rewriting to x-forward / y-left / z-up (ROS REP&nbsp;103), which the original <code>jetracer.xacro</code> did not follow &mdash; it used x for left/right.</li>
+        <li><strong>Ground clearance vs. axle height:</strong> the base's own 1&nbsp;cm ground clearance is not the same as axle height. Wheels sit at z&nbsp;=&nbsp;2.5&nbsp;cm (their own radius) so they meet the ground &mdash; normal for a wheel well overlapping the chassis floor.</li>
+        <li><strong>Isaac Sim / Blender scale check:</strong> before trusting map + robot together in sim, verify a known real-world reference (e.g. a 1&nbsp;m cube) reads correctly in both &mdash; watch for Blender scene unit scale and USD stage <code>metersPerUnit</code> (often defaults to cm) disagreeing.</li>
+      </ul>
+    </div>
+    <div class="note-panel">
+      <h3>Open Items</h3>
+      <ul>
+        <li class="open-item"><strong>Camera mount cross-section</strong> &mdash; not measured, currently a ~1&times;1&nbsp;cm placeholder.</li>
+        <li class="open-item"><strong>Camera mount y-offset</strong> &mdash; assumed centered on base, not explicitly confirmed.</li>
+        <li class="open-item"><strong>Mass distribution</strong> across links &mdash; only total (1.65&nbsp;kg) is known; needed for accurate <code>&lt;inertial&gt;</code> tags.</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    jetracer.xacro &middot; navigation subsystem &middot; tts_robot &mdash; compiled from measurement session, draft rev 1
+  </footer>
+
+</div>
