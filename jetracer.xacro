@@ -5,17 +5,259 @@
     <material name="black">
         <color rgba="0 0 0 1"/>
     </material>
-
+    <!-- Main Base -->
     <link name="base">
         <visual>
-        <origin rpy="0 0 0" xyz="0 0 0"/>
-        <geometry>
-            <box size="1 2 0.3"/>
-        </geometry>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.22 0.11 0.02"/>
+            </geometry>
         </visual>
+
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.22 0.11 0.02"/>
+            </geometry>
+        </collision>
+
+        <inertial>
+            <mass value="1.0"/>
+            <inertia ixx="0.004067" iyy="0.005042" izz="0.001042" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link>
 
-    <!--Front left wheel-->
+    <!-- Xacro Macro: Unsteerable Wheel -->
+    <xacro:macro name="rear_wheel" params="prefix x y">
+        <joint name="${prefix}_wheel_joint" type="continuous">
+            <axis xyz="0 0 1"/>
+            <origin rpy="0.0 1.57 0.0" xyz="${x} ${y} 0.025"/>
+            <parent link="base"/>
+            <child link="${prefix}_wheel"/>
+        </joint>
+
+        <link name="${prefix}_wheel">
+            <inertial>
+                <mass value="0.05"/>
+                <inertia ixx="0.00000875" iyy="0.00000875" izz="0.0000156" ixy="0" ixz="0" iyz="0"/>
+            </inertial>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.025" length="0.015"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.025" length="0.015"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <!-- Xacro Macro: Steerable Wheel -->
+    <xacro:macro name="front_wheel" params="prefix x y">
+        <joint name="${prefix}_base_holder" type="revolute"> 
+            <limit lower="-0.322" upper="0.322" effort="1000.0" velocity="0.5"/>
+            <axis xyz="0 0 1"/>
+            <origin rpy="0.0 1.57 0.0" xyz="${x} ${y} 0.025"/>
+            <parent link="base"/>
+            <child link="${prefix}_holder"/>
+        </joint>
+
+        <joint name="${prefix}_wheel_holder" type="continuous"> 
+            <axis xyz="0 0 1"/>
+            <origin rpy="0.0 0 0.0" xyz="0 0 0"/>
+            <parent link="${prefix}_holder"/>
+            <child link="${prefix}_wheel"/>
+        </joint>
+
+        <link name="${prefix}_wheel">
+            <inertial>
+                <mass value="0.05"/>
+                <inertia ixx="0.00000875" iyy="0.00000875" izz="0.0000156" ixy="0" ixz="0" iyz="0"/>
+            </inertial>
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.025" length="0.015"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="0.025" length="0.015"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="${prefix}_holder">
+            <inertial>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <mass value="0.001"/>
+                <inertia ixx="0.0000001" iyy="0.0000001" izz="0.0000001" ixy="0.0" iyz="0.0" ixz="0.0"/>
+            </inertial>
+            <visual name="">
+                <origin xyz="0.01 0.01 0.01" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <box size="0.0 0.0 0.0"/>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <box size="0.01 0.01 0.01"/>
+                </geometry>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <!-- Front Wheel -->
+    <xacro:front_wheel prefix="front_left" x="0.085" y="0.055"/>
+    <xacro:front_wheel prefix="front_right" x="0.085" y="-0.055"/>
+    <!-- Rear Wheel -->
+    <xacro:rear_wheel prefix="rear_left" x="-0.09" y="0.055"/>
+    <xacro:rear_wheel prefix="rear_right" x="-0.09" y="-0.055"/>
+
+    <!-- Head -->
+    <joint name="head_joint" type="fixed">
+        <origin xyz="0.1275 0.0 -0.004" rpy="0.0 0.0 0.0"/>
+        <parent link="base"/>
+        <child link="head"/>
+    </joint>
+
+    <link name="head">
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0.0000057" iyy="0.0000702" izz="0.0000657" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.035 0.125 0.012"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.035 0.125 0.012"/>
+            </geometry>
+        </collision>
+    </link>
+    <!-- Camera -->
+    <joint name="camera_mount_joint" type="fixed">
+        <origin xyz="0.085 0.0 0.06" rpy="0.0 0.0 0.0"/>
+        <parent link="base"/>
+        <child link="camera_mount"/>
+    </joint>
+    <link name="camera_mount">
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0.0000084" iyy="0.00000017" izz="0.0000084" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.01 0.01 0.10"/>
+            </geometry>
+            <material name="mount_red">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.01 0.01 0.10"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="camera_joint" type="fixed">
+        <origin xyz="0 0 0.06" rpy="0 0.349 0"/>
+        <parent link="camera_mount"/>
+        <child link="camera"/>
+    </joint>
+    <link name="camera">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.01"/>
+            <inertia ixx="0.00000047" iyy="0.00000047" izz="0.00000028" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.0075" length="0.02"/>
+            </geometry>
+            <material name="camera_black">
+                <color rgba="0 0 0 1"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.0075" length="0.02"/>
+            </geometry>
+        </collision>
+    </link>
+    <!-- Board -->
+    <joint name="board_joint" type="fixed">
+        <origin xyz="-0.0375 0.0 0.0475" rpy="0.0 0.0 0.0"/>
+        <parent link="base"/>
+        <child link="board"/>
+    </joint>
+
+    <link name="board">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.145 0.10 0.11"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.145 0.10 0.11"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.15"/>
+            <inertia ixx="0.000414" iyy="0.000388" izz="0.000276" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+    </link>
+    <!-- LiDAR -->
+    <joint name="lidar_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.075" rpy="0.0 0.0 0.0"/>
+        <parent link="board"/>
+        <child link="lidar"/>
+    </joint>
+    <link name="lidar">
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="0.04"/>
+            <inertia ixx="0.0000303" iyy="0.0000303" izz="0.00005" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="0.05" length="0.04"/>
+            </geometry>
+            <material name="lidar_cyan">
+                <color rgba="0.0 0.8 0.9 1.0"/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder radius="0.05" length="0.04"/>
+            </geometry>
+        </collision>
+    </link>
+</robot>
+
+    <!-- Front left wheel
     <joint name="fl_holder_joint" type="revolute">
         <axis xyz="0 0 1"/>
         <limit effort="1000.0" lower="-0.4" upper="0.4" velocity="0.5"/>
@@ -119,6 +361,5 @@
         </geometry>
         <material name="black"/>
         </visual>
-    </link>
+    </link> -->
 
-</robot>
