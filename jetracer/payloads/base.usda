@@ -1,0 +1,497 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.0"
+    }
+    defaultPrim = "jetracer"
+    doc = """Generated from Composed Stage of root layer /tmp/tmp2yrd50i3/jetracer.usdc
+
+
+Generated from Composed Stage of root layer /home/itri/tts_robot/usdex/jetracer.usdc
+
+
+Generated from Composed Stage of root layer /home/itri/tts_robot/temp/jetracer.usd
+
+
+Generated from Composed Stage of root layer /home/itri/tts_robot/jetracer/payloads/base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    subLayers = [
+        @./robot.usda@
+    ]
+    upAxis = "Z"
+)
+
+def Xform "jetracer" (
+    prepend apiSchemas = ["GeomModelAPI"]
+    assetInfo = {
+        string name = "jetracer"
+    }
+    kind = "component"
+)
+{
+    float3[] extentsHint = [(-0.115, -0.06251991, -0.035005964), (0.145, 0.065, 0.1425), (3.4028235e38, 3.4028235e38, 3.4028235e38), (-3.4028235e38, -3.4028235e38, -3.4028235e38), (3.4028235e38, 3.4028235e38, 3.4028235e38), (-3.4028235e38, -3.4028235e38, -3.4028235e38), (-0.115, -0.06251991, -0.035005964), (0.145, 0.06251991, 0.1425)]
+
+    def Scope "Materials"
+    {
+        def Material "black" (
+            instanceable = true
+            prepend references = @./materials.usda@</Materials/camera_black>
+        )
+        {
+        }
+
+        def Material "mount_red" (
+            instanceable = true
+            prepend references = @./materials.usda@</Materials/mount_red>
+        )
+        {
+        }
+
+        def Material "camera_black" (
+            instanceable = true
+            prepend references = @./materials.usda@</Materials/camera_black>
+        )
+        {
+        }
+
+        def Material "lidar_cyan" (
+            instanceable = true
+            prepend references = @./materials.usda@</Materials/lidar_cyan>
+        )
+        {
+        }
+    }
+
+    def Scope "Geometry"
+    {
+        def Xform "base"
+        {
+            def Cube "box" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+                rel material:binding = </jetracer/Materials/black>
+                double size = 1
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (0.22, 0.11, 0.02)
+                double3 xformOp:translate = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Xform "head"
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (0.1275, 0, -0.004)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Cube "box" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+                    rel material:binding = </jetracer/Materials/black>
+                    double size = 1
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (0.035, 0.125, 0.012)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Cube "box_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                    displayName = "box"
+                )
+                {
+                    float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+                    uniform token purpose = "guide"
+                    double size = 1
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (0.035, 0.125, 0.012)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+            }
+
+            def Xform "camera_mount"
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (0.085, 0, 0.06)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Cube "box" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+                    rel material:binding = </jetracer/Materials/mount_red>
+                    double size = 1
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (0.01, 0.01, 0.1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Xform "camera"
+                {
+                    quatf xformOp:orient = (0.98481345, 0, 0.17361586, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0.06)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Cylinder "cylinder" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        uniform token axis = "Z"
+                        float3[] extent = [(-0.0075, -0.0075, -0.01), (0.0075, 0.0075, 0.01)]
+                        double height = 0.02
+                        rel material:binding = </jetracer/Materials/camera_black>
+                        double radius = 0.0075
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Cylinder "cylinder_1" (
+                        prepend apiSchemas = ["PhysicsCollisionAPI"]
+                        displayName = "cylinder"
+                    )
+                    {
+                        uniform token axis = "Z"
+                        float3[] extent = [(-0.0075, -0.0075, -0.01), (0.0075, 0.0075, 0.01)]
+                        double height = 0.02
+                        uniform token purpose = "guide"
+                        double radius = 0.0075
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+                }
+
+                def Cube "box_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                    displayName = "box"
+                )
+                {
+                    float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+                    uniform token purpose = "guide"
+                    double size = 1
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (0.01, 0.01, 0.1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+            }
+
+            def Xform "board"
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.0375, 0, 0.0475)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Cube "box" (
+                    prepend apiSchemas = ["MaterialBindingAPI"]
+                )
+                {
+                    float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+                    rel material:binding = </jetracer/Materials/black>
+                    double size = 1
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (0.145, 0.1, 0.11)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Xform "lidar"
+                {
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0.075)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Cylinder "cylinder" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        uniform token axis = "Z"
+                        float3[] extent = [(-0.05, -0.05, -0.02), (0.05, 0.05, 0.02)]
+                        double height = 0.04
+                        rel material:binding = </jetracer/Materials/lidar_cyan>
+                        double radius = 0.05
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Cylinder "cylinder_1" (
+                        prepend apiSchemas = ["PhysicsCollisionAPI"]
+                        displayName = "cylinder"
+                    )
+                    {
+                        uniform token axis = "Z"
+                        float3[] extent = [(-0.05, -0.05, -0.02), (0.05, 0.05, 0.02)]
+                        double height = 0.04
+                        uniform token purpose = "guide"
+                        double radius = 0.05
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+                }
+
+                def Cube "box_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                    displayName = "box"
+                )
+                {
+                    float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+                    uniform token purpose = "guide"
+                    double size = 1
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (0.145, 0.1, 0.11)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+            }
+
+            def Cube "box_1" (
+                prepend apiSchemas = ["PhysicsCollisionAPI"]
+                displayName = "box"
+            )
+            {
+                float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+                uniform token purpose = "guide"
+                double size = 1
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (0.22, 0.11, 0.02)
+                double3 xformOp:translate = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Xform "front_left_holder"
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (0.085, 0.055, -0.01)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Cube "box"
+                {
+                    float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+                    double size = 1
+                    custom string urdf:name = ""
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (0, 0, 0)
+                    double3 xformOp:translate = (0.01, 0.01, 0.01)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Cube "box_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                    displayName = "box"
+                )
+                {
+                    float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+                    uniform token purpose = "guide"
+                    double size = 1
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (0.01, 0.01, 0.01)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Xform "front_left_wheel"
+                {
+                    quatf xformOp:orient = (0.7073883, 0.7068252, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Cylinder "cylinder"
+                    {
+                        uniform token axis = "Z"
+                        float3[] extent = [(-0.025, -0.025, -0.0075), (0.025, 0.025, 0.0075)]
+                        double height = 0.015
+                        double radius = 0.025
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Cylinder "cylinder_1" (
+                        prepend apiSchemas = ["PhysicsCollisionAPI"]
+                        displayName = "cylinder"
+                    )
+                    {
+                        uniform token axis = "Z"
+                        float3[] extent = [(-0.025, -0.025, -0.0075), (0.025, 0.025, 0.0075)]
+                        double height = 0.015
+                        uniform token purpose = "guide"
+                        double radius = 0.025
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+                }
+            }
+
+            def Xform "front_right_holder"
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (0.085, -0.055, -0.01)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Cube "box"
+                {
+                    float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+                    double size = 1
+                    custom string urdf:name = ""
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (0, 0, 0)
+                    double3 xformOp:translate = (0.01, 0.01, 0.01)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Cube "box_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                    displayName = "box"
+                )
+                {
+                    float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+                    uniform token purpose = "guide"
+                    double size = 1
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (0.01, 0.01, 0.01)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Xform "front_right_wheel"
+                {
+                    quatf xformOp:orient = (0.7073883, 0.7068252, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                    def Cylinder "cylinder"
+                    {
+                        uniform token axis = "Z"
+                        float3[] extent = [(-0.025, -0.025, -0.0075), (0.025, 0.025, 0.0075)]
+                        double height = 0.015
+                        double radius = 0.025
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+
+                    def Cylinder "cylinder_1" (
+                        prepend apiSchemas = ["PhysicsCollisionAPI"]
+                        displayName = "cylinder"
+                    )
+                    {
+                        uniform token axis = "Z"
+                        float3[] extent = [(-0.025, -0.025, -0.0075), (0.025, 0.025, 0.0075)]
+                        double height = 0.015
+                        uniform token purpose = "guide"
+                        double radius = 0.025
+                        quatf xformOp:orient = (1, 0, 0, 0)
+                        float3 xformOp:scale = (1, 1, 1)
+                        double3 xformOp:translate = (0, 0, 0)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                    }
+                }
+            }
+
+            def Xform "rear_left_wheel"
+            {
+                quatf xformOp:orient = (0.7073883, 0.7068252, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.09, 0.055, -0.01)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Cylinder "cylinder"
+                {
+                    uniform token axis = "Z"
+                    float3[] extent = [(-0.025, -0.025, -0.0075), (0.025, 0.025, 0.0075)]
+                    double height = 0.015
+                    double radius = 0.025
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Cylinder "cylinder_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                    displayName = "cylinder"
+                )
+                {
+                    uniform token axis = "Z"
+                    float3[] extent = [(-0.025, -0.025, -0.0075), (0.025, 0.025, 0.0075)]
+                    double height = 0.015
+                    uniform token purpose = "guide"
+                    double radius = 0.025
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+            }
+
+            def Xform "rear_right_wheel"
+            {
+                quatf xformOp:orient = (0.7073883, 0.7068252, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
+                double3 xformOp:translate = (-0.09, -0.055, -0.01)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+                def Cylinder "cylinder"
+                {
+                    uniform token axis = "Z"
+                    float3[] extent = [(-0.025, -0.025, -0.0075), (0.025, 0.025, 0.0075)]
+                    double height = 0.015
+                    double radius = 0.025
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+
+                def Cylinder "cylinder_1" (
+                    prepend apiSchemas = ["PhysicsCollisionAPI"]
+                    displayName = "cylinder"
+                )
+                {
+                    uniform token axis = "Z"
+                    float3[] extent = [(-0.025, -0.025, -0.0075), (0.025, 0.025, 0.0075)]
+                    double height = 0.015
+                    uniform token purpose = "guide"
+                    double radius = 0.025
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+                }
+            }
+        }
+    }
+
+    def Scope "Physics"
+    {
+    }
+}
+

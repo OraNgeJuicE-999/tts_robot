@@ -1,0 +1,431 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.0"
+    }
+    defaultPrim = "jetracer"
+    doc = """Generated from Composed Stage of root layer /tmp/tmpql7xs9um/jetracer.usdc
+
+
+Generated from Composed Stage of root layer /home/itri/tts_robot/usdex/jetracer.usdc
+
+
+Generated from Composed Stage of root layer /home/itri/tts_robot/temp/jetracer.usd
+
+
+Generated from Composed Stage of root layer /home/itri/tts_robot/jetracer/payloads/base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    subLayers = [
+        @./physics.usda@
+    ]
+    upAxis = "Z"
+)
+
+over "jetracer"
+{
+    over "Physics"
+    {
+        def MjcActuator "front_left_base_holder_actuator"
+        {
+            uniform double mjc:forceRange:max = 1000
+            uniform double mjc:forceRange:min = -1000
+            custom rel mjc:target = </jetracer/Physics/front_left_base_holder>
+        }
+
+        def MjcActuator "front_left_wheel_holder_actuator"
+        {
+            uniform double mjc:forceRange:max = inf
+            uniform double mjc:forceRange:min = -inf
+            custom rel mjc:target = </jetracer/Physics/front_left_wheel_holder>
+        }
+
+        def MjcActuator "front_right_base_holder_actuator"
+        {
+            uniform double mjc:forceRange:max = 1000
+            uniform double mjc:forceRange:min = -1000
+            custom rel mjc:target = </jetracer/Physics/front_right_base_holder>
+        }
+
+        def MjcActuator "front_right_wheel_holder_actuator"
+        {
+            uniform double mjc:forceRange:max = inf
+            uniform double mjc:forceRange:min = -inf
+            custom rel mjc:target = </jetracer/Physics/front_right_wheel_holder>
+        }
+
+        def MjcActuator "rear_left_wheel_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = inf
+            uniform double mjc:forceRange:min = -inf
+            custom rel mjc:target = </jetracer/Physics/rear_left_wheel_joint>
+        }
+
+        def MjcActuator "rear_right_wheel_joint_actuator"
+        {
+            uniform double mjc:forceRange:max = inf
+            uniform double mjc:forceRange:min = -inf
+            custom rel mjc:target = </jetracer/Physics/rear_right_wheel_joint>
+        }
+
+        over "front_left_base_holder" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "front_right_base_holder" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "rear_left_wheel_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "rear_right_wheel_joint" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "root_joint"
+        {
+        }
+
+        over "head_joint"
+        {
+        }
+
+        over "camera_mount_joint"
+        {
+        }
+
+        over "board_joint"
+        {
+        }
+
+        over "front_left_wheel_holder" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "front_right_wheel_holder" (
+            delete apiSchemas = ["PhysicsDriveAPI:angular", "PhysicsJointStateAPI:angular"]
+        )
+        {
+        }
+
+        over "camera_joint"
+        {
+        }
+
+        over "lidar_joint"
+        {
+        }
+    }
+
+    over "Geometry"
+    {
+        over "base"
+        {
+            over "front_left_holder"
+            {
+                over "front_left_wheel"
+                {
+                    over "cylinder"
+                    {
+                    }
+
+                    over "cylinder_1"
+                    {
+                    }
+                }
+
+                over "box"
+                {
+                }
+
+                over "box_1"
+                {
+                }
+            }
+
+            over "front_right_holder"
+            {
+                over "front_right_wheel"
+                {
+                    over "cylinder"
+                    {
+                    }
+
+                    over "cylinder_1"
+                    {
+                    }
+                }
+
+                over "box"
+                {
+                }
+
+                over "box_1"
+                {
+                }
+            }
+
+            over "rear_left_wheel"
+            {
+                over "cylinder"
+                {
+                }
+
+                over "cylinder_1"
+                {
+                }
+            }
+
+            over "rear_right_wheel"
+            {
+                over "cylinder"
+                {
+                }
+
+                over "cylinder_1"
+                {
+                }
+            }
+
+            over "head"
+            {
+                over "box"
+                {
+                }
+
+                over "box_1"
+                {
+                }
+            }
+
+            over "camera_mount"
+            {
+                over "camera"
+                {
+                    over "cylinder"
+                    {
+                    }
+
+                    over "cylinder_1"
+                    {
+                    }
+                }
+
+                over "box"
+                {
+                }
+
+                over "box_1"
+                {
+                }
+            }
+
+            over "board"
+            {
+                over "lidar"
+                {
+                    over "cylinder"
+                    {
+                    }
+
+                    over "cylinder_1"
+                    {
+                    }
+                }
+
+                over "box"
+                {
+                }
+
+                over "box_1"
+                {
+                }
+            }
+
+            over "box"
+            {
+            }
+
+            over "box_1"
+            {
+            }
+        }
+    }
+
+    over "Materials"
+    {
+        over "mount_red"
+        {
+        }
+
+        over "camera_black"
+        {
+        }
+
+        over "lidar_cyan"
+        {
+        }
+
+        over "black"
+        {
+        }
+    }
+
+    over "ROS_Sensors"
+    {
+        over "on_playback_tick"
+        {
+        }
+
+        over "ros2_context"
+        {
+        }
+
+        over "ros2_rtx_lidar_helper"
+        {
+        }
+
+        over "ros2_camera_helper"
+        {
+        }
+
+        over "isaac_create_render_product"
+        {
+        }
+
+        over "isaac_create_render_product_01"
+        {
+        }
+
+        over "ros2_camera_helper_01"
+        {
+        }
+
+        over "Xform"
+        {
+        }
+    }
+
+    over "ROS_Ackermann_Drive"
+    {
+        over "on_playback_tick"
+        {
+        }
+
+        over "ros2_subscribe_ackermanndrive"
+        {
+        }
+
+        over "ros2_context"
+        {
+        }
+
+        over "articulation_controller"
+        {
+        }
+
+        over "articulation_controller_01"
+        {
+        }
+
+        over "ackermann_controller"
+        {
+        }
+
+        over "ros2_qos_profile"
+        {
+        }
+    }
+
+    over "ROS_Odometry"
+    {
+        over "on_playback_tick"
+        {
+        }
+
+        over "isaac_compute_odometry_node"
+        {
+        }
+
+        over "ros2_publish_raw_transform_tree"
+        {
+        }
+
+        over "ros2_publish_odometry"
+        {
+        }
+
+        over "isaac_read_simulation_time"
+        {
+        }
+
+        over "tf_tree_base_link_to_chassis"
+        {
+        }
+
+        over "ros2_context"
+        {
+        }
+
+        over "node_namespace"
+        {
+        }
+
+        over "IsaacComputeTransformTree"
+        {
+        }
+    }
+
+    over "GroundPlane"
+    {
+        over "CollisionMesh"
+        {
+        }
+
+        over "CollisionPlane"
+        {
+        }
+    }
+}
+
+over "Render"
+{
+    over "OmniverseKit"
+    {
+        over "HydraTextures"
+        {
+            over "omni_kit_widget_viewport_ViewportTexture_0"
+            {
+            }
+        }
+    }
+
+    over "OmniverseGlobalRenderSettings"
+    {
+    }
+
+    over "Vars"
+    {
+        over "LdrColor"
+        {
+        }
+    }
+}
+
+over "PhysicsScene"
+{
+}
+

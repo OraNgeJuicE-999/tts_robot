@@ -1,0 +1,204 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "URDF USD Converter v0.1.0"
+    }
+    defaultPrim = "jetracer"
+    doc = """Generated from Composed Stage of root layer /tmp/tmpql7xs9um/jetracer.usdc
+
+
+Generated from Composed Stage of root layer /home/itri/tts_robot/usdex/jetracer.usdc
+
+
+Generated from Composed Stage of root layer /home/itri/tts_robot/temp/jetracer.usd
+
+
+Generated from Composed Stage of root layer /home/itri/tts_robot/jetracer/payloads/base.usd
+"""
+    kilogramsPerUnit = 1
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+over "jetracer" (
+    prepend apiSchemas = ["IsaacRobotAPI", "IsaacLinkAPI"]
+)
+{
+    custom rel isaac:physics:robotJoints
+    prepend rel isaac:physics:robotJoints = [
+        </jetracer/Physics/front_left_base_holder>,
+        </jetracer/Physics/front_right_base_holder>,
+        </jetracer/Physics/rear_left_wheel_joint>,
+        </jetracer/Physics/rear_right_wheel_joint>,
+        </jetracer/Physics/root_joint>,
+        </jetracer/Physics/head_joint>,
+        </jetracer/Physics/camera_mount_joint>,
+        </jetracer/Physics/board_joint>,
+        </jetracer/Physics/front_left_wheel_holder>,
+        </jetracer/Physics/front_right_wheel_holder>,
+        </jetracer/Physics/camera_joint>,
+        </jetracer/Physics/lidar_joint>,
+    ]
+    custom rel isaac:physics:robotLinks
+    prepend rel isaac:physics:robotLinks = [
+        </jetracer/Geometry/base>,
+        </jetracer/Geometry/base/front_left_holder>,
+        </jetracer/Geometry/base/front_right_holder>,
+        </jetracer/Geometry/base/rear_left_wheel>,
+        </jetracer/Geometry/base/rear_right_wheel>,
+        </jetracer/Geometry/base/head>,
+        </jetracer/Geometry/base/camera_mount>,
+        </jetracer/Geometry/base/board>,
+        </jetracer/Geometry/base/front_left_holder/front_left_wheel>,
+        </jetracer/Geometry/base/front_right_holder/front_right_wheel>,
+        </jetracer/Geometry/base/camera_mount/camera>,
+        </jetracer/Geometry/base/board/lidar>,
+        </jetracer>,
+    ]
+
+    over "Physics"
+    {
+        over "front_left_base_holder" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "front_right_base_holder" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "rear_left_wheel_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "rear_right_wheel_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "root_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "head_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "camera_mount_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "board_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "front_left_wheel_holder" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "front_right_wheel_holder" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "camera_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+
+        over "lidar_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
+    }
+
+    over "Geometry"
+    {
+        over "base" (
+            prepend apiSchemas = ["IsaacLinkAPI"]
+        )
+        {
+            over "front_left_holder" (
+                prepend apiSchemas = ["IsaacLinkAPI"]
+            )
+            {
+                over "front_left_wheel" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                }
+            }
+
+            over "front_right_holder" (
+                prepend apiSchemas = ["IsaacLinkAPI"]
+            )
+            {
+                over "front_right_wheel" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                }
+            }
+
+            over "rear_left_wheel" (
+                prepend apiSchemas = ["IsaacLinkAPI"]
+            )
+            {
+            }
+
+            over "rear_right_wheel" (
+                prepend apiSchemas = ["IsaacLinkAPI"]
+            )
+            {
+            }
+
+            over "head" (
+                prepend apiSchemas = ["IsaacLinkAPI"]
+            )
+            {
+            }
+
+            over "camera_mount" (
+                prepend apiSchemas = ["IsaacLinkAPI"]
+            )
+            {
+                over "camera" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                }
+            }
+
+            over "board" (
+                prepend apiSchemas = ["IsaacLinkAPI"]
+            )
+            {
+                over "lidar" (
+                    prepend apiSchemas = ["IsaacLinkAPI"]
+                )
+                {
+                }
+            }
+        }
+    }
+}
+

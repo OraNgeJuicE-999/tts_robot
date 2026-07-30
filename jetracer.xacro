@@ -12,6 +12,9 @@
             <geometry>
                 <box size="0.22 0.11 0.02"/>
             </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
         </visual>
 
         <collision>
@@ -31,7 +34,7 @@
     <xacro:macro name="rear_wheel" params="prefix x y">
         <joint name="${prefix}_wheel_joint" type="continuous">
             <axis xyz="0 0 1"/>
-            <origin rpy="0.0 1.57 0.0" xyz="${x} ${y} 0.025"/>
+            <origin rpy="-1.57 0.0 0.0" xyz="${x} ${y} -0.01"/>
             <parent link="base"/>
             <child link="${prefix}_wheel"/>
         </joint>
@@ -61,14 +64,14 @@
         <joint name="${prefix}_base_holder" type="revolute"> 
             <limit lower="-0.322" upper="0.322" effort="1000.0" velocity="0.5"/>
             <axis xyz="0 0 1"/>
-            <origin rpy="0.0 1.57 0.0" xyz="${x} ${y} 0.025"/>
+            <origin rpy="0.0 0.0 0.0" xyz="${x} ${y} -0.01"/>
             <parent link="base"/>
             <child link="${prefix}_holder"/>
         </joint>
 
         <joint name="${prefix}_wheel_holder" type="continuous"> 
             <axis xyz="0 0 1"/>
-            <origin rpy="0.0 0 0.0" xyz="0 0 0"/>
+            <origin rpy="-1.57 0.0 0.0" xyz="0 0 0"/>
             <parent link="${prefix}_holder"/>
             <child link="${prefix}_wheel"/>
         </joint>
@@ -138,6 +141,9 @@
             <geometry>
                 <box size="0.035 0.125 0.012"/>
             </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
         </visual>
         <collision>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
@@ -169,14 +175,14 @@
         </visual>
         <collision>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-            <geometry>
+            <geometry>  
                 <box size="0.01 0.01 0.10"/>
             </geometry>
         </collision>
     </link>
 
     <joint name="camera_joint" type="fixed">
-        <origin xyz="0 0 0.06" rpy="0 0.349 0"/>
+        <origin xyz="0 0 0.06" rpy="0 1.920 0"/>
         <parent link="camera_mount"/>
         <child link="camera"/>
     </joint>
@@ -215,6 +221,9 @@
             <geometry>
                 <box size="0.145 0.10 0.11"/>
             </geometry>
+            <material name="black">
+                <color rgba="0 0 0 1"/>
+            </material>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -255,111 +264,4 @@
             </geometry>
         </collision>
     </link>
-</robot>
-
-    <!-- Front left wheel
-    <joint name="fl_holder_joint" type="revolute">
-        <axis xyz="0 0 1"/>
-        <limit effort="1000.0" lower="-0.4" upper="0.4" velocity="0.5"/>
-        <origin rpy="0 0 0" xyz="-0.5 0.8 0"/>
-        <parent link="base"/>
-        <child link="fl_wheel_link"/>
-    </joint>
-
-    <link name="fl_wheel_link">
-        <visual>
-        <origin rpy="0 0 0" xyz="-0.7 0.8 0"/>
-        <geometry>
-            <box size="0 0 0"/>
-        </geometry>
-        </visual>
-    </link>
-
-    <joint name="fl_wheel_joint" type="continuous">
-        <axis xyz="0 0 1"/>
-        <origin rpy="0 1.57 0" xyz="-0.2 0 0"/>
-        <parent link="fl_wheel_link"/>
-        <child link="fl_wheel"/>
-    </joint>
-
-    <link name="fl_wheel">
-        <visual>
-        <origin rpy="0 0 0" xyz="-0.7 0.8 0"/>
-        <geometry>
-            <cylinder radius="0.4" length="0.2"/>
-        </geometry>
-        <material name="black"/>
-        </visual>
-    </link>
-
-    <!--Front right wheel-->
-    <joint name="fr_holder_joint" type="revolute">
-        <axis xyz="0 0 1"/>
-        <limit effort="1000.0" lower="-0.4" upper="0.4" velocity="0.5"/>
-        <origin rpy="0 0 0" xyz="0.5 0.8 0"/>
-        <parent link="base"/>
-        <child link="fr_wheel_link"/>
-    </joint>
-
-    <link name="fr_wheel_link">
-        <visual>
-        <origin rpy="0 0 0" xyz="0.7 0.8 0"/>
-        <geometry>
-            <box size="0 0 0"/>
-        </geometry>
-        </visual>
-    </link>
-
-    <joint name="fr_wheel_joint" type="continuous">
-        <axis xyz="0 0 1"/>
-        <origin rpy="0 1.57 0" xyz="0.2 0 0"/>
-        <parent link="fr_wheel_link"/>
-        <child link="fr_wheel"/>
-    </joint>
-
-    <link name="fr_wheel">
-        <visual>
-        <origin rpy="0 0 0" xyz="0.7 0.8 0"/>
-        <geometry>
-            <cylinder radius="0.4" length="0.2"/>
-        </geometry>
-        <material name="black"/>
-        </visual>
-    </link>
-
-    <!--Rear left wheel-->
-    <joint name="rl_wheel_joint" type="continuous">
-        <axis xyz="0 0 1"/>
-        <origin rpy="0 1.57 0" xyz="-0.7 -0.8 0"/>
-        <parent link="base"/>
-        <child link="rl_wheel"/>
-    </joint>
-
-    <link name="rl_wheel">
-        <visual>
-        <origin rpy="0 0 0" xyz="-0.7 -0.8 0"/>
-        <geometry>
-            <cylinder radius="0.4" length="0.2"/>
-        </geometry>
-        <material name="black"/>
-        </visual>
-    </link>
-
-    <!--Rear right wheel-->
-    <joint name="rr_wheel_joint" type="continuous">
-        <axis xyz="0 0 1"/>
-        <origin rpy="0 1.57 0" xyz="0.7 -0.8 0"/>
-        <parent link="base"/>
-        <child link="rr_wheel"/>
-    </joint>
-
-    <link name="rr_wheel">
-        <visual>
-        <origin rpy="0 0 0" xyz="0.7 -0.8 0"/>
-        <geometry>
-            <cylinder radius="0.4" length="0.2"/>
-        </geometry>
-        <material name="black"/>
-        </visual>
-    </link> -->
-
+</robot>    
