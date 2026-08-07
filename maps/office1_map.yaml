@@ -1,0 +1,7 @@
+image: office1_map.pgm
+mode: trinary
+resolution: 0.050
+origin: [-31.501, -22.812, 0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
