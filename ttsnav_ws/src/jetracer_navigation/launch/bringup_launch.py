@@ -63,6 +63,20 @@ def generate_launch_description():
             'global_frame_id': 'map',
             'scan_topic': '/scan',
             'use_sim_time': use_sim_time,
+            # Defaults are light for a repetitive/symmetric office layout
+            # (many near-identical cubicle rows), which is exactly the kind
+            # of environment where the particle filter can suddenly favor a
+            # wrong-but-similar-looking hypothesis instead of gradually
+            # losing confidence. More particles keep a richer set of
+            # competing hypotheses alive so a plausible-but-wrong one is
+            # less likely to dominate via resampling noise alone; tighter
+            # update thresholds mean corrections happen more often instead
+            # of letting motion (e.g. a sharp turn at a waypoint transition)
+            # accumulate before AMCL gets a chance to catch a divergence.
+            'min_particles': 500,
+            'max_particles': 5000,
+            'update_min_d': 0.1,
+            'update_min_a': 0.1,
         }],
     )
 

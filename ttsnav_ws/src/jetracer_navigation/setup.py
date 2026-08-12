@@ -14,6 +14,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
         (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
+        (os.path.join('share', package_name, 'config'), glob('config/*.json')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -31,7 +32,9 @@ setup(
             'nav_node = jetracer_navigation.nav_node:main',
             'teleop_keyboard = jetracer_navigation.teleop_keyboard:main',
             'a_star_planner = jetracer_navigation.a_star_planner:main',
-            'dwa_controller = jetracer_navigation.dwa_controller:main'
+            'dwa_controller = jetracer_navigation.dwa_controller:main',
+            'goal_bridge = jetracer_navigation.goal_bridge:main',
+            'vlm_bridge = jetracer_navigation.vlm_bridge:main'
         ],
     },
 )

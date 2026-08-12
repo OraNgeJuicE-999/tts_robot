@@ -67,7 +67,7 @@ class AStarPlanner(Node):
         goal = world_to_pixel(msg.pose.position.x, msg.pose.position.y, self.map_info)
 
         planner_instance = AStarImplementation(
-            self.world_map, start, goal, goal_threshold=3, inflation_radius=5
+            self.world_map, start, goal, goal_threshold=3, inflation_radius=8
         )
         path, visited_node = planner_instance.plan()
         if not path:
@@ -75,6 +75,9 @@ class AStarPlanner(Node):
             return
 
         path = smooth_path_generation(path, occupancy_map=planner_instance.inflated_obstacle_map)
+        if not path:
+            self.get_logger().warning("Path smoothing produced an empty path, not publishing")
+            return
 
         path_ = Path()
         path_.header.frame_id = 'map'

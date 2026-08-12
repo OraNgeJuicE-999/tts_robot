@@ -167,7 +167,7 @@
         <visual>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <box size="0.01 0.01 0.10"/>
+                <box size="0.01 0.01 0.20"/>
             </geometry>
             <material name="mount_red">
                 <color rgba="1.0 0.0 0.0 1.0"/>
@@ -175,14 +175,14 @@
         </visual>
         <collision>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-            <geometry>  
-                <box size="0.01 0.01 0.10"/>
+            <geometry>
+                <box size="0.01 0.01 0.20"/>
             </geometry>
         </collision>
     </link>
 
     <joint name="camera_joint" type="fixed">
-        <origin xyz="0 0 0.06" rpy="0 1.920 0"/>
+        <origin xyz="0 0 0.103" rpy="0 0 0"/>
         <parent link="camera_mount"/>
         <child link="camera"/>
     </joint>
@@ -195,7 +195,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <cylinder radius="0.0075" length="0.02"/>
+                <cylinder radius="0.0075" length="0.006"/>
             </geometry>
             <material name="camera_black">
                 <color rgba="0 0 0 1"/>
@@ -204,7 +204,7 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <cylinder radius="0.0075" length="0.02"/>
+                <cylinder radius="0.0075" length="0.006"/>
             </geometry>
         </collision>
     </link>

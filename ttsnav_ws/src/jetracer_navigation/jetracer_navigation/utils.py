@@ -544,7 +544,7 @@ def clearance_cost(
     for coords in trajectory.states:
         mcoords = world_to_pixel(coords.x, coords.y, map_info)
         traj.append(mcoords)
-        if not is_standable(mcoords, occupancy_map):
+        if not is_in_bounds(mcoords, occupancy_map) or not is_standable(mcoords, occupancy_map):
             return math.inf
 
     dist_px = math.inf
@@ -561,8 +561,12 @@ def heading_cost(trajectory: Trajectory, goal_point: tuple) -> float:
     
     state = trajectory.states[-1]
     yy = goal_point[1] - state.y
-    xx = goal_point[0] - state.x 
-    angle = np.arctan2(yy, xx) - state.theta
+    xx = goal_point[0] - state.x
+    # Reverse trajectories lead with the rear, not the nose -- compare against
+    # theta+pi so backing straight toward a goal behind the car scores as
+    # well-aligned instead of looking like it's facing away from the goal.
+    facing = state.theta if trajectory.v >= 0 else state.theta + math.pi
+    angle = np.arctan2(yy, xx) - facing
     return abs(np.arctan2(np.sin(angle), np.cos(angle)))
 
 

@@ -7,8 +7,8 @@
                 double radius = 5
             }
             dictionary Perspective = {
-                double3 position = (-10.086122529705971, -16.515326128251985, 15.065959987468986)
-                double3 target = (-10.239844128617433, -13.439219108242437, -4.299607436512815)
+                double3 position = (1.4448755533499396, -9.85987599123309, 10.168994340998283)
+                double3 target = (5.88746059868786, 2.1374258176645107, 0.7181111111245801)
             }
             dictionary Right = {
                 double3 position = (0, -5, 0)
@@ -951,6 +951,10 @@ def Xform "jetracer" (
                 string isaac:nameOverride (
                     displayName = "Name Override"
                 )
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 2.5)
+                double3 xformOp:translate = (0.08499999999999996, 0, 0.10233622380397495)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
                 over "camera"
                 {
@@ -959,7 +963,7 @@ def Xform "jetracer" (
                     )
                     bool physics:kinematicEnabled = 0
                     bool physics:rigidBodyEnabled = 1
-                    quatf xformOp:orient = (0.57357645, 0, 0.81915206, 0)
+                    quatf xformOp:orient = (-0.70710677, -1.04530146e-16, -0.70710677, -8.6595606e-17)
 
                     over "cylinder"
                     {
@@ -980,13 +984,22 @@ def Xform "jetracer" (
                         float exposure:time = 0.02
                         float focalLength = 18.147562
                         float focusDistance = 400
-                        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -453.1079358009449)
+                        bool omni:kit:cameraLock = 0
+                        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -490.20189562392403)
                         token visibility = "invisible"
-                        quatd xformOp:orient = (6.123233995736766e-17, -3.308722450212112e-23, 1, -5.29395592033938e-23)
+                        quatd xformOp:orient = (6.123233995736766e-17, 0.7071067811865476, -0.7071067811865475, 4.329780281177466e-17)
                         double3 xformOp:scale = (1, 1, 1)
-                        double3 xformOp:translate = (0, 0, 0.01)
+                        double3 xformOp:translate = (4.7039426309823906e-15, -1.1103488813664256e-16, 0.01)
                         uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
                     }
+                }
+
+                over "box"
+                {
+                    quatf xformOp:orient = (1, 0, 0, 0)
+                    float3 xformOp:scale = (0.01, 0.01, 0.1)
+                    double3 xformOp:translate = (0, 0, 0.0030238485464399167)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
                 }
             }
 
@@ -1033,7 +1046,7 @@ def Xform "jetracer" (
                         float horizontalFov = 360
                         float horizontalResolution = 0.4
                         float maxRange = 100
-                        float minRange = 0.4
+                        float minRange = 0.1
                         float rotationRate = 20
                         float verticalFov = 30
                         float verticalResolution = 4
@@ -1185,7 +1198,7 @@ def Xform "jetracer" (
             token[] isaac:physics:DofOffsetOpOrder (
                 displayName = "Dof Offset Op Order"
             )
-            quatf physics:localRot0 = (0.57357645, 0, 0.81915206, 0)
+            quatf physics:localRot0 = (-0.70710677, -1.04530146e-16, -0.70710677, -8.6595606e-17)
         }
 
         over "lidar_joint"
@@ -1212,6 +1225,7 @@ def Xform "jetracer" (
             token[] isaac:physics:DofOffsetOpOrder (
                 displayName = "Dof Offset Op Order"
             )
+            point3f physics:localPos0 = (0.085, 0, 0.10234)
         }
     }
 
@@ -1759,6 +1773,78 @@ def "Render" (
                 custom bool overrideClipRange = 0
                 uniform int2 resolution = (1280, 720)
             }
+
+            def RenderProduct "Replicator_12" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </jetracer/Geometry/base/camera_mount/camera/Camera>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_12/PostRender"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                rel orderedVars = [
+                    </Render/Vars/LdrColorSD>,
+                    </Render/Vars/DistanceToImagePlaneSD>,
+                    </Render/Vars/LdrColor>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+
+            def RenderProduct "Replicator_13" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </jetracer/Geometry/base/board/lidar/cylinder/jetracer/RPLIDAR_S2E/RPLidar_S2E>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_13/PostRender"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                rel orderedVars = </Render/Vars/GenericModelOutput>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+
+            def RenderProduct "Replicator_14" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </jetracer/Geometry/base/board/lidar/cylinder/jetracer/RPLIDAR_S2E/RPLidar_S2E>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_14/PostRender"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                rel orderedVars = </Render/Vars/GenericModelOutput>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+
+            def RenderProduct "Replicator_15" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </jetracer/Geometry/base/camera_mount/camera/Camera>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/Replicator_15/PostRender"
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:rt:ecoMode:enabled = 0
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                rel orderedVars = [
+                    </Render/Vars/DistanceToImagePlaneSD>,
+                    </Render/Vars/LdrColorSD>,
+                    </Render/Vars/LdrColor>,
+                ]
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
         }
     }
 
@@ -1782,6 +1868,10 @@ def "Render" (
             </Render/OmniverseKit/HydraTextures/Replicator_09>,
             </Render/OmniverseKit/HydraTextures/Replicator_10>,
             </Render/OmniverseKit/HydraTextures/Replicator_11>,
+            </Render/OmniverseKit/HydraTextures/Replicator_12>,
+            </Render/OmniverseKit/HydraTextures/Replicator_13>,
+            </Render/OmniverseKit/HydraTextures/Replicator_14>,
+            </Render/OmniverseKit/HydraTextures/Replicator_15>,
         ]
     }
 
@@ -1818,10 +1908,10 @@ over "OmniverseKit_Persp" (
     float exposure:time = 0.02
     float focalLength = 18.147562
     float focusDistance = 400
-    custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -19.60895882960921)
-    float3 xformOp:rotateXYZ = (9.03677, -4.1605632e-13, 2.8608491)
+    custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -15.90569100679206)
+    float3 xformOp:rotateXYZ = (53.545624, -5.6454846e-13, -20.319525)
     float3 xformOp:scale = (1, 1, 1)
-    double3 xformOp:translate = (-10.086122529705971, -16.515326128251985, 15.065959987468986)
+    double3 xformOp:translate = (1.4448755533499396, -9.85987599123309, 10.168994340998283)
     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
 }
 
@@ -2392,6 +2482,18 @@ def "Office1" (
         {
             uniform token physics:approximation = "none"
             bool physics:collisionEnabled = 1
+        }
+    }
+
+    over "Camera"
+    {
+        over "Camera" (
+            prepend apiSchemas = ["OmniRtxCameraAutoExposureAPI_1", "OmniRtxCameraExposureAPI_1"]
+        )
+        {
+            float exposure:fStop = 5
+            float exposure:responsivity = 1.1026709
+            float exposure:time = 0.02
         }
     }
 }
