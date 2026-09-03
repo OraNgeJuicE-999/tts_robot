@@ -23,10 +23,21 @@
                 <box size="0.22 0.11 0.02"/>
             </geometry>
         </collision>
+    </link>
 
+    <!-- Massless base_link (root) with inertia moved onto this coincident child:
+         KDL/robot_state_publisher doesn't support the tree's root link carrying
+         an inertia. base_link itself must stay the root untouched, since Isaac
+         Sim's odometry bridge externally publishes odom->base_link directly. -->
+    <joint name="base_inertial_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="base_inertial"/>
+    </joint>
+    <link name="base_inertial">
         <inertial>
-            <mass value="1.0"/>
-            <inertia ixx="0.004067" iyy="0.005042" izz="0.001042" ixy="0" ixz="0" iyz="0"/>
+            <mass value="1.166"/>
+            <inertia ixx="0.004742" iyy="0.005879" izz="0.001215" ixy="0" ixz="0" iyz="0"/>
         </inertial>
     </link>
 
@@ -41,8 +52,8 @@
 
         <link name="${prefix}_wheel">
             <inertial>
-                <mass value="0.05"/>
-                <inertia ixx="0.00000875" iyy="0.00000875" izz="0.0000156" ixy="0" ixz="0" iyz="0"/>
+                <mass value="0.07"/>
+                <inertia ixx="0.00001225" iyy="0.00001225" izz="0.00002184" ixy="0" ixz="0" iyz="0"/>
             </inertial>
             <visual>
                 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
@@ -78,8 +89,8 @@
 
         <link name="${prefix}_wheel">
             <inertial>
-                <mass value="0.05"/>
-                <inertia ixx="0.00000875" iyy="0.00000875" izz="0.0000156" ixy="0" ixz="0" iyz="0"/>
+                <mass value="0.07"/>
+                <inertia ixx="0.00001225" iyy="0.00001225" izz="0.00002184" ixy="0" ixz="0" iyz="0"/>
             </inertial>
             <visual>
                 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
@@ -154,20 +165,20 @@
     </link>
     <!-- Camera -->
     <joint name="camera_mount_joint" type="fixed">
-        <origin xyz="0.085 0.0 0.06" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.085 0.0 0.10233622380397495" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="camera_mount"/>
     </joint>
     <link name="camera_mount">
         <inertial>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0.05"/>
-            <inertia ixx="0.0000084" iyy="0.00000017" izz="0.0000084" ixy="0" ixz="0" iyz="0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.0000001" iyy="0.0000001" izz="0.0000001" ixy="0" ixz="0" iyz="0"/>
         </inertial>
         <visual>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <box size="0.01 0.01 0.20"/>
+                <box size="0.01 0.01 0.25"/>
             </geometry>
             <material name="mount_red">
                 <color rgba="1.0 0.0 0.0 1.0"/>
@@ -176,21 +187,21 @@
         <collision>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <box size="0.01 0.01 0.20"/>
+                <box size="0.01 0.01 0.25"/>
             </geometry>
         </collision>
     </link>
 
     <joint name="camera_joint" type="fixed">
-        <origin xyz="0 0 0.103" rpy="0 0 0"/>
+        <origin xyz="0 0 0.06" rpy="0 1.5708 0"/>
         <parent link="camera_mount"/>
         <child link="camera"/>
     </joint>
     <link name="camera">
         <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
-            <mass value="0.01"/>
-            <inertia ixx="0.00000047" iyy="0.00000047" izz="0.00000028" ixy="0" ixz="0" iyz="0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.0000001" iyy="0.0000001" izz="0.0000001" ixy="0" ixz="0" iyz="0"/>
         </inertial>
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -210,7 +221,7 @@
     </link>
     <!-- Board -->
     <joint name="board_joint" type="fixed">
-        <origin xyz="-0.0375 0.0 0.0475" rpy="0.0 0.0 0.0"/>
+        <origin xyz="-0.0375 0.0 0.14614899660969316" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="board"/>
     </joint>
@@ -219,7 +230,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <box size="0.145 0.10 0.11"/>
+                <box size="0.145 0.10 0.275"/>
             </geometry>
             <material name="black">
                 <color rgba="0 0 0 1"/>
@@ -228,25 +239,25 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <box size="0.145 0.10 0.11"/>
+                <box size="0.145 0.10 0.275"/>
             </geometry>
         </collision>
         <inertial>
-            <mass value="0.15"/>
-            <inertia ixx="0.000414" iyy="0.000388" izz="0.000276" ixy="0" ixz="0" iyz="0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.0000001" iyy="0.0000001" izz="0.0000001" ixy="0" ixz="0" iyz="0"/>
         </inertial>
     </link>
     <!-- LiDAR -->
     <joint name="lidar_joint" type="fixed">
-        <origin xyz="0.0 0.0 0.075" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.1575" rpy="0.0 0.0 0.0"/>
         <parent link="board"/>
         <child link="lidar"/>
     </joint>
     <link name="lidar">
         <inertial>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-            <mass value="0.04"/>
-            <inertia ixx="0.0000303" iyy="0.0000303" izz="0.00005" ixy="0" ixz="0" iyz="0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0.0000001" iyy="0.0000001" izz="0.0000001" ixy="0" ixz="0" iyz="0"/>
         </inertial>
         <visual>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>

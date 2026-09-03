@@ -210,6 +210,199 @@ over "jetracer"
                 }
             }
         }
+
+        over "base_link" (
+            prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsArticulationRootAPI", "NewtonArticulationRootAPI", "PhysicsMassAPI"]
+        )
+        {
+            bool newton:selfCollisionEnabled = 0
+
+            over "head" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                point3f physics:centerOfMass = (0, 0, 0)
+                float3 physics:diagonalInertia = (0.0000057, 0.0000657, 0.0000702)
+                float physics:mass = 0.05
+                quatf physics:principalAxes = (-0.70710677, 0.70710677, 0, 0)
+
+                over "box_1" (
+                    prepend apiSchemas = ["NewtonCollisionAPI"]
+                )
+                {
+                }
+            }
+
+            over "camera_mount" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                point3f physics:centerOfMass = (0, 0, 0)
+                float3 physics:diagonalInertia = (1e-7, 1e-7, 1e-7)
+                float physics:mass = 0.001
+                quatf physics:principalAxes = (1, 0, 0, 0)
+
+                over "camera" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    point3f physics:centerOfMass = (0, 0, 0)
+                    float3 physics:diagonalInertia = (1e-7, 1e-7, 1e-7)
+                    float physics:mass = 0.001
+                    quatf physics:principalAxes = (1, 0, 0, 0)
+
+                    over "cylinder_1" (
+                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                    )
+                    {
+                    }
+                }
+
+                over "box_1" (
+                    prepend apiSchemas = ["NewtonCollisionAPI"]
+                )
+                {
+                }
+            }
+
+            over "board" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float3 physics:diagonalInertia = (1e-7, 1e-7, 1e-7)
+                float physics:mass = 0.001
+                quatf physics:principalAxes = (1, 0, 0, 0)
+
+                over "lidar" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    point3f physics:centerOfMass = (0, 0, 0)
+                    float3 physics:diagonalInertia = (1e-7, 1e-7, 1e-7)
+                    float physics:mass = 0.001
+                    quatf physics:principalAxes = (1, 0, 0, 0)
+
+                    over "cylinder_1" (
+                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                    )
+                    {
+                    }
+                }
+
+                over "box_1" (
+                    prepend apiSchemas = ["NewtonCollisionAPI"]
+                )
+                {
+                }
+            }
+
+            over "box_1" (
+                prepend apiSchemas = ["NewtonCollisionAPI"]
+            )
+            {
+            }
+
+            over "base_inertial" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float3 physics:diagonalInertia = (0.001215, 0.004742, 0.005879)
+                float physics:mass = 1.166
+                quatf physics:principalAxes = (0.5, 0.5, 0.5, 0.5)
+            }
+
+            over "front_left_holder" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                point3f physics:centerOfMass = (0, 0, 0)
+                float3 physics:diagonalInertia = (1e-7, 1e-7, 1e-7)
+                float physics:mass = 0.001
+                quatf physics:principalAxes = (1, 0, 0, 0)
+
+                over "box_1" (
+                    prepend apiSchemas = ["NewtonCollisionAPI"]
+                )
+                {
+                }
+
+                over "front_left_wheel" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    float3 physics:diagonalInertia = (0.00001225, 0.00001225, 0.00002184)
+                    float physics:mass = 0.07
+                    quatf physics:principalAxes = (1, 0, 0, 0)
+
+                    over "cylinder_1" (
+                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                    )
+                    {
+                    }
+                }
+            }
+
+            over "front_right_holder" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                point3f physics:centerOfMass = (0, 0, 0)
+                float3 physics:diagonalInertia = (1e-7, 1e-7, 1e-7)
+                float physics:mass = 0.001
+                quatf physics:principalAxes = (1, 0, 0, 0)
+
+                over "box_1" (
+                    prepend apiSchemas = ["NewtonCollisionAPI"]
+                )
+                {
+                }
+
+                over "front_right_wheel" (
+                    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+                )
+                {
+                    float3 physics:diagonalInertia = (0.00001225, 0.00001225, 0.00002184)
+                    float physics:mass = 0.07
+                    quatf physics:principalAxes = (1, 0, 0, 0)
+
+                    over "cylinder_1" (
+                        prepend apiSchemas = ["NewtonCollisionAPI"]
+                    )
+                    {
+                    }
+                }
+            }
+
+            over "rear_left_wheel" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float3 physics:diagonalInertia = (0.00001225, 0.00001225, 0.00002184)
+                float physics:mass = 0.07
+                quatf physics:principalAxes = (1, 0, 0, 0)
+
+                over "cylinder_1" (
+                    prepend apiSchemas = ["NewtonCollisionAPI"]
+                )
+                {
+                }
+            }
+
+            over "rear_right_wheel" (
+                prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+            )
+            {
+                float3 physics:diagonalInertia = (0.00001225, 0.00001225, 0.00002184)
+                float physics:mass = 0.07
+                quatf physics:principalAxes = (1, 0, 0, 0)
+
+                over "cylinder_1" (
+                    prepend apiSchemas = ["NewtonCollisionAPI"]
+                )
+                {
+                }
+            }
+        }
     }
 
     over "Physics"
@@ -220,8 +413,14 @@ over "jetracer"
         {
             float drive:angular:physics:maxForce = 1000
             uniform token physics:axis = "Z"
-            custom rel physics:body0 = </jetracer/Geometry/base>
-            custom rel physics:body1 = </jetracer/Geometry/base/front_left_holder>
+            custom rel physics:body0 = [
+                </jetracer/Geometry/base>,
+                </jetracer/Geometry/base_link>,
+            ]
+            custom rel physics:body1 = [
+                </jetracer/Geometry/base/front_left_holder>,
+                </jetracer/Geometry/base_link/front_left_holder>,
+            ]
             point3f physics:localPos0 = (0.085, 0.055, -0.01)
             point3f physics:localPos1 = (0, 0, 0)
             quatf physics:localRot0 = (1, 0, 0, 0)
@@ -237,11 +436,17 @@ over "jetracer"
         )
         {
             uniform token physics:axis = "Z"
-            custom rel physics:body0 = </jetracer/Geometry/base/front_left_holder>
-            custom rel physics:body1 = </jetracer/Geometry/base/front_left_holder/front_left_wheel>
+            custom rel physics:body0 = [
+                </jetracer/Geometry/base/front_left_holder>,
+                </jetracer/Geometry/base_link/front_left_holder>,
+            ]
+            custom rel physics:body1 = [
+                </jetracer/Geometry/base/front_left_holder/front_left_wheel>,
+                </jetracer/Geometry/base_link/front_left_holder/front_left_wheel>,
+            ]
             point3f physics:localPos0 = (0, 0, 0)
             point3f physics:localPos1 = (0, 0, 0)
-            quatf physics:localRot0 = (0.7073883, 0.7068252, 0, 0)
+            quatf physics:localRot0 = (0.7073883, -0.7068252, 0, 0)
             quatf physics:localRot1 = (1, 0, 0, 0)
         }
 
@@ -251,8 +456,14 @@ over "jetracer"
         {
             float drive:angular:physics:maxForce = 1000
             uniform token physics:axis = "Z"
-            custom rel physics:body0 = </jetracer/Geometry/base>
-            custom rel physics:body1 = </jetracer/Geometry/base/front_right_holder>
+            custom rel physics:body0 = [
+                </jetracer/Geometry/base>,
+                </jetracer/Geometry/base_link>,
+            ]
+            custom rel physics:body1 = [
+                </jetracer/Geometry/base/front_right_holder>,
+                </jetracer/Geometry/base_link/front_right_holder>,
+            ]
             point3f physics:localPos0 = (0.085, -0.055, -0.01)
             point3f physics:localPos1 = (0, 0, 0)
             quatf physics:localRot0 = (1, 0, 0, 0)
@@ -268,11 +479,17 @@ over "jetracer"
         )
         {
             uniform token physics:axis = "Z"
-            custom rel physics:body0 = </jetracer/Geometry/base/front_right_holder>
-            custom rel physics:body1 = </jetracer/Geometry/base/front_right_holder/front_right_wheel>
+            custom rel physics:body0 = [
+                </jetracer/Geometry/base/front_right_holder>,
+                </jetracer/Geometry/base_link/front_right_holder>,
+            ]
+            custom rel physics:body1 = [
+                </jetracer/Geometry/base/front_right_holder/front_right_wheel>,
+                </jetracer/Geometry/base_link/front_right_holder/front_right_wheel>,
+            ]
             point3f physics:localPos0 = (0, 0, 0)
             point3f physics:localPos1 = (0, 0, 0)
-            quatf physics:localRot0 = (0.7073883, 0.7068252, 0, 0)
+            quatf physics:localRot0 = (0.7073883, -0.7068252, 0, 0)
             quatf physics:localRot1 = (1, 0, 0, 0)
         }
 
@@ -281,11 +498,17 @@ over "jetracer"
         )
         {
             uniform token physics:axis = "Z"
-            custom rel physics:body0 = </jetracer/Geometry/base>
-            custom rel physics:body1 = </jetracer/Geometry/base/rear_left_wheel>
+            custom rel physics:body0 = [
+                </jetracer/Geometry/base>,
+                </jetracer/Geometry/base_link>,
+            ]
+            custom rel physics:body1 = [
+                </jetracer/Geometry/base/rear_left_wheel>,
+                </jetracer/Geometry/base_link/rear_left_wheel>,
+            ]
             point3f physics:localPos0 = (-0.09, 0.055, -0.01)
             point3f physics:localPos1 = (0, 0, 0)
-            quatf physics:localRot0 = (0.7073883, 0.7068252, 0, 0)
+            quatf physics:localRot0 = (0.7073883, -0.7068252, 0, 0)
             quatf physics:localRot1 = (1, 0, 0, 0)
         }
 
@@ -294,18 +517,27 @@ over "jetracer"
         )
         {
             uniform token physics:axis = "Z"
-            custom rel physics:body0 = </jetracer/Geometry/base>
-            custom rel physics:body1 = </jetracer/Geometry/base/rear_right_wheel>
+            custom rel physics:body0 = [
+                </jetracer/Geometry/base>,
+                </jetracer/Geometry/base_link>,
+            ]
+            custom rel physics:body1 = [
+                </jetracer/Geometry/base/rear_right_wheel>,
+                </jetracer/Geometry/base_link/rear_right_wheel>,
+            ]
             point3f physics:localPos0 = (-0.09, -0.055, -0.01)
             point3f physics:localPos1 = (0, 0, 0)
-            quatf physics:localRot0 = (0.7073883, 0.7068252, 0, 0)
+            quatf physics:localRot0 = (0.7073883, -0.7068252, 0, 0)
             quatf physics:localRot1 = (1, 0, 0, 0)
         }
 
         def PhysicsFixedJoint "root_joint"
         {
             custom rel physics:body0 = </jetracer>
-            custom rel physics:body1 = </jetracer/Geometry/base>
+            custom rel physics:body1 = [
+                </jetracer/Geometry/base>,
+                </jetracer/Geometry/base_link>,
+            ]
             point3f physics:localPos0 = (0, 0, 0)
             point3f physics:localPos1 = (0, 0, 0)
             quatf physics:localRot0 = (1, 0, 0, 0)
@@ -314,8 +546,14 @@ over "jetracer"
 
         def PhysicsFixedJoint "head_joint"
         {
-            custom rel physics:body0 = </jetracer/Geometry/base>
-            custom rel physics:body1 = </jetracer/Geometry/base/head>
+            custom rel physics:body0 = [
+                </jetracer/Geometry/base>,
+                </jetracer/Geometry/base_link>,
+            ]
+            custom rel physics:body1 = [
+                </jetracer/Geometry/base/head>,
+                </jetracer/Geometry/base_link/head>,
+            ]
             point3f physics:localPos0 = (0.1275, 0, -0.004)
             point3f physics:localPos1 = (0, 0, 0)
             quatf physics:localRot0 = (1, 0, 0, 0)
@@ -324,9 +562,15 @@ over "jetracer"
 
         def PhysicsFixedJoint "camera_mount_joint"
         {
-            custom rel physics:body0 = </jetracer/Geometry/base>
-            custom rel physics:body1 = </jetracer/Geometry/base/camera_mount>
-            point3f physics:localPos0 = (0.085, 0, 0.06)
+            custom rel physics:body0 = [
+                </jetracer/Geometry/base>,
+                </jetracer/Geometry/base_link>,
+            ]
+            custom rel physics:body1 = [
+                </jetracer/Geometry/base/camera_mount>,
+                </jetracer/Geometry/base_link/camera_mount>,
+            ]
+            point3f physics:localPos0 = (0.085, 0, 0.10233622)
             point3f physics:localPos1 = (0, 0, 0)
             quatf physics:localRot0 = (1, 0, 0, 0)
             quatf physics:localRot1 = (1, 0, 0, 0)
@@ -334,19 +578,31 @@ over "jetracer"
 
         def PhysicsFixedJoint "camera_joint"
         {
-            custom rel physics:body0 = </jetracer/Geometry/base/camera_mount>
-            custom rel physics:body1 = </jetracer/Geometry/base/camera_mount/camera>
+            custom rel physics:body0 = [
+                </jetracer/Geometry/base/camera_mount>,
+                </jetracer/Geometry/base_link/camera_mount>,
+            ]
+            custom rel physics:body1 = [
+                </jetracer/Geometry/base/camera_mount/camera>,
+                </jetracer/Geometry/base_link/camera_mount/camera>,
+            ]
             point3f physics:localPos0 = (0, 0, 0.06)
             point3f physics:localPos1 = (0, 0, 0)
-            quatf physics:localRot0 = (0.98481345, 0, 0.17361586, 0)
+            quatf physics:localRot0 = (0.70710546, 0, 0.7071081, 0)
             quatf physics:localRot1 = (1, 0, 0, 0)
         }
 
         def PhysicsFixedJoint "board_joint"
         {
-            custom rel physics:body0 = </jetracer/Geometry/base>
-            custom rel physics:body1 = </jetracer/Geometry/base/board>
-            point3f physics:localPos0 = (-0.0375, 0, 0.0475)
+            custom rel physics:body0 = [
+                </jetracer/Geometry/base>,
+                </jetracer/Geometry/base_link>,
+            ]
+            custom rel physics:body1 = [
+                </jetracer/Geometry/base/board>,
+                </jetracer/Geometry/base_link/board>,
+            ]
+            point3f physics:localPos0 = (-0.0375, 0, 0.146149)
             point3f physics:localPos1 = (0, 0, 0)
             quatf physics:localRot0 = (1, 0, 0, 0)
             quatf physics:localRot1 = (1, 0, 0, 0)
@@ -354,9 +610,25 @@ over "jetracer"
 
         def PhysicsFixedJoint "lidar_joint"
         {
-            custom rel physics:body0 = </jetracer/Geometry/base/board>
-            custom rel physics:body1 = </jetracer/Geometry/base/board/lidar>
-            point3f physics:localPos0 = (0, 0, 0.075)
+            custom rel physics:body0 = [
+                </jetracer/Geometry/base/board>,
+                </jetracer/Geometry/base_link/board>,
+            ]
+            custom rel physics:body1 = [
+                </jetracer/Geometry/base/board/lidar>,
+                </jetracer/Geometry/base_link/board/lidar>,
+            ]
+            point3f physics:localPos0 = (0, 0, 0.1575)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        def PhysicsFixedJoint "base_inertial_joint"
+        {
+            custom rel physics:body0 = </jetracer/Geometry/base_link>
+            custom rel physics:body1 = </jetracer/Geometry/base_link/base_inertial>
+            point3f physics:localPos0 = (0, 0, 0)
             point3f physics:localPos1 = (0, 0, 0)
             quatf physics:localRot0 = (1, 0, 0, 0)
             quatf physics:localRot1 = (1, 0, 0, 0)

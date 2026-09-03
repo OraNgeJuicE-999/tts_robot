@@ -128,6 +128,10 @@ over "jetracer"
         over "lidar_joint"
         {
         }
+
+        over "base_inertial_joint"
+        {
+        }
     }
 
     over "Geometry"
@@ -222,6 +226,10 @@ over "jetracer"
                     over "cylinder_1"
                     {
                     }
+
+                    over "Camera"
+                    {
+                    }
                 }
 
                 over "box"
@@ -239,9 +247,949 @@ over "jetracer"
                 {
                     over "cylinder"
                     {
+                        over "jetracer"
+                        {
+                            over "RPLIDAR_S2E"
+                            {
+                                over "materials"
+                                {
+                                    over "Looks"
+                                    {
+                                        over "Shark"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Chateau_Green"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Harvest_Gold"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Celeste"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Satin_Linen"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Fog"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Chicago"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Tidal"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Gravel"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Silver"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "White"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Japanese_Laurel"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Gray"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Cornflower"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Taupe_Gray"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Como"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Red"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Gull_Gray"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Gray_Nurse"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Kabul"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Vulcan"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "San_Marino"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Mint_Tulip"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Silver_Chalice"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Tropical_Blue"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Emperor"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Mountain_Mist"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Rio_Grande"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Tangerine"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Concord"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Silver_Rust"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Mercury"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Periwinkle_Gray"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Ivory"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Black"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Shady_Lady"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Selective_Yellow"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Yellow"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Cape_Cod"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Mine_Shaft"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Fuchsia_Pink"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Nugget"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Dolly"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Alabaster"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Dawn"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Green"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Pattens_Blue"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Charade"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Trinidad"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Boulder"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Wild_Sand"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Rajah"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Jaguar"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Royal_Blue"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "De_York"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Alto"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Rangoon_Green"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Blue"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Mystic"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Blush_Pink"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Almond"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Melrose"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Cloud"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "French_Lilac"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Cararra"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Amber"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Pizazz"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Shalimar"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Black_Russian"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Bitter_Lemon"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Aquamarine"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Screaming_Green"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Midnight_Blue"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Link_Water"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Cerulean"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Malachite"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Perano"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Hurricane"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Maroon"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Bondi_Blue"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Japonica"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Fire_Bush"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Saffron"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Tuatara"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Neon_Carrot"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Ironside_Gray"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Blue_Zodiac"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Pink_Swan"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Flush_Mahogany"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Oslo_Gray"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Stack"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Log_Cabin"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Tea"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Nobel"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Gallery"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Puce"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Negroni"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Marigold"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Flush_Orange"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Macaroni_and_Cheese"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Mulberry"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Wild_Willow"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Neptune"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Caribbean_Green"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Citrus"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Red_Orange"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "East_Side"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Double_Colonial_White"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Cadet_Blue"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Burning_Sand"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Spring_Wood"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Apple"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Star_Dust"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Golden_Sand"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Gamboge"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Thistle"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Milano_Red"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Matisse"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "La_Palma"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Tory_Blue"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Antique_Bronze"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+
+                                        over "Tapa"
+                                        {
+                                            over "Shader"
+                                            {
+                                            }
+                                        }
+                                    }
+                                }
+
+                                over "RPLidar_S2E"
+                                {
+                                }
+
+                                over "RPLidar_mesh"
+                                {
+                                    over "Antique_Bronze"
+                                    {
+                                    }
+
+                                    over "Apple"
+                                    {
+                                    }
+
+                                    over "Black"
+                                    {
+                                    }
+
+                                    over "Gamboge"
+                                    {
+                                    }
+
+                                    over "Gray"
+                                    {
+                                    }
+
+                                    over "Gray_Nurse"
+                                    {
+                                    }
+
+                                    over "La_Palma"
+                                    {
+                                    }
+
+                                    over "Matisse"
+                                    {
+                                    }
+
+                                    over "Milano_Red"
+                                    {
+                                    }
+
+                                    over "Rangoon_Green"
+                                    {
+                                    }
+
+                                    over "Shark"
+                                    {
+                                    }
+
+                                    over "Silver"
+                                    {
+                                    }
+
+                                    over "Spring_Wood"
+                                    {
+                                    }
+
+                                    over "Star_Dust"
+                                    {
+                                    }
+
+                                    over "Tapa"
+                                    {
+                                    }
+
+                                    over "Tory_Blue"
+                                    {
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     over "cylinder_1"
+                    {
+                    }
+
+                    over "Lidar"
                     {
                     }
                 }
@@ -261,6 +1209,1080 @@ over "jetracer"
 
             over "box_1"
             {
+            }
+        }
+
+        over "base_link"
+        {
+            over "base_inertial"
+            {
+            }
+
+            over "box"
+            {
+            }
+
+            over "head"
+            {
+                over "box"
+                {
+                }
+
+                over "box_1"
+                {
+                }
+            }
+
+            over "camera_mount"
+            {
+                over "box"
+                {
+                }
+
+                over "camera"
+                {
+                    over "cylinder"
+                    {
+                    }
+
+                    over "cylinder_1"
+                    {
+                    }
+
+                    over "Camera"
+                    {
+                    }
+                }
+
+                over "box_1"
+                {
+                }
+            }
+
+            over "board"
+            {
+                over "box"
+                {
+                }
+
+                over "lidar"
+                {
+                    over "cylinder"
+                    {
+                    }
+
+                    over "cylinder_1"
+                    {
+                    }
+
+                    over "RPLIDAR_S2E"
+                    {
+                        over "materials"
+                        {
+                            over "Looks"
+                            {
+                                over "Shark"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Chateau_Green"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Harvest_Gold"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Celeste"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Satin_Linen"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Fog"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Chicago"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Tidal"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Gravel"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Silver"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "White"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Japanese_Laurel"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Gray"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Cornflower"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Taupe_Gray"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Como"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Red"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Gull_Gray"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Gray_Nurse"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Kabul"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Vulcan"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "San_Marino"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Mint_Tulip"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Silver_Chalice"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Tropical_Blue"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Emperor"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Mountain_Mist"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Rio_Grande"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Tangerine"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Concord"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Silver_Rust"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Mercury"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Periwinkle_Gray"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Ivory"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Black"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Shady_Lady"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Selective_Yellow"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Yellow"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Cape_Cod"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Mine_Shaft"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Fuchsia_Pink"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Nugget"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Dolly"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Alabaster"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Dawn"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Green"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Pattens_Blue"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Charade"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Trinidad"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Boulder"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Wild_Sand"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Rajah"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Jaguar"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Royal_Blue"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "De_York"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Alto"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Rangoon_Green"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Blue"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Mystic"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Blush_Pink"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Almond"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Melrose"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Cloud"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "French_Lilac"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Cararra"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Amber"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Pizazz"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Shalimar"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Black_Russian"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Bitter_Lemon"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Aquamarine"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Screaming_Green"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Midnight_Blue"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Link_Water"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Cerulean"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Malachite"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Perano"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Hurricane"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Maroon"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Bondi_Blue"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Japonica"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Fire_Bush"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Saffron"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Tuatara"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Neon_Carrot"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Ironside_Gray"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Blue_Zodiac"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Pink_Swan"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Flush_Mahogany"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Oslo_Gray"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Stack"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Log_Cabin"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Tea"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Nobel"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Gallery"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Puce"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Negroni"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Marigold"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Flush_Orange"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Macaroni_and_Cheese"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Mulberry"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Wild_Willow"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Neptune"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Caribbean_Green"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Citrus"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Red_Orange"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "East_Side"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Double_Colonial_White"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Cadet_Blue"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Burning_Sand"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Spring_Wood"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Apple"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Star_Dust"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Golden_Sand"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Gamboge"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Thistle"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Milano_Red"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Matisse"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "La_Palma"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Tory_Blue"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Antique_Bronze"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+
+                                over "Tapa"
+                                {
+                                    over "Shader"
+                                    {
+                                    }
+                                }
+                            }
+                        }
+
+                        over "RPLidar_S2E"
+                        {
+                        }
+
+                        over "RPLidar_mesh"
+                        {
+                            over "Antique_Bronze"
+                            {
+                            }
+
+                            over "Apple"
+                            {
+                            }
+
+                            over "Black"
+                            {
+                            }
+
+                            over "Gamboge"
+                            {
+                            }
+
+                            over "Gray"
+                            {
+                            }
+
+                            over "Gray_Nurse"
+                            {
+                            }
+
+                            over "La_Palma"
+                            {
+                            }
+
+                            over "Matisse"
+                            {
+                            }
+
+                            over "Milano_Red"
+                            {
+                            }
+
+                            over "Rangoon_Green"
+                            {
+                            }
+
+                            over "Shark"
+                            {
+                            }
+
+                            over "Silver"
+                            {
+                            }
+
+                            over "Spring_Wood"
+                            {
+                            }
+
+                            over "Star_Dust"
+                            {
+                            }
+
+                            over "Tapa"
+                            {
+                            }
+
+                            over "Tory_Blue"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "box_1"
+                {
+                }
+            }
+
+            over "box_1"
+            {
+            }
+
+            over "front_left_holder"
+            {
+                over "box"
+                {
+                }
+
+                over "box_1"
+                {
+                }
+
+                over "front_left_wheel"
+                {
+                    over "cylinder"
+                    {
+                    }
+
+                    over "cylinder_1"
+                    {
+                    }
+                }
+            }
+
+            over "front_right_holder"
+            {
+                over "box"
+                {
+                }
+
+                over "box_1"
+                {
+                }
+
+                over "front_right_wheel"
+                {
+                    over "cylinder"
+                    {
+                    }
+
+                    over "cylinder_1"
+                    {
+                    }
+                }
+            }
+
+            over "rear_left_wheel"
+            {
+                over "cylinder"
+                {
+                }
+
+                over "cylinder_1"
+                {
+                }
+            }
+
+            over "rear_right_wheel"
+            {
+                over "cylinder"
+                {
+                }
+
+                over "cylinder_1"
+                {
+                }
             }
         }
     }
@@ -315,6 +2337,22 @@ over "jetracer"
         }
 
         over "Xform"
+        {
+        }
+
+        over "isaac_read_lidar_point_cloud_node"
+        {
+        }
+
+        over "ros2_publish_point_cloud"
+        {
+        }
+
+        over "isaac_read_simulation_time"
+        {
+        }
+
+        over "ros2_publish_clock"
         {
         }
     }
@@ -387,6 +2425,10 @@ over "jetracer"
         over "IsaacComputeTransformTree"
         {
         }
+
+        over "ros2_publish_joint_state"
+        {
+        }
     }
 
     over "GroundPlane"
@@ -410,6 +2452,114 @@ over "Render"
             over "omni_kit_widget_viewport_ViewportTexture_0"
             {
             }
+
+            over "omni_kit_widget_viewport_ViewportTexture_1"
+            {
+            }
+
+            over "Replicator"
+            {
+            }
+
+            over "Replicator_01"
+            {
+            }
+
+            over "Replicator_02"
+            {
+            }
+
+            over "Replicator_03"
+            {
+            }
+
+            over "Replicator_04"
+            {
+            }
+
+            over "Replicator_05"
+            {
+            }
+
+            over "Replicator_06"
+            {
+            }
+
+            over "Replicator_07"
+            {
+            }
+
+            over "Replicator_08"
+            {
+            }
+
+            over "Replicator_09"
+            {
+            }
+
+            over "Replicator_10"
+            {
+            }
+
+            over "Replicator_11"
+            {
+            }
+
+            over "Replicator_12"
+            {
+            }
+
+            over "Replicator_13"
+            {
+            }
+
+            over "Replicator_14"
+            {
+            }
+
+            over "Replicator_15"
+            {
+            }
+
+            over "Replicator_16"
+            {
+            }
+
+            over "Replicator_17"
+            {
+            }
+
+            over "Replicator_18"
+            {
+            }
+
+            over "Replicator_19"
+            {
+            }
+
+            over "Replicator_20"
+            {
+            }
+
+            over "Replicator_21"
+            {
+            }
+
+            over "Replicator_22"
+            {
+            }
+
+            over "Replicator_23"
+            {
+            }
+
+            over "Replicator_24"
+            {
+            }
+
+            over "Replicator_25"
+            {
+            }
         }
     }
 
@@ -427,5 +2577,5159 @@ over "Render"
 
 over "PhysicsScene"
 {
+}
+
+over "Office1"
+{
+    over "node_0_027"
+    {
+        over "node_0_051"
+        {
+        }
+    }
+
+    over "_materials"
+    {
+        over "Material_012"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+
+            over "Image_Texture_002"
+            {
+            }
+
+            over "Image_Texture_001"
+            {
+            }
+
+            over "Image_Texture_003"
+            {
+            }
+        }
+
+        over "Material_008"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+
+            over "Image_Texture_002"
+            {
+            }
+
+            over "Image_Texture_001"
+            {
+            }
+
+            over "Image_Texture_003"
+            {
+            }
+        }
+
+        over "Material_005"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+        }
+
+        over "Material_006"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+
+            over "Image_Texture_002"
+            {
+            }
+
+            over "Image_Texture_001"
+            {
+            }
+
+            over "Image_Texture_003"
+            {
+            }
+        }
+
+        over "Material_010"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+        }
+
+        over "Material_011"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+
+            over "Image_Texture_002"
+            {
+            }
+
+            over "Image_Texture_001"
+            {
+            }
+
+            over "Image_Texture_003"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+        }
+
+        over "Material_009"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+
+            over "Image_Texture_002"
+            {
+            }
+
+            over "Image_Texture_001"
+            {
+            }
+
+            over "Image_Texture_003"
+            {
+            }
+        }
+
+        over "Material_003"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+        }
+
+        over "Material_004"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+
+            over "Image_Texture_002"
+            {
+            }
+
+            over "Image_Texture_001"
+            {
+            }
+
+            over "Image_Texture_003"
+            {
+            }
+        }
+
+        over "Material_002"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+
+            over "Image_Texture_002"
+            {
+            }
+
+            over "Image_Texture_001"
+            {
+            }
+
+            over "Image_Texture_003"
+            {
+            }
+        }
+
+        over "Material_007"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+
+            over "Image_Texture_002"
+            {
+            }
+
+            over "Image_Texture_001"
+            {
+            }
+
+            over "Image_Texture_003"
+            {
+            }
+        }
+
+        over "Material_014"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+
+            over "Image_Texture_002"
+            {
+            }
+
+            over "Image_Texture_001"
+            {
+            }
+
+            over "Image_Texture_003"
+            {
+            }
+        }
+
+        over "Material_013"
+        {
+            over "Principled_BSDF"
+            {
+            }
+
+            over "Image_Texture"
+            {
+            }
+
+            over "uvmap"
+            {
+            }
+        }
+    }
+
+    over "Printer"
+    {
+        over "node_0_047"
+        {
+        }
+    }
+
+    over "Table05"
+    {
+        over "Cube_032"
+        {
+            over "Material_005"
+            {
+            }
+
+            over "Material_006"
+            {
+            }
+
+            over "Material_010"
+            {
+            }
+
+            over "Material_011"
+            {
+            }
+        }
+    }
+
+    over "Table02"
+    {
+        over "Cube_024"
+        {
+            over "Material_005"
+            {
+            }
+
+            over "Material_006"
+            {
+            }
+
+            over "Material_010"
+            {
+            }
+
+            over "Material_011"
+            {
+            }
+        }
+    }
+
+    over "node_0"
+    {
+        over "node_0_048"
+        {
+        }
+    }
+
+    over "Plane"
+    {
+        over "Plane"
+        {
+        }
+    }
+
+    over "Point"
+    {
+        over "Point_001"
+        {
+        }
+    }
+
+    over "node_0_017"
+    {
+        over "node_0_035"
+        {
+        }
+    }
+
+    over "Chair06"
+    {
+        over "node_0_041"
+        {
+        }
+    }
+
+    over "Chair08"
+    {
+        over "node_0_036"
+        {
+        }
+    }
+
+    over "Cube_004"
+    {
+        over "Cube_008"
+        {
+        }
+    }
+
+    over "node_0_004"
+    {
+        over "node_0_009"
+        {
+        }
+    }
+
+    over "node_0_011"
+    {
+        over "node_0_027"
+        {
+        }
+    }
+
+    over "Table08"
+    {
+        over "Cube_027"
+        {
+            over "Material_005"
+            {
+            }
+
+            over "Material_006"
+            {
+            }
+
+            over "Material_010"
+            {
+            }
+
+            over "Material_011"
+            {
+            }
+        }
+    }
+
+    over "node_0_003"
+    {
+        over "node_0_008"
+        {
+        }
+    }
+
+    over "Table04"
+    {
+        over "Cube_021"
+        {
+            over "Material_005"
+            {
+            }
+
+            over "Material_006"
+            {
+            }
+
+            over "Material_010"
+            {
+            }
+
+            over "Material_011"
+            {
+            }
+        }
+    }
+
+    over "node_0_001"
+    {
+        over "node_0_006"
+        {
+        }
+    }
+
+    over "Table07"
+    {
+        over "Cube_029"
+        {
+            over "Material_005"
+            {
+            }
+
+            over "Material_006"
+            {
+            }
+
+            over "Material_010"
+            {
+            }
+
+            over "Material_011"
+            {
+            }
+        }
+    }
+
+    over "node_0_006"
+    {
+        over "node_0_049"
+        {
+        }
+    }
+
+    over "Chair01"
+    {
+        over "node_0_030"
+        {
+        }
+    }
+
+    over "Cube_003"
+    {
+        over "Cube_007"
+        {
+        }
+    }
+
+    over "стены"
+    {
+        over "Cube_001"
+        {
+        }
+    }
+
+    over "Table01"
+    {
+        over "Cube_026"
+        {
+            over "Material_005"
+            {
+            }
+
+            over "Material_006"
+            {
+            }
+
+            over "Material_010"
+            {
+            }
+
+            over "Material_011"
+            {
+            }
+        }
+    }
+
+    over "Chair04"
+    {
+        over "node_0_022"
+        {
+        }
+    }
+
+    over "node_0_005"
+    {
+        over "node_0_002"
+        {
+        }
+    }
+
+    over "node_0_007"
+    {
+        over "node_0_012"
+        {
+        }
+    }
+
+    over "node_0_002"
+    {
+        over "node_0_001"
+        {
+        }
+    }
+
+    over "node_0_009"
+    {
+        over "node_0_003"
+        {
+        }
+    }
+
+    over "node_0_008"
+    {
+        over "node_0_013"
+        {
+        }
+    }
+
+    over "node_0_010"
+    {
+        over "node_0_004"
+        {
+        }
+    }
+
+    over "node_0_021"
+    {
+        over "node_0_039"
+        {
+        }
+    }
+
+    over "Table03"
+    {
+        over "Cube_023"
+        {
+            over "Material_005"
+            {
+            }
+
+            over "Material_006"
+            {
+            }
+
+            over "Material_010"
+            {
+            }
+
+            over "Material_011"
+            {
+            }
+        }
+    }
+
+    over "Chair07"
+    {
+        over "node_0_038"
+        {
+        }
+    }
+
+    over "Chair05"
+    {
+        over "node_0_042"
+        {
+        }
+    }
+
+    over "Chair03"
+    {
+        over "node_0_026"
+        {
+        }
+    }
+
+    over "node_0_028"
+    {
+        over "node_0_046"
+        {
+        }
+    }
+
+    over "Light"
+    {
+        over "Light"
+        {
+        }
+    }
+
+    over "Chair02"
+    {
+        over "node_0_028"
+        {
+        }
+    }
+
+    over "Table06"
+    {
+        over "Cube_030"
+        {
+            over "Material_005"
+            {
+            }
+
+            over "Material_006"
+            {
+            }
+
+            over "Material_010"
+            {
+            }
+
+            over "Material_011"
+            {
+            }
+        }
+    }
+
+    over "Camera"
+    {
+        over "Camera"
+        {
+        }
+    }
+
+    over "Door"
+    {
+        over "Cube_002"
+        {
+        }
+    }
+
+    over "node_0_016"
+    {
+        over "node_0_050"
+        {
+        }
+    }
+
+    over "env_light"
+    {
+    }
+}
+
+over "office_plant"
+{
+    over "Looks"
+    {
+        over "plant1"
+        {
+            over "plant1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface1"
+        {
+            over "aiStandardSurface1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface3"
+        {
+            over "aiStandardSurface3"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "e143bd7868104ddb835e3acfb9299f0c_fbx"
+    {
+        over "RootNode"
+        {
+            over "Snow_Plant"
+            {
+                over "Plant"
+                {
+                    over "Sprout_12"
+                    {
+                        over "Sprout_12_plant1_0"
+                        {
+                            over "Sprout_12_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_11"
+                    {
+                        over "Sprout_11_plant1_0"
+                        {
+                            over "Sprout_11_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_10"
+                    {
+                        over "Sprout_10_plant1_0"
+                        {
+                            over "Sprout_10_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_9"
+                    {
+                        over "Sprout_9_plant1_0"
+                        {
+                            over "Sprout_9_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_8"
+                    {
+                        over "Sprout_8_plant1_0"
+                        {
+                            over "Sprout_8_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_7"
+                    {
+                        over "Sprout_7_plant1_0"
+                        {
+                            over "Sprout_7_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_6"
+                    {
+                        over "Sprout_6_plant1_0"
+                        {
+                            over "Sprout_6_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_5"
+                    {
+                        over "Sprout_5_plant1_0"
+                        {
+                            over "Sprout_5_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_4"
+                    {
+                        over "Sprout_4_plant1_0"
+                        {
+                            over "Sprout_4_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_3"
+                    {
+                        over "Sprout_3_plant1_0"
+                        {
+                            over "Sprout_3_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_2"
+                    {
+                        over "Sprout_2_plant1_0"
+                        {
+                            over "Sprout_2_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_1"
+                    {
+                        over "Sprout_1_plant1_0"
+                        {
+                            over "Sprout_1_plant1_0"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "PlantDirt"
+                {
+                    over "PlantDirt_aiStandardSurface1_0"
+                    {
+                        over "PlantDirt_aiStandardSurface1_0"
+                        {
+                        }
+                    }
+                }
+
+                over "PlantPod"
+                {
+                    over "PlantPod_aiStandardSurface3_0"
+                    {
+                        over "PlantPod_aiStandardSurface3_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "office_plant_01"
+{
+    over "Looks"
+    {
+        over "plant1"
+        {
+            over "plant1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface1"
+        {
+            over "aiStandardSurface1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface3"
+        {
+            over "aiStandardSurface3"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "e143bd7868104ddb835e3acfb9299f0c_fbx"
+    {
+        over "RootNode"
+        {
+            over "Snow_Plant"
+            {
+                over "Plant"
+                {
+                    over "Sprout_12"
+                    {
+                        over "Sprout_12_plant1_0"
+                        {
+                            over "Sprout_12_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_11"
+                    {
+                        over "Sprout_11_plant1_0"
+                        {
+                            over "Sprout_11_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_10"
+                    {
+                        over "Sprout_10_plant1_0"
+                        {
+                            over "Sprout_10_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_9"
+                    {
+                        over "Sprout_9_plant1_0"
+                        {
+                            over "Sprout_9_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_8"
+                    {
+                        over "Sprout_8_plant1_0"
+                        {
+                            over "Sprout_8_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_7"
+                    {
+                        over "Sprout_7_plant1_0"
+                        {
+                            over "Sprout_7_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_6"
+                    {
+                        over "Sprout_6_plant1_0"
+                        {
+                            over "Sprout_6_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_5"
+                    {
+                        over "Sprout_5_plant1_0"
+                        {
+                            over "Sprout_5_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_4"
+                    {
+                        over "Sprout_4_plant1_0"
+                        {
+                            over "Sprout_4_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_3"
+                    {
+                        over "Sprout_3_plant1_0"
+                        {
+                            over "Sprout_3_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_2"
+                    {
+                        over "Sprout_2_plant1_0"
+                        {
+                            over "Sprout_2_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_1"
+                    {
+                        over "Sprout_1_plant1_0"
+                        {
+                            over "Sprout_1_plant1_0"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "PlantDirt"
+                {
+                    over "PlantDirt_aiStandardSurface1_0"
+                    {
+                        over "PlantDirt_aiStandardSurface1_0"
+                        {
+                        }
+                    }
+                }
+
+                over "PlantPod"
+                {
+                    over "PlantPod_aiStandardSurface3_0"
+                    {
+                        over "PlantPod_aiStandardSurface3_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "office_plant_02"
+{
+    over "Looks"
+    {
+        over "plant1"
+        {
+            over "plant1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface1"
+        {
+            over "aiStandardSurface1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface3"
+        {
+            over "aiStandardSurface3"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "e143bd7868104ddb835e3acfb9299f0c_fbx"
+    {
+        over "RootNode"
+        {
+            over "Snow_Plant"
+            {
+                over "Plant"
+                {
+                    over "Sprout_12"
+                    {
+                        over "Sprout_12_plant1_0"
+                        {
+                            over "Sprout_12_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_11"
+                    {
+                        over "Sprout_11_plant1_0"
+                        {
+                            over "Sprout_11_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_10"
+                    {
+                        over "Sprout_10_plant1_0"
+                        {
+                            over "Sprout_10_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_9"
+                    {
+                        over "Sprout_9_plant1_0"
+                        {
+                            over "Sprout_9_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_8"
+                    {
+                        over "Sprout_8_plant1_0"
+                        {
+                            over "Sprout_8_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_7"
+                    {
+                        over "Sprout_7_plant1_0"
+                        {
+                            over "Sprout_7_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_6"
+                    {
+                        over "Sprout_6_plant1_0"
+                        {
+                            over "Sprout_6_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_5"
+                    {
+                        over "Sprout_5_plant1_0"
+                        {
+                            over "Sprout_5_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_4"
+                    {
+                        over "Sprout_4_plant1_0"
+                        {
+                            over "Sprout_4_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_3"
+                    {
+                        over "Sprout_3_plant1_0"
+                        {
+                            over "Sprout_3_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_2"
+                    {
+                        over "Sprout_2_plant1_0"
+                        {
+                            over "Sprout_2_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_1"
+                    {
+                        over "Sprout_1_plant1_0"
+                        {
+                            over "Sprout_1_plant1_0"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "PlantDirt"
+                {
+                    over "PlantDirt_aiStandardSurface1_0"
+                    {
+                        over "PlantDirt_aiStandardSurface1_0"
+                        {
+                        }
+                    }
+                }
+
+                over "PlantPod"
+                {
+                    over "PlantPod_aiStandardSurface3_0"
+                    {
+                        over "PlantPod_aiStandardSurface3_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "office_plant_03"
+{
+    over "Looks"
+    {
+        over "plant1"
+        {
+            over "plant1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface1"
+        {
+            over "aiStandardSurface1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface3"
+        {
+            over "aiStandardSurface3"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "e143bd7868104ddb835e3acfb9299f0c_fbx"
+    {
+        over "RootNode"
+        {
+            over "Snow_Plant"
+            {
+                over "Plant"
+                {
+                    over "Sprout_12"
+                    {
+                        over "Sprout_12_plant1_0"
+                        {
+                            over "Sprout_12_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_11"
+                    {
+                        over "Sprout_11_plant1_0"
+                        {
+                            over "Sprout_11_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_10"
+                    {
+                        over "Sprout_10_plant1_0"
+                        {
+                            over "Sprout_10_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_9"
+                    {
+                        over "Sprout_9_plant1_0"
+                        {
+                            over "Sprout_9_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_8"
+                    {
+                        over "Sprout_8_plant1_0"
+                        {
+                            over "Sprout_8_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_7"
+                    {
+                        over "Sprout_7_plant1_0"
+                        {
+                            over "Sprout_7_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_6"
+                    {
+                        over "Sprout_6_plant1_0"
+                        {
+                            over "Sprout_6_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_5"
+                    {
+                        over "Sprout_5_plant1_0"
+                        {
+                            over "Sprout_5_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_4"
+                    {
+                        over "Sprout_4_plant1_0"
+                        {
+                            over "Sprout_4_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_3"
+                    {
+                        over "Sprout_3_plant1_0"
+                        {
+                            over "Sprout_3_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_2"
+                    {
+                        over "Sprout_2_plant1_0"
+                        {
+                            over "Sprout_2_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_1"
+                    {
+                        over "Sprout_1_plant1_0"
+                        {
+                            over "Sprout_1_plant1_0"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "PlantDirt"
+                {
+                    over "PlantDirt_aiStandardSurface1_0"
+                    {
+                        over "PlantDirt_aiStandardSurface1_0"
+                        {
+                        }
+                    }
+                }
+
+                over "PlantPod"
+                {
+                    over "PlantPod_aiStandardSurface3_0"
+                    {
+                        over "PlantPod_aiStandardSurface3_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "office_plant_04"
+{
+    over "Looks"
+    {
+        over "plant1"
+        {
+            over "plant1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface1"
+        {
+            over "aiStandardSurface1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface3"
+        {
+            over "aiStandardSurface3"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "e143bd7868104ddb835e3acfb9299f0c_fbx"
+    {
+        over "RootNode"
+        {
+            over "Snow_Plant"
+            {
+                over "Plant"
+                {
+                    over "Sprout_12"
+                    {
+                        over "Sprout_12_plant1_0"
+                        {
+                            over "Sprout_12_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_11"
+                    {
+                        over "Sprout_11_plant1_0"
+                        {
+                            over "Sprout_11_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_10"
+                    {
+                        over "Sprout_10_plant1_0"
+                        {
+                            over "Sprout_10_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_9"
+                    {
+                        over "Sprout_9_plant1_0"
+                        {
+                            over "Sprout_9_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_8"
+                    {
+                        over "Sprout_8_plant1_0"
+                        {
+                            over "Sprout_8_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_7"
+                    {
+                        over "Sprout_7_plant1_0"
+                        {
+                            over "Sprout_7_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_6"
+                    {
+                        over "Sprout_6_plant1_0"
+                        {
+                            over "Sprout_6_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_5"
+                    {
+                        over "Sprout_5_plant1_0"
+                        {
+                            over "Sprout_5_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_4"
+                    {
+                        over "Sprout_4_plant1_0"
+                        {
+                            over "Sprout_4_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_3"
+                    {
+                        over "Sprout_3_plant1_0"
+                        {
+                            over "Sprout_3_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_2"
+                    {
+                        over "Sprout_2_plant1_0"
+                        {
+                            over "Sprout_2_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_1"
+                    {
+                        over "Sprout_1_plant1_0"
+                        {
+                            over "Sprout_1_plant1_0"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "PlantDirt"
+                {
+                    over "PlantDirt_aiStandardSurface1_0"
+                    {
+                        over "PlantDirt_aiStandardSurface1_0"
+                        {
+                        }
+                    }
+                }
+
+                over "PlantPod"
+                {
+                    over "PlantPod_aiStandardSurface3_0"
+                    {
+                        over "PlantPod_aiStandardSurface3_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "office_plant_05"
+{
+    over "Looks"
+    {
+        over "plant1"
+        {
+            over "plant1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface1"
+        {
+            over "aiStandardSurface1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface3"
+        {
+            over "aiStandardSurface3"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "e143bd7868104ddb835e3acfb9299f0c_fbx"
+    {
+        over "RootNode"
+        {
+            over "Snow_Plant"
+            {
+                over "Plant"
+                {
+                    over "Sprout_12"
+                    {
+                        over "Sprout_12_plant1_0"
+                        {
+                            over "Sprout_12_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_11"
+                    {
+                        over "Sprout_11_plant1_0"
+                        {
+                            over "Sprout_11_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_10"
+                    {
+                        over "Sprout_10_plant1_0"
+                        {
+                            over "Sprout_10_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_9"
+                    {
+                        over "Sprout_9_plant1_0"
+                        {
+                            over "Sprout_9_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_8"
+                    {
+                        over "Sprout_8_plant1_0"
+                        {
+                            over "Sprout_8_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_7"
+                    {
+                        over "Sprout_7_plant1_0"
+                        {
+                            over "Sprout_7_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_6"
+                    {
+                        over "Sprout_6_plant1_0"
+                        {
+                            over "Sprout_6_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_5"
+                    {
+                        over "Sprout_5_plant1_0"
+                        {
+                            over "Sprout_5_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_4"
+                    {
+                        over "Sprout_4_plant1_0"
+                        {
+                            over "Sprout_4_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_3"
+                    {
+                        over "Sprout_3_plant1_0"
+                        {
+                            over "Sprout_3_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_2"
+                    {
+                        over "Sprout_2_plant1_0"
+                        {
+                            over "Sprout_2_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_1"
+                    {
+                        over "Sprout_1_plant1_0"
+                        {
+                            over "Sprout_1_plant1_0"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "PlantDirt"
+                {
+                    over "PlantDirt_aiStandardSurface1_0"
+                    {
+                        over "PlantDirt_aiStandardSurface1_0"
+                        {
+                        }
+                    }
+                }
+
+                over "PlantPod"
+                {
+                    over "PlantPod_aiStandardSurface3_0"
+                    {
+                        over "PlantPod_aiStandardSurface3_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "office_plant_06"
+{
+    over "Looks"
+    {
+        over "plant1"
+        {
+            over "plant1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface1"
+        {
+            over "aiStandardSurface1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface3"
+        {
+            over "aiStandardSurface3"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "e143bd7868104ddb835e3acfb9299f0c_fbx"
+    {
+        over "RootNode"
+        {
+            over "Snow_Plant"
+            {
+                over "Plant"
+                {
+                    over "Sprout_12"
+                    {
+                        over "Sprout_12_plant1_0"
+                        {
+                            over "Sprout_12_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_11"
+                    {
+                        over "Sprout_11_plant1_0"
+                        {
+                            over "Sprout_11_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_10"
+                    {
+                        over "Sprout_10_plant1_0"
+                        {
+                            over "Sprout_10_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_9"
+                    {
+                        over "Sprout_9_plant1_0"
+                        {
+                            over "Sprout_9_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_8"
+                    {
+                        over "Sprout_8_plant1_0"
+                        {
+                            over "Sprout_8_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_7"
+                    {
+                        over "Sprout_7_plant1_0"
+                        {
+                            over "Sprout_7_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_6"
+                    {
+                        over "Sprout_6_plant1_0"
+                        {
+                            over "Sprout_6_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_5"
+                    {
+                        over "Sprout_5_plant1_0"
+                        {
+                            over "Sprout_5_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_4"
+                    {
+                        over "Sprout_4_plant1_0"
+                        {
+                            over "Sprout_4_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_3"
+                    {
+                        over "Sprout_3_plant1_0"
+                        {
+                            over "Sprout_3_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_2"
+                    {
+                        over "Sprout_2_plant1_0"
+                        {
+                            over "Sprout_2_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_1"
+                    {
+                        over "Sprout_1_plant1_0"
+                        {
+                            over "Sprout_1_plant1_0"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "PlantDirt"
+                {
+                    over "PlantDirt_aiStandardSurface1_0"
+                    {
+                        over "PlantDirt_aiStandardSurface1_0"
+                        {
+                        }
+                    }
+                }
+
+                over "PlantPod"
+                {
+                    over "PlantPod_aiStandardSurface3_0"
+                    {
+                        over "PlantPod_aiStandardSurface3_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "office_plant_07"
+{
+    over "Looks"
+    {
+        over "plant1"
+        {
+            over "plant1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface1"
+        {
+            over "aiStandardSurface1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface3"
+        {
+            over "aiStandardSurface3"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "e143bd7868104ddb835e3acfb9299f0c_fbx"
+    {
+        over "RootNode"
+        {
+            over "Snow_Plant"
+            {
+                over "Plant"
+                {
+                    over "Sprout_12"
+                    {
+                        over "Sprout_12_plant1_0"
+                        {
+                            over "Sprout_12_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_11"
+                    {
+                        over "Sprout_11_plant1_0"
+                        {
+                            over "Sprout_11_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_10"
+                    {
+                        over "Sprout_10_plant1_0"
+                        {
+                            over "Sprout_10_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_9"
+                    {
+                        over "Sprout_9_plant1_0"
+                        {
+                            over "Sprout_9_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_8"
+                    {
+                        over "Sprout_8_plant1_0"
+                        {
+                            over "Sprout_8_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_7"
+                    {
+                        over "Sprout_7_plant1_0"
+                        {
+                            over "Sprout_7_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_6"
+                    {
+                        over "Sprout_6_plant1_0"
+                        {
+                            over "Sprout_6_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_5"
+                    {
+                        over "Sprout_5_plant1_0"
+                        {
+                            over "Sprout_5_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_4"
+                    {
+                        over "Sprout_4_plant1_0"
+                        {
+                            over "Sprout_4_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_3"
+                    {
+                        over "Sprout_3_plant1_0"
+                        {
+                            over "Sprout_3_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_2"
+                    {
+                        over "Sprout_2_plant1_0"
+                        {
+                            over "Sprout_2_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_1"
+                    {
+                        over "Sprout_1_plant1_0"
+                        {
+                            over "Sprout_1_plant1_0"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "PlantDirt"
+                {
+                    over "PlantDirt_aiStandardSurface1_0"
+                    {
+                        over "PlantDirt_aiStandardSurface1_0"
+                        {
+                        }
+                    }
+                }
+
+                over "PlantPod"
+                {
+                    over "PlantPod_aiStandardSurface3_0"
+                    {
+                        over "PlantPod_aiStandardSurface3_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "office_plant_08"
+{
+    over "Looks"
+    {
+        over "plant1"
+        {
+            over "plant1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface1"
+        {
+            over "aiStandardSurface1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface3"
+        {
+            over "aiStandardSurface3"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "e143bd7868104ddb835e3acfb9299f0c_fbx"
+    {
+        over "RootNode"
+        {
+            over "Snow_Plant"
+            {
+                over "Plant"
+                {
+                    over "Sprout_12"
+                    {
+                        over "Sprout_12_plant1_0"
+                        {
+                            over "Sprout_12_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_11"
+                    {
+                        over "Sprout_11_plant1_0"
+                        {
+                            over "Sprout_11_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_10"
+                    {
+                        over "Sprout_10_plant1_0"
+                        {
+                            over "Sprout_10_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_9"
+                    {
+                        over "Sprout_9_plant1_0"
+                        {
+                            over "Sprout_9_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_8"
+                    {
+                        over "Sprout_8_plant1_0"
+                        {
+                            over "Sprout_8_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_7"
+                    {
+                        over "Sprout_7_plant1_0"
+                        {
+                            over "Sprout_7_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_6"
+                    {
+                        over "Sprout_6_plant1_0"
+                        {
+                            over "Sprout_6_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_5"
+                    {
+                        over "Sprout_5_plant1_0"
+                        {
+                            over "Sprout_5_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_4"
+                    {
+                        over "Sprout_4_plant1_0"
+                        {
+                            over "Sprout_4_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_3"
+                    {
+                        over "Sprout_3_plant1_0"
+                        {
+                            over "Sprout_3_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_2"
+                    {
+                        over "Sprout_2_plant1_0"
+                        {
+                            over "Sprout_2_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_1"
+                    {
+                        over "Sprout_1_plant1_0"
+                        {
+                            over "Sprout_1_plant1_0"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "PlantDirt"
+                {
+                    over "PlantDirt_aiStandardSurface1_0"
+                    {
+                        over "PlantDirt_aiStandardSurface1_0"
+                        {
+                        }
+                    }
+                }
+
+                over "PlantPod"
+                {
+                    over "PlantPod_aiStandardSurface3_0"
+                    {
+                        over "PlantPod_aiStandardSurface3_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "office_plant_09"
+{
+    over "Looks"
+    {
+        over "plant1"
+        {
+            over "plant1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface1"
+        {
+            over "aiStandardSurface1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface3"
+        {
+            over "aiStandardSurface3"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "e143bd7868104ddb835e3acfb9299f0c_fbx"
+    {
+        over "RootNode"
+        {
+            over "Snow_Plant"
+            {
+                over "Plant"
+                {
+                    over "Sprout_12"
+                    {
+                        over "Sprout_12_plant1_0"
+                        {
+                            over "Sprout_12_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_11"
+                    {
+                        over "Sprout_11_plant1_0"
+                        {
+                            over "Sprout_11_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_10"
+                    {
+                        over "Sprout_10_plant1_0"
+                        {
+                            over "Sprout_10_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_9"
+                    {
+                        over "Sprout_9_plant1_0"
+                        {
+                            over "Sprout_9_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_8"
+                    {
+                        over "Sprout_8_plant1_0"
+                        {
+                            over "Sprout_8_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_7"
+                    {
+                        over "Sprout_7_plant1_0"
+                        {
+                            over "Sprout_7_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_6"
+                    {
+                        over "Sprout_6_plant1_0"
+                        {
+                            over "Sprout_6_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_5"
+                    {
+                        over "Sprout_5_plant1_0"
+                        {
+                            over "Sprout_5_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_4"
+                    {
+                        over "Sprout_4_plant1_0"
+                        {
+                            over "Sprout_4_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_3"
+                    {
+                        over "Sprout_3_plant1_0"
+                        {
+                            over "Sprout_3_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_2"
+                    {
+                        over "Sprout_2_plant1_0"
+                        {
+                            over "Sprout_2_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_1"
+                    {
+                        over "Sprout_1_plant1_0"
+                        {
+                            over "Sprout_1_plant1_0"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "PlantDirt"
+                {
+                    over "PlantDirt_aiStandardSurface1_0"
+                    {
+                        over "PlantDirt_aiStandardSurface1_0"
+                        {
+                        }
+                    }
+                }
+
+                over "PlantPod"
+                {
+                    over "PlantPod_aiStandardSurface3_0"
+                    {
+                        over "PlantPod_aiStandardSurface3_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "office_plant_10"
+{
+    over "Looks"
+    {
+        over "plant1"
+        {
+            over "plant1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface1"
+        {
+            over "aiStandardSurface1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface3"
+        {
+            over "aiStandardSurface3"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "e143bd7868104ddb835e3acfb9299f0c_fbx"
+    {
+        over "RootNode"
+        {
+            over "Snow_Plant"
+            {
+                over "Plant"
+                {
+                    over "Sprout_12"
+                    {
+                        over "Sprout_12_plant1_0"
+                        {
+                            over "Sprout_12_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_11"
+                    {
+                        over "Sprout_11_plant1_0"
+                        {
+                            over "Sprout_11_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_10"
+                    {
+                        over "Sprout_10_plant1_0"
+                        {
+                            over "Sprout_10_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_9"
+                    {
+                        over "Sprout_9_plant1_0"
+                        {
+                            over "Sprout_9_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_8"
+                    {
+                        over "Sprout_8_plant1_0"
+                        {
+                            over "Sprout_8_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_7"
+                    {
+                        over "Sprout_7_plant1_0"
+                        {
+                            over "Sprout_7_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_6"
+                    {
+                        over "Sprout_6_plant1_0"
+                        {
+                            over "Sprout_6_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_5"
+                    {
+                        over "Sprout_5_plant1_0"
+                        {
+                            over "Sprout_5_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_4"
+                    {
+                        over "Sprout_4_plant1_0"
+                        {
+                            over "Sprout_4_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_3"
+                    {
+                        over "Sprout_3_plant1_0"
+                        {
+                            over "Sprout_3_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_2"
+                    {
+                        over "Sprout_2_plant1_0"
+                        {
+                            over "Sprout_2_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_1"
+                    {
+                        over "Sprout_1_plant1_0"
+                        {
+                            over "Sprout_1_plant1_0"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "PlantDirt"
+                {
+                    over "PlantDirt_aiStandardSurface1_0"
+                    {
+                        over "PlantDirt_aiStandardSurface1_0"
+                        {
+                        }
+                    }
+                }
+
+                over "PlantPod"
+                {
+                    over "PlantPod_aiStandardSurface3_0"
+                    {
+                        over "PlantPod_aiStandardSurface3_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "office_plant_11"
+{
+    over "Looks"
+    {
+        over "plant1"
+        {
+            over "plant1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface1"
+        {
+            over "aiStandardSurface1"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "aiStandardSurface3"
+        {
+            over "aiStandardSurface3"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "e143bd7868104ddb835e3acfb9299f0c_fbx"
+    {
+        over "RootNode"
+        {
+            over "Snow_Plant"
+            {
+                over "Plant"
+                {
+                    over "Sprout_12"
+                    {
+                        over "Sprout_12_plant1_0"
+                        {
+                            over "Sprout_12_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_11"
+                    {
+                        over "Sprout_11_plant1_0"
+                        {
+                            over "Sprout_11_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_10"
+                    {
+                        over "Sprout_10_plant1_0"
+                        {
+                            over "Sprout_10_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_9"
+                    {
+                        over "Sprout_9_plant1_0"
+                        {
+                            over "Sprout_9_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_8"
+                    {
+                        over "Sprout_8_plant1_0"
+                        {
+                            over "Sprout_8_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_7"
+                    {
+                        over "Sprout_7_plant1_0"
+                        {
+                            over "Sprout_7_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_6"
+                    {
+                        over "Sprout_6_plant1_0"
+                        {
+                            over "Sprout_6_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_5"
+                    {
+                        over "Sprout_5_plant1_0"
+                        {
+                            over "Sprout_5_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_4"
+                    {
+                        over "Sprout_4_plant1_0"
+                        {
+                            over "Sprout_4_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_3"
+                    {
+                        over "Sprout_3_plant1_0"
+                        {
+                            over "Sprout_3_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_2"
+                    {
+                        over "Sprout_2_plant1_0"
+                        {
+                            over "Sprout_2_plant1_0"
+                            {
+                            }
+                        }
+                    }
+
+                    over "Sprout_1"
+                    {
+                        over "Sprout_1_plant1_0"
+                        {
+                            over "Sprout_1_plant1_0"
+                            {
+                            }
+                        }
+                    }
+                }
+
+                over "PlantDirt"
+                {
+                    over "PlantDirt_aiStandardSurface1_0"
+                    {
+                        over "PlantDirt_aiStandardSurface1_0"
+                        {
+                        }
+                    }
+                }
+
+                over "PlantPod"
+                {
+                    over "PlantPod_aiStandardSurface3_0"
+                    {
+                        over "PlantPod_aiStandardSurface3_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_01"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_02"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_03"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_04"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_05"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_06"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_07"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+
+                    over "Object_02"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_08"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_09"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_10"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_11"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_12"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_13"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "small_office_trash_can_14"
+{
+    over "Looks"
+    {
+        over "Material_032"
+        {
+            over "Material_032"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "Cube_017_2"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+            }
+
+            over "Sphere_3"
+            {
+                over "Object_6"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "file_cabinet"
+{
+    over "Looks"
+    {
+        over "Material"
+        {
+            over "Material"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+        }
+
+        over "Material_002"
+        {
+            over "Material_002"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+        }
+    }
+
+    over "cd375cdc657d40a389ca2362818f9880_fbx"
+    {
+        over "RootNode"
+        {
+            over "Cube"
+            {
+                over "Cube_Material_0"
+                {
+                    over "Cube_Material_0"
+                    {
+                    }
+
+                    over "Cube_Material_01"
+                    {
+                    }
+                }
+            }
+
+            over "Cube_001"
+            {
+                over "Cube_001_Material_001_0"
+                {
+                    over "Cube_001_Material_001_0"
+                    {
+                    }
+                }
+
+                over "Cube_002"
+                {
+                    over "Cube_002_Material_002_0"
+                    {
+                        over "Cube_002_Material_002_0"
+                        {
+                        }
+                    }
+                }
+            }
+
+            over "Cube_003"
+            {
+                over "Cube_003_Material_001_0"
+                {
+                    over "Cube_003_Material_001_0"
+                    {
+                    }
+                }
+
+                over "Cube_004"
+                {
+                    over "Cube_004_Material_002_0"
+                    {
+                        over "Cube_004_Material_002_0"
+                        {
+                        }
+                    }
+                }
+            }
+
+            over "Cube_006"
+            {
+                over "Cube_006_Material_002_0"
+                {
+                    over "Cube_006_Material_002_0"
+                    {
+                    }
+                }
+
+                over "Cube_005"
+                {
+                    over "Cube_005_Material_001_0"
+                    {
+                        over "Cube_005_Material_001_0"
+                        {
+                        }
+                    }
+                }
+            }
+
+            over "Cube_008"
+            {
+                over "Cube_008_Material_002_0"
+                {
+                    over "Cube_008_Material_002_0"
+                    {
+                    }
+                }
+
+                over "Cube_007"
+                {
+                    over "Cube_007_Material_001_0"
+                    {
+                        over "Cube_007_Material_001_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "filing_cabinet___green"
+{
+    over "Looks"
+    {
+        over "T_filing_cabinet_2"
+        {
+            over "T_filing_cabinet_2"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "node_7c7f200d51c4ab5809444d8f87e8822_fbx"
+    {
+        over "RootNode"
+        {
+            over "SM_filing_cabinet_2"
+            {
+                over "SM_filing_cabinet_2_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_6"
+            {
+                over "SM_filing_cabinet_2_draw_6_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_6_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_5"
+            {
+                over "SM_filing_cabinet_2_draw_5_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_5_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_2"
+            {
+                over "SM_filing_cabinet_2_draw_2_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_2_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_1"
+            {
+                over "SM_filing_cabinet_2_draw_1_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_1_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_3"
+            {
+                over "SM_filing_cabinet_2_draw_3_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_3_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_4"
+            {
+                over "SM_filing_cabinet_2_draw_4_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_4_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "filing_cabinet___green_01"
+{
+    over "Looks"
+    {
+        over "T_filing_cabinet_2"
+        {
+            over "T_filing_cabinet_2"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "node_7c7f200d51c4ab5809444d8f87e8822_fbx"
+    {
+        over "RootNode"
+        {
+            over "SM_filing_cabinet_2"
+            {
+                over "SM_filing_cabinet_2_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_6"
+            {
+                over "SM_filing_cabinet_2_draw_6_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_6_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_5"
+            {
+                over "SM_filing_cabinet_2_draw_5_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_5_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_2"
+            {
+                over "SM_filing_cabinet_2_draw_2_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_2_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_1"
+            {
+                over "SM_filing_cabinet_2_draw_1_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_1_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_3"
+            {
+                over "SM_filing_cabinet_2_draw_3_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_3_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_4"
+            {
+                over "SM_filing_cabinet_2_draw_4_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_4_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "filing_cabinet___green_02"
+{
+    over "Looks"
+    {
+        over "T_filing_cabinet_2"
+        {
+            over "T_filing_cabinet_2"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "node_7c7f200d51c4ab5809444d8f87e8822_fbx"
+    {
+        over "RootNode"
+        {
+            over "SM_filing_cabinet_2"
+            {
+                over "SM_filing_cabinet_2_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_6"
+            {
+                over "SM_filing_cabinet_2_draw_6_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_6_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_5"
+            {
+                over "SM_filing_cabinet_2_draw_5_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_5_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_2"
+            {
+                over "SM_filing_cabinet_2_draw_2_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_2_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_1"
+            {
+                over "SM_filing_cabinet_2_draw_1_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_1_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_3"
+            {
+                over "SM_filing_cabinet_2_draw_3_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_3_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_4"
+            {
+                over "SM_filing_cabinet_2_draw_4_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_4_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "filing_cabinet___green_03"
+{
+    over "Looks"
+    {
+        over "T_filing_cabinet_2"
+        {
+            over "T_filing_cabinet_2"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+    }
+
+    over "node_7c7f200d51c4ab5809444d8f87e8822_fbx"
+    {
+        over "RootNode"
+        {
+            over "SM_filing_cabinet_2"
+            {
+                over "SM_filing_cabinet_2_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_6"
+            {
+                over "SM_filing_cabinet_2_draw_6_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_6_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_5"
+            {
+                over "SM_filing_cabinet_2_draw_5_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_5_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_2"
+            {
+                over "SM_filing_cabinet_2_draw_2_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_2_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_1"
+            {
+                over "SM_filing_cabinet_2_draw_1_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_1_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_3"
+            {
+                over "SM_filing_cabinet_2_draw_3_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_3_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+
+            over "SM_filing_cabinet_2_draw_4"
+            {
+                over "SM_filing_cabinet_2_draw_4_T_filing_cabinet_2_0"
+                {
+                    over "SM_filing_cabinet_2_draw_4_T_filing_cabinet_2_0"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "modern_wooden_desk_with_drawer__3d_model"
+{
+    over "Looks"
+    {
+        over "Simple_wood"
+        {
+            over "Simple_wood"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Simple_wood_0"
+        {
+            over "Simple_wood_0"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_002"
+        {
+            over "Material_002"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "table_0"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+
+                over "Object_5"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+
+            over "table_001_1"
+            {
+                over "Object_7"
+                {
+                    over "Object_2"
+                    {
+                    }
+                }
+
+                over "Object_8"
+                {
+                    over "Object_3"
+                    {
+                    }
+                }
+            }
+
+            over "Cube_2"
+            {
+                over "Object_10"
+                {
+                    over "Object_4"
+                    {
+                    }
+                }
+            }
+
+            over "Cube_001_3"
+            {
+                over "Object_12"
+                {
+                    over "Object_5"
+                    {
+                    }
+                }
+            }
+
+            over "Cube_002_4"
+            {
+                over "Object_14"
+                {
+                    over "Object_6"
+                    {
+                    }
+                }
+            }
+
+            over "Cube_003_5"
+            {
+                over "Object_16"
+                {
+                    over "Object_7"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "modern_wooden_desk_with_drawer__3d_model_01"
+{
+    over "Looks"
+    {
+        over "Simple_wood"
+        {
+            over "Simple_wood"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Simple_wood_0"
+        {
+            over "Simple_wood_0"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+
+            over "metallicRoughnessTex"
+            {
+            }
+
+            over "normalTex"
+            {
+            }
+        }
+
+        over "Material_002"
+        {
+            over "Material_002"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+        }
+    }
+
+    over "root"
+    {
+        over "GLTF_SceneRootNode"
+        {
+            over "table_0"
+            {
+                over "Object_4"
+                {
+                    over "Object_0"
+                    {
+                    }
+                }
+
+                over "Object_5"
+                {
+                    over "Object_1"
+                    {
+                    }
+                }
+            }
+
+            over "table_001_1"
+            {
+                over "Object_7"
+                {
+                    over "Object_2"
+                    {
+                    }
+                }
+
+                over "Object_8"
+                {
+                    over "Object_3"
+                    {
+                    }
+                }
+            }
+
+            over "Cube_2"
+            {
+                over "Object_10"
+                {
+                    over "Object_4"
+                    {
+                    }
+                }
+            }
+
+            over "Cube_001_3"
+            {
+                over "Object_12"
+                {
+                    over "Object_5"
+                    {
+                    }
+                }
+            }
+
+            over "Cube_002_4"
+            {
+                over "Object_14"
+                {
+                    over "Object_6"
+                    {
+                    }
+                }
+            }
+
+            over "Cube_003_5"
+            {
+                over "Object_16"
+                {
+                    over "Object_7"
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+over "file_cabinet_01"
+{
+    over "Looks"
+    {
+        over "Material"
+        {
+            over "Material"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+        }
+
+        over "Material_001"
+        {
+            over "Material_001"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+        }
+
+        over "Material_002"
+        {
+            over "Material_002"
+            {
+            }
+
+            over "baseColorTex"
+            {
+            }
+        }
+    }
+
+    over "cd375cdc657d40a389ca2362818f9880_fbx"
+    {
+        over "RootNode"
+        {
+            over "Cube"
+            {
+                over "Cube_Material_0"
+                {
+                    over "Cube_Material_0"
+                    {
+                    }
+
+                    over "Cube_Material_01"
+                    {
+                    }
+                }
+            }
+
+            over "Cube_001"
+            {
+                over "Cube_001_Material_001_0"
+                {
+                    over "Cube_001_Material_001_0"
+                    {
+                    }
+                }
+
+                over "Cube_002"
+                {
+                    over "Cube_002_Material_002_0"
+                    {
+                        over "Cube_002_Material_002_0"
+                        {
+                        }
+                    }
+                }
+            }
+
+            over "Cube_003"
+            {
+                over "Cube_003_Material_001_0"
+                {
+                    over "Cube_003_Material_001_0"
+                    {
+                    }
+                }
+
+                over "Cube_004"
+                {
+                    over "Cube_004_Material_002_0"
+                    {
+                        over "Cube_004_Material_002_0"
+                        {
+                        }
+                    }
+                }
+            }
+
+            over "Cube_006"
+            {
+                over "Cube_006_Material_002_0"
+                {
+                    over "Cube_006_Material_002_0"
+                    {
+                    }
+                }
+
+                over "Cube_005"
+                {
+                    over "Cube_005_Material_001_0"
+                    {
+                        over "Cube_005_Material_001_0"
+                        {
+                        }
+                    }
+                }
+            }
+
+            over "Cube_008"
+            {
+                over "Cube_008_Material_002_0"
+                {
+                    over "Cube_008_Material_002_0"
+                    {
+                    }
+                }
+
+                over "Cube_007"
+                {
+                    over "Cube_007_Material_001_0"
+                    {
+                        over "Cube_007_Material_001_0"
+                        {
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 

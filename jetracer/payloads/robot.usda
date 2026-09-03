@@ -25,35 +25,11 @@ over "jetracer" (
 )
 {
     custom rel isaac:physics:robotJoints
-    prepend rel isaac:physics:robotJoints = [
-        </jetracer/Physics/front_left_base_holder>,
-        </jetracer/Physics/front_right_base_holder>,
-        </jetracer/Physics/rear_left_wheel_joint>,
-        </jetracer/Physics/rear_right_wheel_joint>,
-        </jetracer/Physics/root_joint>,
-        </jetracer/Physics/head_joint>,
-        </jetracer/Physics/camera_mount_joint>,
-        </jetracer/Physics/board_joint>,
-        </jetracer/Physics/front_left_wheel_holder>,
-        </jetracer/Physics/front_right_wheel_holder>,
-        </jetracer/Physics/camera_joint>,
-        </jetracer/Physics/lidar_joint>,
-    ]
+    prepend rel isaac:physics:robotJoints = </jetracer/Physics/base_inertial_joint>
     custom rel isaac:physics:robotLinks
     prepend rel isaac:physics:robotLinks = [
-        </jetracer/Geometry/base>,
-        </jetracer/Geometry/base/front_left_holder>,
-        </jetracer/Geometry/base/front_right_holder>,
-        </jetracer/Geometry/base/rear_left_wheel>,
-        </jetracer/Geometry/base/rear_right_wheel>,
-        </jetracer/Geometry/base/head>,
-        </jetracer/Geometry/base/camera_mount>,
-        </jetracer/Geometry/base/board>,
-        </jetracer/Geometry/base/front_left_holder/front_left_wheel>,
-        </jetracer/Geometry/base/front_right_holder/front_right_wheel>,
-        </jetracer/Geometry/base/camera_mount/camera>,
-        </jetracer/Geometry/base/board/lidar>,
-        </jetracer>,
+        </jetracer/Geometry/base_link>,
+        </jetracer/Geometry/base_link/base_inertial>,
     ]
 
     over "Physics"
@@ -129,6 +105,12 @@ over "jetracer" (
         )
         {
         }
+
+        over "base_inertial_joint" (
+            prepend apiSchemas = ["IsaacJointAPI"]
+        )
+        {
+        }
     }
 
     over "Geometry"
@@ -197,6 +179,17 @@ over "jetracer" (
                 )
                 {
                 }
+            }
+        }
+
+        over "base_link" (
+            prepend apiSchemas = ["IsaacLinkAPI"]
+        )
+        {
+            over "base_inertial" (
+                prepend apiSchemas = ["IsaacLinkAPI"]
+            )
+            {
             }
         }
     }

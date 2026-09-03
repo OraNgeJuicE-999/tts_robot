@@ -4,7 +4,7 @@
         string creator = "URDF USD Converter v0.1.0"
     }
     defaultPrim = "jetracer"
-    doc = """Generated from Composed Stage of root layer /tmp/tmp2yrd50i3/jetracer.usdc
+    doc = """Generated from Composed Stage of root layer /tmp/tmp_l_ku72l/jetracer.usdc
 
 
 Generated from Composed Stage of root layer /home/itri/tts_robot/usdex/jetracer.usdc
@@ -31,7 +31,7 @@ def Xform "jetracer" (
     kind = "component"
 )
 {
-    float3[] extentsHint = [(-0.115, -0.06251991, -0.035005964), (0.145, 0.065, 0.1425), (3.4028235e38, 3.4028235e38, 3.4028235e38), (-3.4028235e38, -3.4028235e38, -3.4028235e38), (3.4028235e38, 3.4028235e38, 3.4028235e38), (-3.4028235e38, -3.4028235e38, -3.4028235e38), (-0.115, -0.06251991, -0.035005964), (0.145, 0.06251991, 0.1425)]
+    float3[] extentsHint = [(-0.115, -0.06251991, -0.035005964), (0.145, 0.065, 0.323649), (3.4028235e38, 3.4028235e38, 3.4028235e38), (-3.4028235e38, -3.4028235e38, -3.4028235e38), (3.4028235e38, 3.4028235e38, 3.4028235e38), (-3.4028235e38, -3.4028235e38, -3.4028235e38), (-0.115, -0.06251991, -0.035005964), (0.145, 0.06251991, 0.323649)]
 
     def Scope "Materials"
     {
@@ -66,7 +66,7 @@ def Xform "jetracer" (
 
     def Scope "Geometry"
     {
-        def Xform "base"
+        def Xform "base_link"
         {
             def Cube "box" (
                 prepend apiSchemas = ["MaterialBindingAPI"]
@@ -120,7 +120,7 @@ def Xform "jetracer" (
             {
                 quatf xformOp:orient = (1, 0, 0, 0)
                 float3 xformOp:scale = (1, 1, 1)
-                double3 xformOp:translate = (0.085, 0, 0.06)
+                double3 xformOp:translate = (0.085, 0, 0.10233622380397495)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
                 def Cube "box" (
@@ -131,14 +131,14 @@ def Xform "jetracer" (
                     rel material:binding = </jetracer/Materials/mount_red>
                     double size = 1
                     quatf xformOp:orient = (1, 0, 0, 0)
-                    float3 xformOp:scale = (0.01, 0.01, 0.1)
+                    float3 xformOp:scale = (0.01, 0.01, 0.25)
                     double3 xformOp:translate = (0, 0, 0)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
                 }
 
                 def Xform "camera"
                 {
-                    quatf xformOp:orient = (0.98481345, 0, 0.17361586, 0)
+                    quatf xformOp:orient = (0.70710546, 0, 0.7071081, 0)
                     float3 xformOp:scale = (1, 1, 1)
                     double3 xformOp:translate = (0, 0, 0.06)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
@@ -148,8 +148,8 @@ def Xform "jetracer" (
                     )
                     {
                         uniform token axis = "Z"
-                        float3[] extent = [(-0.0075, -0.0075, -0.01), (0.0075, 0.0075, 0.01)]
-                        double height = 0.02
+                        float3[] extent = [(-0.0075, -0.0075, -0.003), (0.0075, 0.0075, 0.003)]
+                        double height = 0.006
                         rel material:binding = </jetracer/Materials/camera_black>
                         double radius = 0.0075
                         quatf xformOp:orient = (1, 0, 0, 0)
@@ -164,8 +164,8 @@ def Xform "jetracer" (
                     )
                     {
                         uniform token axis = "Z"
-                        float3[] extent = [(-0.0075, -0.0075, -0.01), (0.0075, 0.0075, 0.01)]
-                        double height = 0.02
+                        float3[] extent = [(-0.0075, -0.0075, -0.003), (0.0075, 0.0075, 0.003)]
+                        double height = 0.006
                         uniform token purpose = "guide"
                         double radius = 0.0075
                         quatf xformOp:orient = (1, 0, 0, 0)
@@ -184,7 +184,7 @@ def Xform "jetracer" (
                     uniform token purpose = "guide"
                     double size = 1
                     quatf xformOp:orient = (1, 0, 0, 0)
-                    float3 xformOp:scale = (0.01, 0.01, 0.1)
+                    float3 xformOp:scale = (0.01, 0.01, 0.25)
                     double3 xformOp:translate = (0, 0, 0)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
                 }
@@ -194,7 +194,7 @@ def Xform "jetracer" (
             {
                 quatf xformOp:orient = (1, 0, 0, 0)
                 float3 xformOp:scale = (1, 1, 1)
-                double3 xformOp:translate = (-0.0375, 0, 0.0475)
+                double3 xformOp:translate = (-0.0375, 0, 0.14614899660969316)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
                 def Cube "box" (
@@ -205,7 +205,7 @@ def Xform "jetracer" (
                     rel material:binding = </jetracer/Materials/black>
                     double size = 1
                     quatf xformOp:orient = (1, 0, 0, 0)
-                    float3 xformOp:scale = (0.145, 0.1, 0.11)
+                    float3 xformOp:scale = (0.145, 0.1, 0.275)
                     double3 xformOp:translate = (0, 0, 0)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
                 }
@@ -214,7 +214,7 @@ def Xform "jetracer" (
                 {
                     quatf xformOp:orient = (1, 0, 0, 0)
                     float3 xformOp:scale = (1, 1, 1)
-                    double3 xformOp:translate = (0, 0, 0.075)
+                    double3 xformOp:translate = (0, 0, 0.1575)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
 
                     def Cylinder "cylinder" (
@@ -258,7 +258,7 @@ def Xform "jetracer" (
                     uniform token purpose = "guide"
                     double size = 1
                     quatf xformOp:orient = (1, 0, 0, 0)
-                    float3 xformOp:scale = (0.145, 0.1, 0.11)
+                    float3 xformOp:scale = (0.145, 0.1, 0.275)
                     double3 xformOp:translate = (0, 0, 0)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
                 }
@@ -274,6 +274,14 @@ def Xform "jetracer" (
                 double size = 1
                 quatf xformOp:orient = (1, 0, 0, 0)
                 float3 xformOp:scale = (0.22, 0.11, 0.02)
+                double3 xformOp:translate = (0, 0, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+            }
+
+            def Xform "base_inertial"
+            {
+                quatf xformOp:orient = (1, 0, 0, 0)
+                float3 xformOp:scale = (1, 1, 1)
                 double3 xformOp:translate = (0, 0, 0)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
             }
@@ -312,7 +320,7 @@ def Xform "jetracer" (
 
                 def Xform "front_left_wheel"
                 {
-                    quatf xformOp:orient = (0.7073883, 0.7068252, 0, 0)
+                    quatf xformOp:orient = (0.7073883, -0.7068252, 0, 0)
                     float3 xformOp:scale = (1, 1, 1)
                     double3 xformOp:translate = (0, 0, 0)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
@@ -381,7 +389,7 @@ def Xform "jetracer" (
 
                 def Xform "front_right_wheel"
                 {
-                    quatf xformOp:orient = (0.7073883, 0.7068252, 0, 0)
+                    quatf xformOp:orient = (0.7073883, -0.7068252, 0, 0)
                     float3 xformOp:scale = (1, 1, 1)
                     double3 xformOp:translate = (0, 0, 0)
                     uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
@@ -418,7 +426,7 @@ def Xform "jetracer" (
 
             def Xform "rear_left_wheel"
             {
-                quatf xformOp:orient = (0.7073883, 0.7068252, 0, 0)
+                quatf xformOp:orient = (0.7073883, -0.7068252, 0, 0)
                 float3 xformOp:scale = (1, 1, 1)
                 double3 xformOp:translate = (-0.09, 0.055, -0.01)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
@@ -454,7 +462,7 @@ def Xform "jetracer" (
 
             def Xform "rear_right_wheel"
             {
-                quatf xformOp:orient = (0.7073883, 0.7068252, 0, 0)
+                quatf xformOp:orient = (0.7073883, -0.7068252, 0, 0)
                 float3 xformOp:scale = (1, 1, 1)
                 double3 xformOp:translate = (-0.09, -0.055, -0.01)
                 uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
