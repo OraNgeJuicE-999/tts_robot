@@ -21,7 +21,15 @@ from std_msgs.msg import Bool
 
 from jetracer_navigation.dwa import DWA, DWAConfig
 from jetracer_navigation.primitives import RobotState, PathNode, PixelCoords
-from jetracer_navigation.utils import euclidean_distance, inflated_obstacles
+from jetracer_navigation.utils import (
+    euclidean_distance,
+    inflated_obstacles,
+    rollout_trajectory,
+    build_distance_map,
+    clearance_cost,
+    closest_point_on_segment,
+    bresenham,
+)
 
 
 class DWAController(Node):
@@ -29,6 +37,16 @@ class DWAController(Node):
         super().__init__('dwa_controller')
 
         self.dwa = DWA(config=DWAConfig())
+
+        # Diagnostic bypass: when True, control_loop skips dwa.plan() entirely
+        # and just steers geometrically toward get_local_goal() (pure pursuit,
+        # fixed speed, no obstacle awareness at all). Use this to check
+        # whether /plan itself is a sane, drivable path -- independent of
+        # whether DWA's search/cost logic is doing anything reasonable --
+        # before spending more time debugging DWA specifically. Flip back to
+        # False to restore normal obstacle-aware planning.
+        self.dwa_enabled = False
+        self.pure_pursuit_speed = 0.3  # m/s, fixed forward speed while bypassing DWA
 
         self.tf_buffer = tf2_ros.Buffer()
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer, self)
@@ -41,7 +59,6 @@ class DWAController(Node):
         self.last_steer = 0.0
         self.goal_tolerance = 0.3      # meters; how close to the final path point counts as "reached"
         self.goal_reached_published = False  # edge-trigger: only publish once per path, not every cycle
-        self.check_on_path_dist = 1.0
         # Local-map obstacle inflation, in pixels at the local grid's 0.05m/px
         # resolution. Covers the robot's own half-width (~0.0625m, from the
         # 0.125m-wide wheel boxes in jetracer.xacro) plus one control step's
@@ -51,7 +68,31 @@ class DWAController(Node):
         # pixel itself, since collision is only checked at each sampled state,
         # not swept continuously between them.
         self.local_inflation_radius = 5
-        self.on_path = False
+
+        # Stuck-recovery: dwa.plan() is forward-only, so getting unstuck is
+        # handled here instead, as a bounded recovery behavior (Nav2's
+        # BackUp pattern) rather than folded into the planner's per-cycle
+        # cost search -- see start_recovery()/run_recovery() below.
+        self.failed_count = 0                # consecutive cycles with no valid forward command
+        self.stuck_cycle_threshold = 5       # ~1/3s at 15Hz before treating it as genuinely stuck, not a one-frame blip
+        self.recovery_state = False
+        self.recovery_distance = 0.3         # meters to back away before declaring success
+        self.recovery_time_cap = 5.0         # seconds; safety net if recovery_distance is unreachable (e.g. truly wedged)
+        self.recovery_speed = 0.3            # m/s, fixed reverse speed used during recovery
+        self.recovery_start_pos = None
+        self.recovery_start_time = None
+        self.recovery_steer = 0.0            # chosen once in start_recovery(), held for the whole maneuver
+        self.min_scan_dist = None
+        self.previous_world_map = None
+        # grid_origin_x/y from the cycle that produced previous_world_map --
+        # needed to shift the persisted grid by however many cells the
+        # robot moved since then, since the grid always recenters on the
+        # robot's CURRENT position each cycle. Without this, array index
+        # (240,240) silently means "wherever the robot was last cycle"
+        # instead of "wherever it is now," and persisted marks drift
+        # relative to the robot every cycle they aren't freshly reobserved.
+        self.previous_grid_origin_x = None
+        self.previous_grid_origin_y = None
 
         scan_qos = QoSProfile(
             reliability=QoSReliabilityPolicy.BEST_EFFORT,
@@ -115,8 +156,36 @@ class DWAController(Node):
         through.
         """
         try:
-            t = self.tf_buffer.lookup_transform('map', msg.header.frame_id, rclpy.time.Time())
-        except tf2_ros.TransformException:
+            # Look up the transform AT THE SCAN'S OWN TIMESTAMP, not "whatever's
+            # freshest right now" (rclpy.time.Time()) -- using "latest" here means
+            # every scan gets projected into the map frame using the pose the
+            # robot happens to be at when this callback executes, not the pose it
+            # was actually at when the LIDAR data was captured. That gap grows
+            # with turning speed and executor/transport latency, and reprojects
+            # every single scan at a slightly different (wrong) origin --
+            # producing exactly a flickering, unstable local grid even in a
+            # perfectly static, obstacle-fixed environment.
+            # timeout intentionally left at 0 (no wait): this node spins on
+            # the default single-threaded executor, which also dispatches
+            # the TF listener's own subscription callback -- the one that
+            # actually appends new data to tf_buffer. Blocking here to wait
+            # for a timeout can never succeed, because the executor can't
+            # run that callback while it's stuck waiting inside this one;
+            # it just burns the wait time and fails anyway, and the wasted
+            # time backs up the /scan queue, making the next lookup miss
+            # too. Fail fast and skip instead -- the next scan (~33ms
+            # later) gets a chance once the executor has had a turn to
+            # actually process the intervening /tf messages.
+            t = self.tf_buffer.lookup_transform(
+                'map', msg.header.frame_id, rclpy.time.Time.from_msg(msg.header.stamp),
+            )
+        except tf2_ros.TransformException as e:
+            # Previously silent -- made this loud on purpose while chasing
+            # why self.world_map stays empty even with /scan and TF both
+            # confirmed healthy from the outside. If this fires every
+            # cycle, the exception text below is the actual reason, not
+            # speculation about it.
+            self.get_logger().warning(f"scan_callback: TF lookup failed, skipping this scan: {e}")
             return
         origin_x = t.transform.translation.x
         origin_y = t.transform.translation.y
@@ -128,7 +197,109 @@ class DWAController(Node):
         grid_origin_x = origin_x - msg.range_max
         grid_origin_y = origin_y - msg.range_max
 
-        grid = np.ones((grid_size, grid_size), dtype=np.uint8)
+        # TODO (costmap persistence + confidence smoothing): this grid is
+        # rebuilt from all-occupied every single call, with zero memory of
+        # the previous cycle -- so single-scan sensor noise (dropped/noisy
+        # rays, the minRange/overrange ambiguity already noted above) and
+        # any TF/localization jitter both show up directly as flicker,
+        # which propagates into build_distance_map()/clearance_cost() in
+        # dwa.py on every plan() call: a trajectory that scored fine last
+        # cycle can suddenly read as a collision for no real reason.
+        # Priority order to work through:
+        #   1. Persistence: instead of starting from all-occupied each
+        #      call, incrementally mark newly-observed occupied cells and
+        #      clear cells each ray actually passed through, reusing
+        #      self.world_map from the previous cycle as the starting
+        #      point. bresenham() in utils.py returns every cell on a line
+        #      and is already used for line-of-sight checks elsewhere
+        #      (check_collision_free) -- would it fit the raytrace-clear
+        #      step here, in place of (or alongside) the current
+        #      cv2.fillPoly wedge fill? Worth benchmarking first: it's a
+        #      plain Python per-cell loop, and a /scan can be 700+ rays up
+        #      to range_max/resolution = 240 cells each -- cv2.fillPoly is
+        #      a fast batch C call, bresenham() called per-ray per-scan is
+        #      a very different cost profile. Does it fit the 15Hz control
+        #      budget, or does the existing wedge-fill approach need to
+        #      stay for the fill step with bresenham only handling
+        #      something narrower?
+        #   2. Confidence layer: a per-cell counter or log-odds float array
+        #      (separate from the binary grid clearance_cost/is_standable
+        #      actually consume), incrementing on a hit and decaying on a
+        #      clear ray-pass, only promoting a cell to "occupied" in the
+        #      binary grid once it crosses a threshold -- so one noisy
+        #      frame can't flip a cell by itself. What threshold (N
+        #      consecutive hits? a log-odds value?), and what's the right
+        #      increment/decrement magnitude relative to how fast a real
+        #      obstacle should be trusted?
+        #   3. Decay: now that cells persist instead of resetting to
+        #      all-occupied every call, a cell the robot moved away from
+        #      (or an obstacle that moved) needs to actively clear over
+        #      time rather than staying occupied forever. What's the right
+        #      decay rate, and does it differ from the confidence-layer
+        #      decrement in (2), or is it the same mechanism?
+        #   4. Hard safety floor: keep a separate, always-instantaneous
+        #      minimum-distance check straight from the raw current /scan
+        #      (not smoothed, not confidence-gated) so improving map
+        #      stability never trades away collision safety. Where does
+        #      this hook in -- scan_callback publishing a
+        #      self.min_scan_distance that control_loop checks directly
+        #      alongside dwa.plan(), bypassing the smoothed grid entirely?
+        #   5. Frame anchoring (only if 1-3 don't resolve the instability):
+        #      this grid is currently rebuilt in the map frame every call,
+        #      using a fresh tf_buffer lookup each time -- once it
+        #      persists across cycles instead, any localization jitter (or
+        #      a real AMCL correction) no longer just shows up as one
+        #      frame's flicker, it *smears* previously-marked cells to the
+        #      wrong place, since old cells don't get retroactively
+        #      corrected when the pose estimate shifts. This is the same
+        #      concern already flagged as "wait until AMCL/amcl_pose
+        #      covariance is verified before doing this" -- anchoring the
+        #      rolling grid in the odom frame instead (only using map
+        #      frame for the DWA lookahead goal) is Nav2's own answer to
+        #      exactly this problem. Don't reach for this until (1)-(3)
+        #      are in and still don't resolve the instability.
+        #
+        # Acceptance check: with the robot and obstacles stationary,
+        # consecutive /dwa_local_map frames (debug_map_pub below) shouldn't
+        # flip individual cells between occupied/free frame to frame.
+        # clearance_cost()/build_distance_map() in dwa.py/utils.py
+        # shouldn't need to change at all -- they keep consuming a binary
+        # grid, just a more stable one. Worth a small standalone
+        # script/test subscribing to /dwa_local_map for N consecutive
+        # frames while stationary and diffing them cell-by-cell before
+        # trusting this by eye in RViz.
+        
+        if self.previous_world_map is None:
+            grid = np.ones((grid_size, grid_size), dtype=np.uint8)
+        else:
+            # The grid recenters on the robot's CURRENT position every
+            # cycle, so array index (240,240) always means "the robot,
+            # right now" -- but self.previous_world_map's cells were
+            # written relative to LAST cycle's origin. Shift the persisted
+            # array by however many cells the origin moved, so a
+            # stationary world point lands at the same array index it
+            # would if it had just been freshly observed, instead of
+            # silently dragging along with wherever the robot used to be.
+            dx_px = int(round((grid_origin_x - self.previous_grid_origin_x) / resolution))
+            dy_px = int(round((grid_origin_y - self.previous_grid_origin_y) / resolution))
+
+            grid = np.ones((grid_size, grid_size), dtype=np.uint8)
+
+            # new_grid[:, dst] = previous_world_map[:, dst + dx_px] (same
+            # idea for rows/dy_px) -- derived from: a world point at old
+            # column px_old is now at new column px_old - dx_px, since the
+            # origin itself moved dx_px cells in the same direction.
+            # Whatever doesn't overlap (newly-revealed edge, or the robot
+            # having moved more than a full grid-width since last cycle)
+            # is left at the blank/unknown default above.
+            dst_x_start, dst_x_end = max(0, -dx_px), min(grid_size, grid_size - dx_px)
+            dst_y_start, dst_y_end = max(0, -dy_px), min(grid_size, grid_size - dy_px)
+            src_x_start, src_x_end = dst_x_start + dx_px, dst_x_end + dx_px
+            src_y_start, src_y_end = dst_y_start + dy_px, dst_y_end + dy_px
+
+            if src_x_end > src_x_start and src_y_end > src_y_start:
+                grid[dst_y_start:dst_y_end, dst_x_start:dst_x_end] = \
+                    self.previous_world_map[src_y_start:src_y_end, src_x_start:src_x_end]
 
         origin_px = int((origin_x - grid_origin_x) / resolution)
         origin_py = int((origin_y - grid_origin_y) / resolution)
@@ -144,8 +315,10 @@ class DWAController(Node):
 
         half_increment = msg.angle_increment / 2.0
         hit_points = []
+        min_dist = math.inf
 
         for i, r in enumerate(msg.ranges):
+            
             # NaN / below range_min is a genuine invalid reading -- unknown,
             # contributes nothing.
             if np.isnan(r) or r < msg.range_min:
@@ -154,15 +327,35 @@ class DWAController(Node):
             is_hit = np.isfinite(r) and r <= msg.range_max
             r_eff = r if is_hit else msg.range_max
 
+            if np.isnan(r) or r < min_dist:
+                min_dist = r
+
             angle = msg.angle_min + i * msg.angle_increment
 
             # This ray's own thin wedge -- origin plus the two edges of its
             # angular slice, both at r_eff. cv2.fillPoly clips to the image
             # automatically, so no bounds check is needed for the fill itself.
-            p_left = to_grid_cell(angle - half_increment, r_eff)
-            p_right = to_grid_cell(angle + half_increment, r_eff)
-            polygon = np.array([[origin_px, origin_py], list(p_left), list(p_right)], dtype=np.int32)
-            cv2.fillPoly(grid, [polygon.reshape((-1, 1, 2))], 0)
+
+            # Original Version
+            # p_left = to_grid_cell(angle - half_increment, r_eff)
+            # p_right = to_grid_cell(angle + half_increment, r_eff)
+            # polygon = np.array([[origin_px, origin_py], list(p_left), list(p_right)], dtype=np.int32)
+            # cv2.fillPoly(grid, [polygon.reshape((-1, 1, 2))], 0)
+
+            # Revised
+            hitx, hity = to_grid_cell(angle, r_eff)
+            path = bresenham(origin_px, hitx, origin_py, hity)
+            for x, y in path:
+                # to_grid_cell() can land exactly on grid_size at max range
+                # along a cardinal direction (e.g. r_eff=range_max puts
+                # px/py at 480 on a 480-wide grid) -- cv2.fillPoly used to
+                # clip this for free, a raw numpy index does not, so this
+                # needs its own bounds check the way the hit_points
+                # collection below already does. Also note grid[y][x], not
+                # grid[x][y] -- same row/column convention as everywhere
+                # else in this file (see line ~332's grid[py][px] = 1).
+                if 0 <= x < grid_size and 0 <= y < grid_size:
+                    grid[y][x] = 0
 
             if is_hit:
                 px, py = to_grid_cell(angle, r_eff)
@@ -171,6 +364,21 @@ class DWAController(Node):
 
         for px, py in hit_points:
             grid[py][px] = 1
+
+        self.min_scan_dist = min_dist
+
+        # Save the RAW (pre-inflation) grid as next cycle's persistence
+        # starting point, before inflated_obstacles() pads it below. If the
+        # already-inflated grid were persisted instead, next cycle would
+        # inflate it *again* on top of the existing padding, and the padding
+        # around every obstacle would keep growing every single cycle
+        # instead of staying constant -- inflation has to be re-derived
+        # fresh from the raw observations each time, not accumulated.
+        self.previous_world_map = grid.copy()
+        # Origin this grid was built at -- next cycle's shift math needs
+        # both halves of the delta (its own new origin, and this one).
+        self.previous_grid_origin_x = grid_origin_x
+        self.previous_grid_origin_y = grid_origin_y
 
         # Pad obstacles out so is_standable()/clearance_cost() see a wall with
         # real margin instead of a razor-thin, exactly-where-the-ray-landed
@@ -215,19 +423,6 @@ class DWAController(Node):
         return RobotState(xx, yy, yaw, v=self.last_v, steer=self.last_steer)
         
 
-    def closest_point_on_segment(self, p, a, b):
-        ab_x = b[0] - a[0]
-        ab_y = b[1] - a[1]
-        ab_len_sq = ab_x ** 2 + ab_y ** 2
-        if ab_len_sq == 0.0:
-            return a, float(np.hypot(p[0] - a[0], p[1] - a[1]))
-
-        t = ((p[0] - a[0]) * ab_x + (p[1] - a[1]) * ab_y) / ab_len_sq
-        t = max(0.0, min(1.0, t))
-        closest = (a[0] + t * ab_x, a[1] + t * ab_y)
-        dist = float(np.hypot(p[0] - closest[0], p[1] - closest[1]))
-        return closest, dist
-
     def get_local_goal(self) -> tuple:
         state = self.get_current_state()
         p = (state.x, state.y)
@@ -238,16 +433,11 @@ class DWAController(Node):
         for i in range(len(self.path) - 1):
             a = (self.path[i].pose.position.x, self.path[i].pose.position.y)
             b = (self.path[i + 1].pose.position.x, self.path[i + 1].pose.position.y)
-            point, dist = self.closest_point_on_segment(p, a, b)
+            point, dist = closest_point_on_segment(p, a, b)
             if dist < best_dist:
                 best_dist = dist
                 best_i = i
                 best_point = point
-
-        if best_dist <= self.check_on_path_dist:
-            self.on_path = True
-        else:
-            self.on_path = False
 
         if best_i is None:
             last = self.path[-1].pose.position
@@ -315,19 +505,35 @@ class DWAController(Node):
 
         state = self.get_current_state()
         self.check_goal_reached(state)
+
+        if self.recovery_state:
+            self.run_recovery(state)
+            return
+
         goal = self.get_local_goal()
 
-        # TODO (lane-check): dwa.plan() needs some minimal signal for "is the
-        # robot back on the lane" to know when a reverse maneuver has solved
-        # the problem it started for. get_local_goal() above already walks
-        # self.path with closest_point_on_segment() to find the nearest point
-        # on the path to the robot -- what's the smallest additional piece of
-        # data you could compute alongside/from that (without duplicating all
-        # of get_local_goal's lookahead-walking logic) that plan() would
-        # actually need? Where does that get computed, and how does it get
-        # threaded into the plan() call below once dwa.py's signature grows
-        # to accept it?
-        v, steer, traj = self.dwa.plan(state, goal, self.on_path, self.world_map, self.map_info)
+        if not self.dwa_enabled:
+            final = self.path[-1].pose.position
+            dist_to_final = math.hypot(state.x - final.x, state.y - final.y)
+            if dist_to_final <= self.goal_tolerance:
+                self.get_logger().info(
+                    f"control_loop (DWA bypassed): reached goal (dist={dist_to_final:.2f}m), stopping"
+                )
+                self.failed_count = 0
+                self.Ackermann_cmd_publisher(0.0, 0.0)
+                return
+
+            v, steer = self.pure_pursuit_speed, self.pure_pursuit_steer(state, goal)
+            self.get_logger().info(
+                f"control_loop (DWA bypassed): state=({state.x:.2f},{state.y:.2f},{state.theta:.2f}) "
+                f"goal={goal} v={v} steer={steer:.3f}"
+            )
+            self.failed_count = 0
+            self.Ackermann_cmd_publisher(v, steer)
+            return
+
+        path_points = [(p.pose.position.x, p.pose.position.y) for p in self.path]
+        v, steer, traj = self.dwa.plan(state, goal, self.world_map, self.map_info, path_points)
 
         dt = (self.get_clock().now() - t0).nanoseconds / 1e9
         self.get_logger().info(
@@ -337,23 +543,161 @@ class DWAController(Node):
         )
 
         if v is None:
-            self.get_logger().warning("control_loop: no valid trajectory found, stopping")
+            # "Stuck" here is deliberately just "v is None" (zero valid
+            # forward candidates at all), not "v stayed near 0 for a while"
+            # -- v~=0 is often completely legitimate (slowing near a goal,
+            # a genuinely good but not-yet-accelerated heading), and treating
+            # it as a stuck signal is exactly the ambiguity that caused most
+            # of the trouble with the old reverse-hysteresis approach. "Zero
+            # candidates found" is unambiguous.
+            self.failed_count += 1
+            self.get_logger().warning(
+                f"control_loop: no valid trajectory found "
+                f"({self.failed_count}/{self.stuck_cycle_threshold} consecutive), stopping"
+            )
             self.Ackermann_cmd_publisher(0.0, 0.0)
+            if self.failed_count > self.stuck_cycle_threshold:
+                self.start_recovery(state)
             return
 
-        self.Ackermann_cmd_publisher(v, steer)
-            
+        if self.min_scan_dist >= 0.3:
+            self.failed_count = 0
+            self.Ackermann_cmd_publisher(v, steer)
+        else:
+            self.Ackermann_cmd_publisher(0.0, 0.0)
+            self.failed_count += 1
+
+
+    def pure_pursuit_steer(self, state, goal) -> float:
+        """Standard pure-pursuit steering angle toward `goal` (already at
+        ~lookahead_distance away, from get_local_goal()), ignoring obstacles
+        entirely -- only used while self.dwa_enabled is False, to sanity-check
+        that /plan is a drivable path on its own."""
+        dx = goal[0] - state.x
+        dy = goal[1] - state.y
+
+        # goal in the robot's own frame (x forward, y left)
+        lx = dx * math.cos(state.theta) + dy * math.sin(state.theta)
+        ly = -dx * math.sin(state.theta) + dy * math.cos(state.theta)
+
+        L = math.hypot(lx, ly)
+        if L < 1e-3:
+            return 0.0
+
+        curvature = 2.0 * ly / (L ** 2)
+        steer = math.atan(self.dwa.config.wheelbase * curvature)
+        return max(self.dwa.config.min_steer, min(self.dwa.config.max_steer, steer))
+
+    def start_recovery(self, state):
+        """Begin a bounded backup recovery: pick a steering direction once
+        (whichever of left/straight/right has the most clearance right now),
+        then back away in that fixed direction until either
+        recovery_distance is covered or recovery_time_cap is hit."""
+        self.recovery_steer = self.choose_recovery_steer(state)
+        self.recovery_start_pos = (state.x, state.y)
+        self.recovery_start_time = self.get_clock().now()
+        self.recovery_state = True
+        self.failed_count = 0
+        self.get_logger().warning(
+            f"control_loop: stuck for {self.stuck_cycle_threshold}+ cycles, "
+            f"starting recovery backup (steer={self.recovery_steer:.3f})"
+        )
+
+    def choose_recovery_steer(self, state):
+        """Pick the steering angle for the recovery backup, once, by rolling
+        out a short reverse trajectory at min/0/max steer and comparing
+        clearance -- the same rollout_trajectory/clearance_cost machinery
+        dwa.py's normal planning already uses, just a one-shot decision here
+        instead of a per-cycle search."""
+        # TODO (coarse candidate set): only three discrete angles get
+        # considered here -- full-left, straight, full-right -- unlike
+        # normal forward planning in dwa.py, which sweeps the whole steer
+        # range at steer_resolution. bicycle_step already handles negative
+        # v correctly (the turn direction physically flips vs. forward at
+        # the same steer angle, which is correct Ackermann behavior, not a
+        # bug), so the math this runs on is sound -- the open question is
+        # just whether 3 buckets is coarse enough to sometimes pick a worse
+        # escape angle than a finer sweep would. Worth it for a one-shot
+        # decision, given the extra rollout/cost-eval calls are cheap
+        # relative to plan()'s full per-cycle search? Or does the coarse
+        # choice not actually matter much in practice, since this only
+        # needs to clear the immediate obstacle, not find an optimal path?
+        distance_map = build_distance_map(self.world_map)
+        candidates = [self.dwa.config.min_steer, 0.0, self.dwa.config.max_steer]
+
+        best_steer = 0.0
+        best_clearance = -math.inf
+        for steer in candidates:
+            traj = rollout_trajectory(
+                state, -self.recovery_speed, steer,
+                self.dwa.config.predict_time, self.dwa.config.dt, self.dwa.config.wheelbase,
+            )
+            cost = clearance_cost(traj, self.world_map, distance_map, self.map_info)
+            if cost == math.inf:
+                continue
+            clearance = -cost  # clearance_cost = 10 - dist_m, so a lower cost means more clearance
+            if clearance > best_clearance:
+                best_clearance = clearance
+                best_steer = steer
+        return best_steer
+
+    def run_recovery(self, state):
+        """Execute one cycle of an in-progress recovery backup: keep
+        reversing at the fixed speed/steering chosen in start_recovery()
+        until the distance target is reached (success) or the time cap is
+        hit (give up this attempt)."""
+        traveled = math.hypot(state.x - self.recovery_start_pos[0], state.y - self.recovery_start_pos[1])
+        elapsed = (self.get_clock().now() - self.recovery_start_time).nanoseconds / 1e9
+
+        if traveled >= self.recovery_distance:
+            self.get_logger().info(f"control_loop: recovery complete, travelled {traveled:.2f}m")
+            self.recovery_state = False
+            return
+
+        if elapsed >= self.recovery_time_cap:
+            # TODO (escalation): only travelled `traveled` of
+            # self.recovery_distance before timing out -- a single straight
+            # backup didn't solve it. Right now this just gives up and
+            # returns to normal planning, which will likely re-detect
+            # "stuck" and retry the same backup again. Options, not
+            # mutually exclusive:
+            #   - A second recovery tier (e.g. spin in place for a fresh
+            #     scan) or a max-attempts counter that eventually reports
+            #     failure upward instead of retrying the same thing forever.
+            #   - Trigger a full global replan: nothing currently does this
+            #     anywhere -- a_star_planner only ever plans on receiving a
+            #     fresh /goal_pose, and dwa_controller doesn't publish to
+            #     that topic at all today. If the issue is that the
+            #     existing /plan is fundamentally bad (routes through a
+            #     corridor that's now blocked), no amount of local backing
+            #     up fixes that; only a fresh global path from the current
+            #     position would. Worth working out: who initiates this --
+            #     does dwa_controller republish /goal_pose itself, reusing
+            #     self.path's final pose as the goal? Should it be tried
+            #     before local backup attempts (in case backing up can't
+            #     help at all) or only after they're exhausted (to avoid
+            #     replanning for what might just be a one-frame transient
+            #     blockage)? And if a survey course is running, does
+            #     goal_bridge need to know a replan happened, or is it
+            #     transparent since /plan just updates underneath it?
+            self.get_logger().warning(
+                f"control_loop: recovery timed out after {elapsed:.1f}s, only "
+                f"travelled {traveled:.2f}m of {self.recovery_distance}m -- giving up this attempt"
+            )
+            self.recovery_state = False
+            return
+
+        self.Ackermann_cmd_publisher(-self.recovery_speed, self.recovery_steer)
 
     def Ackermann_cmd_publisher(self, speed:float, steer:float):
         msg = AckermannDriveStamped()
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = 'base_link'
-        # DWA's internal bicycle model uses the standard convention (positive speed
-        # = forward), but this robot's real Ackermann interface is inverted (see
-        # teleop_keyboard.py: 'w' = forward drives self.speed negative) — so the
-        # sign is flipped only here, at the final publish boundary, leaving DWA's
-        # own math and self.last_v in its normal convention.
-        msg.drive.speed = -float(speed)
+        # DWA's internal bicycle model and this robot's real Ackermann interface
+        # both use the standard convention (positive speed = forward) — see
+        # teleop_keyboard.py: 'w' calls increase_speed(), which makes self.speed
+        # more positive and publishes it unmodified. No sign flip needed here.
+        msg.drive.speed = float(speed)
         msg.drive.steering_angle = float(steer)
         self.cmd_pub.publish(msg)
         self.last_v = float(speed)

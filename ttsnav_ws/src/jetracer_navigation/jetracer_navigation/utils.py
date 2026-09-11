@@ -571,8 +571,54 @@ def heading_cost(trajectory: Trajectory, goal_point: tuple) -> float:
 
 
 def velocity_cost(trajectory: Trajectory, target_speed: float) -> float:
-    
+
     return target_speed - trajectory.v
+
+
+def closest_point_on_segment(p: tuple, a: tuple, b: tuple) -> tuple:
+    """Closest point on segment a->b to p, and the distance to it. Shared by
+    dwa_controller.py's get_local_goal (walking the path for a lookahead
+    point) and path_alignment_cost below (scoring candidates against the
+    whole path), so the two don't carry separate copies of the same
+    point-to-segment math."""
+    ab_x = b[0] - a[0]
+    ab_y = b[1] - a[1]
+    ab_len_sq = ab_x ** 2 + ab_y ** 2
+    if ab_len_sq == 0.0:
+        return a, float(math.hypot(p[0] - a[0], p[1] - a[1]))
+
+    t = ((p[0] - a[0]) * ab_x + (p[1] - a[1]) * ab_y) / ab_len_sq
+    t = max(0.0, min(1.0, t))
+    closest = (a[0] + t * ab_x, a[1] + t * ab_y)
+    dist = float(math.hypot(p[0] - closest[0], p[1] - closest[1]))
+    return closest, dist
+
+
+def path_alignment_cost(trajectory: Trajectory, path: list) -> float:
+    """Average distance (meters) from every sampled point along `trajectory`
+    to the nearest point on `path` (a list of (x, y) tuples, in order).
+
+    Complements heading_cost rather than replacing it: heading_cost only
+    checks whether the trajectory's final state points toward a single
+    lookahead point, so a candidate that swings away from the actual path
+    mid-maneuver and back can still score well there. Averaging over every
+    sampled state (not just the last one) penalizes that drift directly,
+    for the same reason clearance_cost checks every sampled state instead
+    of only the endpoint.
+    """
+    if len(path) < 2:
+        return 0.0
+
+    total = 0.0
+    for state in trajectory.states:
+        best_dist = math.inf
+        for i in range(len(path) - 1):
+            _, dist = closest_point_on_segment((state.x, state.y), path[i], path[i + 1])
+            if dist < best_dist:
+                best_dist = dist
+        total += best_dist
+
+    return total / len(trajectory.states)
 
 
 # ======================================================

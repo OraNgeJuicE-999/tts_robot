@@ -57,8 +57,37 @@ class GoalBridge(Node):
             return
 
         elif command_name == "survey":
+            # TODO: once validate_course() below is implemented, decide
+            # whether "survey" should gate on its result before calling
+            # start_course() at all.
             self.start_course()
             return
+
+    def validate_course(self) -> bool:
+        """TODO (course dry-run validation): before committing to driving
+        the whole survey route, check that every consecutive waypoint pair
+        in self.course actually has a feasible A* path -- so an infeasible
+        leg (e.g. one blocked by a_star_planner's inflation_radius) is
+        caught before the robot ever leaves the first waypoint, instead of
+        discovered mid-course when it's stuck partway through with nowhere
+        to go. Worth working out:
+          - Where should this run: once at node startup (as soon as a map
+            is available), or every time "survey" is triggered?
+          - goal_bridge doesn't currently subscribe to /map at all, and has
+            no A* planning logic of its own. a_star.py's AStarImplementation
+            is kept separate from a_star_planner.py specifically so it's
+            reusable/testable standalone (see that module's own docstring)
+            -- does that mean goal_bridge should import it directly and
+            keep its own copy of the map, or should this ask a_star_planner
+            to do the check instead (and if so, how -- a service call?),
+            so the planning logic and its inflation_radius aren't
+            duplicated in two places that could drift out of sync?
+          - If a leg turns out infeasible, what should happen: refuse to
+            start the whole course, skip just that leg, or log a warning
+            and let it fail the way it does today (silently, discovered
+            only when the robot gets there)?
+        """
+        pass
 
     def start_course(self):
         """Begin walking self.course from the first waypoint, and (since

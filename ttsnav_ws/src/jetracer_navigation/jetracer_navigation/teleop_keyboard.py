@@ -58,9 +58,9 @@ def main():
     while True:
         key = node.getKey()
         if key == 'w':
-            node.decrease_speed()
-        elif key == 's':
             node.increase_speed()
+        elif key == 's':
+            node.decrease_speed()
         elif key == 'a':
             node.increase_steering()
         elif key == 'd':

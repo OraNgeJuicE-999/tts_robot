@@ -17,6 +17,7 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
+    map_yaml_file = LaunchConfiguration('map_yaml_file')
 
     declare_use_sim_time_cmd = DeclareLaunchArgument(
         'use_sim_time',
@@ -24,11 +25,19 @@ def generate_launch_description():
         description='Use the /clock topic (Isaac Sim) instead of the system clock',
     )
 
+    declare_map_yaml_file_cmd = DeclareLaunchArgument(
+        'map_yaml_file',
+        default_value=os.path.expanduser('~/tts_robot/maps/office1_map.yaml'),
+        description=(
+            'Map yaml to load. Defaults to the slam_toolbox-built map; pass '
+            'map_yaml_file:=<path>/office1_ground_truth.yaml to localize '
+            'against the Occupancy Map Generator ground-truth map instead.'
+        ),
+    )
+
     urdf_path = os.path.expanduser('~/tts_robot/jetracer.urdf')
     with open(urdf_path, 'r') as f:
         robot_description = f.read()
-
-    map_yaml_path = os.path.expanduser('~/tts_robot/maps/office1_map.yaml')
 
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -47,7 +56,7 @@ def generate_launch_description():
         name='map_server',
         output='screen',
         parameters=[{
-            'yaml_filename': map_yaml_path,
+            'yaml_filename': map_yaml_file,
             'use_sim_time': use_sim_time,
         }],
     )
@@ -90,10 +99,10 @@ def generate_launch_description():
             ('scan', '/scan'),
         ],
         parameters=[{
-            'target_frame': 'lidar',
+            'target_frame': 'base_link',
             'transform_tolerance': 0.1,
-            'min_height': -0.05,
-            'max_height': 0.05,
+            'min_height': -0.5,
+            'max_height': 1.0,
             'angle_min': -3.14159,
             'angle_max': 3.14159,
             'range_min': 0.1,
@@ -116,6 +125,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         declare_use_sim_time_cmd,
+        declare_map_yaml_file_cmd,
         robot_state_publisher_node,
         map_server_node,
         amcl_node,

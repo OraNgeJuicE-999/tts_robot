@@ -28,6 +28,7 @@ over "jetracer"
     over "Geometry"
     {
         over "base" (
+            active = false
             delete apiSchemas = ["NewtonArticulationRootAPI"]
             prepend apiSchemas = ["PhysxArticulationAPI"]
         )

@@ -34,7 +34,8 @@ setup(
             'a_star_planner = jetracer_navigation.a_star_planner:main',
             'dwa_controller = jetracer_navigation.dwa_controller:main',
             'goal_bridge = jetracer_navigation.goal_bridge:main',
-            'vlm_bridge = jetracer_navigation.vlm_bridge:main'
+            'vlm_bridge = jetracer_navigation.vlm_bridge:main',
+            'set_initial_pose = jetracer_navigation.set_initial_pose:main'
         ],
     },
 )
