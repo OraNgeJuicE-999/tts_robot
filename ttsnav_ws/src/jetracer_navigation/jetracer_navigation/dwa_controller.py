@@ -11,13 +11,17 @@ import math
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, QoSDurabilityPolicy, QoSReliabilityPolicy, QoSHistoryPolicy
+from rclpy.executors import MultiThreadedExecutor
+from rclpy.duration import Duration
 import tf2_ros
 from tf_transformations import euler_from_quaternion 
 
 from nav_msgs.msg import Path, OccupancyGrid, MapMetaData
 from sensor_msgs.msg import LaserScan
 from ackermann_msgs.msg import AckermannDriveStamped
-from std_msgs.msg import Bool
+from std_msgs.msg import Bool, ColorRGBA
+from geometry_msgs.msg import Point
+from visualization_msgs.msg import Marker, MarkerArray
 
 from jetracer_navigation.dwa import DWA, DWAConfig
 from jetracer_navigation.primitives import RobotState, PathNode, PixelCoords
@@ -29,6 +33,7 @@ from jetracer_navigation.utils import (
     clearance_cost,
     closest_point_on_segment,
     bresenham,
+    world_to_pixel,
 )
 
 
@@ -45,8 +50,8 @@ class DWAController(Node):
         # whether DWA's search/cost logic is doing anything reasonable --
         # before spending more time debugging DWA specifically. Flip back to
         # False to restore normal obstacle-aware planning.
-        self.dwa_enabled = False
-        self.pure_pursuit_speed = 0.3  # m/s, fixed forward speed while bypassing DWA
+        self.dwa_enabled = True
+        self.pure_pursuit_speed = 0.6  # m/s, fixed forward speed while bypassing DWA
 
         self.tf_buffer = tf2_ros.Buffer()
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer, self)
@@ -57,16 +62,25 @@ class DWAController(Node):
         self.lookahead_distance = 1.2  # meters; tune above the vehicle's min turning radius (~0.78m)
         self.last_v = 0.0
         self.last_steer = 0.0
-        self.goal_tolerance = 0.3      # meters; how close to the final path point counts as "reached"
+        self.goal_tolerance = 1.0      # meters; how close to the final path point counts as "reached" (widened from 0.3 -> 0.5 -> 1.0 -- fussing over exact precision was taking too long; matches slowdown_distance below)
         self.goal_reached_published = False  # edge-trigger: only publish once per path, not every cycle
+        self.last_logged_mode = None  # edge-trigger for _log_mode: only print control_loop's mode on change
+        self.was_on_obstacle_cell = False  # edge-trigger for the [ON_OBSTACLE] diagnostic, kept separate from last_logged_mode
+        self.world_map_pose_x = None  # pose scan_callback was at when it last built self.world_map -- see control_loop's staleness diagnostic
+        self.world_map_pose_y = None
         # Local-map obstacle inflation, in pixels at the local grid's 0.05m/px
-        # resolution. Covers the robot's own half-width (~0.0625m, from the
-        # 0.125m-wide wheel boxes in jetracer.xacro) plus one control step's
-        # worth of travel at max_speed*dt (1.0 * 0.1 = 0.1m) -- without that
-        # second term, a trajectory's sampled states can land on either side
-        # of a wall that's only ~1px wide without ever landing on the wall
-        # pixel itself, since collision is only checked at each sampled state,
-        # not swept continuously between them.
+        # resolution. Covers the robot's own half-width (~0.12m, half of the
+        # Leatherback's real 0.24m trackWidth) plus one control step's worth
+        # of travel -- without that second term, a trajectory's sampled
+        # states can land on either side of a wall that's only ~1px wide
+        # without ever landing on the wall pixel itself, since collision is
+        # only checked at each sampled state, not swept continuously between
+        # them. Deliberately sized off the ACHIEVABLE travel on an early,
+        # accel-limited tick (~0.1m, not max_speed*dt's 0.3m) -- a cold-start
+        # candidate never actually reaches max_speed*dt in one step, so
+        # sizing this off max_speed swallowed the only cells reachable from
+        # a stop and made the car unable to ever start moving.
+        # (0.12 + 0.1 = 0.22m ~= 4.4px)
         self.local_inflation_radius = 5
 
         # Stuck-recovery: dwa.plan() is forward-only, so getting unstuck is
@@ -81,7 +95,9 @@ class DWAController(Node):
         self.recovery_speed = 0.3            # m/s, fixed reverse speed used during recovery
         self.recovery_start_pos = None
         self.recovery_start_time = None
+        self.recovery_v = 0.0                # chosen once in start_recovery() (or escalated in run_recovery()), held for the whole maneuver
         self.recovery_steer = 0.0            # chosen once in start_recovery(), held for the whole maneuver
+        self.recovery_attempts = 0           # consecutive backup timeouts -- escalates to find_any_escape() after a couple
         self.min_scan_dist = None
         self.previous_world_map = None
         # grid_origin_x/y from the cycle that produced previous_world_map --
@@ -104,6 +120,7 @@ class DWAController(Node):
         self.scan_sub = self.create_subscription(LaserScan, '/scan', self.scan_callback, scan_qos)
         self.cmd_pub = self.create_publisher(AckermannDriveStamped, 'ackermann_cmd', 10)
         self.debug_map_pub = self.create_publisher(OccupancyGrid, '/dwa_local_map', 10)  # add a Map display on this topic in RViz to see what clearance_cost sees
+        self.candidates_pub = self.create_publisher(MarkerArray, '/dwa_candidates', 10)  # add a MarkerArray display on this topic to see every (v, steer) rollout DWA evaluated this tick
         self.goal_reached_pub = self.create_publisher(Bool, '/goal_reached', 10)  # goal_bridge listens for this to advance a survey course
         self.timer = self.create_timer(1.0 / 15.0, self.control_loop)
 
@@ -112,6 +129,20 @@ class DWAController(Node):
         self.path = msg.poses
         self.goal_reached_published = False  # new goal in play -- allow /goal_reached to fire again
         self.get_logger().info(f"path_callback: received {len(self.path)} waypoints")
+
+        # A fresh path's very first control_loop tick sees world_map built
+        # from just one scan frame at the robot's fixed starting pose -- a
+        # single frame's blind spots/near-range artifacts can make every
+        # forward candidate look blocked even in open space, and nothing
+        # fixes that until the robot actually moves and collects a couple
+        # of fresh, different-angle scans. Force a short clearing backup
+        # immediately rather than waiting stuck_cycle_threshold cycles for
+        # normal stuck-detection to notice and trigger the same thing.
+        if self.world_map is not None:
+            try:
+                self.start_recovery(self.get_current_state(), reason="fresh path, clearing map before planning")
+            except Exception as exc:
+                self.get_logger().warning(f"path_callback: couldn't start clearing backup, skipping: {exc}")
 
 
     def scan_callback(self, msg):
@@ -165,19 +196,19 @@ class DWAController(Node):
             # every single scan at a slightly different (wrong) origin --
             # producing exactly a flickering, unstable local grid even in a
             # perfectly static, obstacle-fixed environment.
-            # timeout intentionally left at 0 (no wait): this node spins on
-            # the default single-threaded executor, which also dispatches
-            # the TF listener's own subscription callback -- the one that
-            # actually appends new data to tf_buffer. Blocking here to wait
-            # for a timeout can never succeed, because the executor can't
-            # run that callback while it's stuck waiting inside this one;
-            # it just burns the wait time and fails anyway, and the wasted
-            # time backs up the /scan queue, making the next lookup miss
-            # too. Fail fast and skip instead -- the next scan (~33ms
-            # later) gets a chance once the executor has had a turn to
-            # actually process the intervening /tf messages.
+            # A short bounded wait is safe here now that main() runs a
+            # MultiThreadedExecutor: the TF listener's own subscription
+            # callback (the one that appends new data to tf_buffer) runs on
+            # a different thread than this callback, so blocking here
+            # doesn't starve it the way it would have on the old
+            # single-threaded executor. Observed lag between a scan's own
+            # timestamp and the newest available transform was a *constant*
+            # ~17ms (one /tf publish tick), not occasional jitter -- 0.05s
+            # comfortably covers that without risking a real multi-cycle
+            # stall turning into a long block.
             t = self.tf_buffer.lookup_transform(
                 'map', msg.header.frame_id, rclpy.time.Time.from_msg(msg.header.stamp),
+                timeout=Duration(seconds=0.05),
             )
         except tf2_ros.TransformException as e:
             # Previously silent -- made this loud on purpose while chasing
@@ -185,7 +216,10 @@ class DWAController(Node):
             # confirmed healthy from the outside. If this fires every
             # cycle, the exception text below is the actual reason, not
             # speculation about it.
-            self.get_logger().warning(f"scan_callback: TF lookup failed, skipping this scan: {e}")
+            self.get_logger().warning(
+                f"scan_callback: TF lookup failed, skipping this scan: {e}",
+                throttle_duration_sec=2.0,
+            )
             return
         origin_x = t.transform.translation.x
         origin_y = t.transform.translation.y
@@ -196,6 +230,14 @@ class DWAController(Node):
         grid_size = int(2 * msg.range_max / resolution)
         grid_origin_x = origin_x - msg.range_max
         grid_origin_y = origin_y - msg.range_max
+        # The exact pose this world_map build is anchored to -- control_loop
+        # diffs this against its own, separately-TF-looked-up state each
+        # tick, to check whether world_map is actually stale relative to
+        # where the robot currently believes it is (scan_callback only
+        # updates world_map when its own TF lookup succeeds, which TF
+        # extrapolation failures skip roughly half the time).
+        self.world_map_pose_x = origin_x
+        self.world_map_pose_y = origin_y
 
         # TODO (costmap persistence + confidence smoothing): this grid is
         # rebuilt from all-occupied every single call, with zero memory of
@@ -318,10 +360,23 @@ class DWAController(Node):
         min_dist = math.inf
 
         for i, r in enumerate(msg.ranges):
-            
-            # NaN / below range_min is a genuine invalid reading -- unknown,
-            # contributes nothing.
+            angle = msg.angle_min + i * msg.angle_increment
+
+            # NaN / below range_min is not a trustworthy obstacle reading,
+            # but it's also not "occupied" -- the grid starts entirely
+            # occupied (np.ones above) and only gets cleared along rays that
+            # reach here, so simply skipping these left a permanent ring of
+            # phantom obstacles at exactly this range around the robot on
+            # every cycle, since a real lidar reliably returns sub-range_min
+            # readings for empty space immediately around its own mount.
+            # Clear this ray out to range_min as free instead -- the actual
+            # close-range safety net is min_scan_dist's hard stop in
+            # control_loop, not this costmap.
             if np.isnan(r) or r < msg.range_min:
+                hitx, hity = to_grid_cell(angle, msg.range_min)
+                for x, y in bresenham(origin_px, hitx, origin_py, hity):
+                    if 0 <= x < grid_size and 0 <= y < grid_size:
+                        grid[y][x] = 0
                 continue
 
             is_hit = np.isfinite(r) and r <= msg.range_max
@@ -329,8 +384,6 @@ class DWAController(Node):
 
             if np.isnan(r) or r < min_dist:
                 min_dist = r
-
-            angle = msg.angle_min + i * msg.angle_increment
 
             # This ray's own thin wedge -- origin plus the two edges of its
             # angular slice, both at r_eff. cv2.fillPoly clips to the image
@@ -388,7 +441,7 @@ class DWAController(Node):
         origin_px_coords = PixelCoords(origin_px, origin_py)
         grid = inflated_obstacles(grid, self.local_inflation_radius, start=origin_px_coords)
 
-        self.get_logger().info(f"origin cell ({origin_px},{origin_py}) = {grid[origin_py][origin_px]}")
+        self.get_logger().debug(f"origin cell ({origin_px},{origin_py}) = {grid[origin_py][origin_px]}")
 
         self.world_map = grid
 
@@ -491,13 +544,28 @@ class DWAController(Node):
             self.goal_reached_pub.publish(Bool(data=True))
             self.goal_reached_published = True
 
+    def _log_mode(self, mode, message, level='info'):
+        """Print one line only when `mode` differs from the last call --
+        control_loop runs every tick, so logging on every call regardless of
+        outcome buries the moments that actually matter (a mode changing)
+        under a constant stream of "still doing the same thing" lines."""
+        if mode != self.last_logged_mode:
+            # Deliberately two separate calls, not one aliased through a
+            # variable -- rclpy's logger tracks per-call-site state by
+            # source line, and refuses (raises ValueError) if the same line
+            # is ever used at two different severities across calls.
+            if level == 'warning':
+                self.get_logger().warning(f"[{mode}] {message}")
+            else:
+                self.get_logger().info(f"[{mode}] {message}")
+            self.last_logged_mode = mode
+
     def control_loop(self):
         """Timer callback: run one DWA cycle and publish a command."""
-        t0 = self.get_clock().now()
-
         if not self.path or self.world_map is None:
-            self.get_logger().info(
-                f"control_loop: waiting (path={'yes' if self.path else 'no'}, "
+            self._log_mode(
+                "WAIT",
+                f"no path/map yet (path={'yes' if self.path else 'no'}, "
                 f"world_map={'yes' if self.world_map is not None else 'no'})"
             )
             self.Ackermann_cmd_publisher(0.0, 0.0)
@@ -516,57 +584,204 @@ class DWAController(Node):
             final = self.path[-1].pose.position
             dist_to_final = math.hypot(state.x - final.x, state.y - final.y)
             if dist_to_final <= self.goal_tolerance:
-                self.get_logger().info(
-                    f"control_loop (DWA bypassed): reached goal (dist={dist_to_final:.2f}m), stopping"
-                )
+                self._log_mode("STOPPED", f"reached goal (dist={dist_to_final:.2f}m)")
                 self.failed_count = 0
                 self.Ackermann_cmd_publisher(0.0, 0.0)
                 return
 
+            # Pure pursuit has zero obstacle awareness of its own -- it just
+            # geometrically chases get_local_goal() along /plan, so nothing
+            # above this stops it from driving straight into a wall that
+            # isn't (accurately) reflected in the global map. Piggyback on
+            # the same live /scan-derived min_scan_dist safety floor the DWA
+            # branch below already gates on, so bypassing DWA only removes
+            # local trajectory *planning*, not this hard stop.
+            if self.min_scan_dist is not None and self.min_scan_dist < 0.3:
+                self._log_mode("STOPPED", f"obstacle at {self.min_scan_dist:.2f}m", level='warning')
+                self.Ackermann_cmd_publisher(0.0, 0.0)
+                return
+
             v, steer = self.pure_pursuit_speed, self.pure_pursuit_steer(state, goal)
-            self.get_logger().info(
-                f"control_loop (DWA bypassed): state=({state.x:.2f},{state.y:.2f},{state.theta:.2f}) "
-                f"goal={goal} v={v} steer={steer:.3f}"
+            self._log_mode(
+                "FOLLOW",
+                f"pure pursuit -- state=({state.x:.2f},{state.y:.2f},{state.theta:.2f}) goal={goal}"
             )
             self.failed_count = 0
             self.Ackermann_cmd_publisher(v, steer)
             return
 
-        path_points = [(p.pose.position.x, p.pose.position.y) for p in self.path]
-        v, steer, traj = self.dwa.plan(state, goal, self.world_map, self.map_info, path_points)
+        # Diagnostic: is the robot's own current cell reading as occupied in
+        # world_map? inflated_obstacles() is supposed to exempt this exact
+        # cell (see scan_callback's "start=origin_px_coords" comment) so a
+        # robot near a wall never reads its own position as a collision --
+        # this checks live whether that exemption is actually holding, since
+        # if it isn't, every forward candidate collides on its very first
+        # sampled state and only v=0 ever looks valid.
+        origin_cell = world_to_pixel(state.x, state.y, self.map_info)
+        opx, opy = origin_cell.x, origin_cell.y
+        on_obstacle = (
+            0 <= opy < self.world_map.shape[0] and 0 <= opx < self.world_map.shape[1]
+            and self.world_map[opy][opx] == 1
+        )
+        if on_obstacle != self.was_on_obstacle_cell:
+            if on_obstacle:
+                self.get_logger().warning(
+                    f"[ON_OBSTACLE] robot's own cell ({opx},{opy}) reads OCCUPIED in "
+                    f"world_map -- every forward DWA candidate will collide immediately "
+                    f"until this clears, which is why the car won't move"
+                )
+            else:
+                self.get_logger().info(f"[ON_OBSTACLE] cleared -- robot's own cell ({opx},{opy}) is free again")
+            self.was_on_obstacle_cell = on_obstacle
 
-        dt = (self.get_clock().now() - t0).nanoseconds / 1e9
+        # Taper velocity_cost's "ideal" speed proportionally to euclidean
+        # distance from the FINAL goal (not the local lookahead goal, which
+        # stays a fixed lookahead_distance away right up until the very
+        # end), once within slowdown_distance -- a single-step drop (e.g.
+        # straight to 1.0 m/s) still holds that speed all the way to
+        # goal_tolerance and overshoots; a proportional (P) taper keeps
+        # slowing continuously as distance shrinks, like the P term of a
+        # PID loop with dist_to_final as the error. Floored at
+        # min_approach_speed so it keeps creeping in rather than
+        # stalling before actually reaching goal_tolerance.
+        final_point = self.path[-1].pose.position
+        dist_to_final = math.hypot(state.x - final_point.x, state.y - final_point.y)
+        slowdown_distance = 1.0
+        min_approach_speed = 0.2
+        if dist_to_final < slowdown_distance:
+            target_speed = max(min_approach_speed, self.dwa.config.max_speed * (dist_to_final / slowdown_distance))
+        else:
+            target_speed = self.dwa.config.max_speed
+
+        path_points = [(p.pose.position.x, p.pose.position.y) for p in self.path]
+        v, steer, traj, candidates = self.dwa.plan(
+            state, goal, self.world_map, self.map_info, path_points, target_speed=target_speed
+        )
+        self.publish_candidates(candidates, v, steer)
+
+        # Direct breakdown instead of guessing: are v>0 candidates even being
+        # generated (window too narrow), colliding (map/inflation issue), or
+        # valid-but-losing on cost (a scoring bug, not a collision one)?
+        num_total = len(candidates)
+        num_positive_v = sum(1 for c in candidates if c[0] > 0.0)
+        num_valid_positive_v = sum(1 for c in candidates if c[0] > 0.0 and c[3])
         self.get_logger().info(
-            f"control_loop: state=({state.x:.2f},{state.y:.2f},{state.theta:.2f}) "
-            f"last=({self.last_v:.2f},{self.last_steer:.2f}) goal={goal} "
-            f"v={v} steer={steer} took={dt:.3f}s"
+            f"[candidates] total={num_total} with_v>0={num_positive_v} valid_and_v>0={num_valid_positive_v}",
+            throttle_duration_sec=1.0,
         )
 
-        if v is None:
-            # "Stuck" here is deliberately just "v is None" (zero valid
-            # forward candidates at all), not "v stayed near 0 for a while"
-            # -- v~=0 is often completely legitimate (slowing near a goal,
-            # a genuinely good but not-yet-accelerated heading), and treating
-            # it as a stuck signal is exactly the ambiguity that caused most
-            # of the trouble with the old reverse-hysteresis approach. "Zero
-            # candidates found" is unambiguous.
+        # v=0 is *always* a valid candidate whenever the robot's own cell is
+        # free (standing still can't collide with anything it isn't already
+        # overlapping), so "v is None" alone can't detect the common real
+        # stuck case: every v>0 candidate this cycle was a genuine collision
+        # (num_valid_positive_v == 0, not merely outscored on cost -- that
+        # would still leave some v>0 candidate marked valid), and v=0 wins
+        # by default. Without this, the car can sit pinned at (v=0,
+        # steer=min_steer) indefinitely -- start_recovery() never fires,
+        # since it's never technically "zero candidates at all". Gated on
+        # num_positive_v > 0 (at least one v>0 candidate was actually
+        # sampled and rejected this cycle) so a cold-start/near-goal window
+        # that simply hasn't opened up to include any v>0 candidates yet --
+        # a legitimate, non-stuck situation -- doesn't trip this.
+        blocked = v is not None and num_positive_v > 0 and num_valid_positive_v == 0
+
+        if v is None or blocked:
+            # "Stuck" here means either zero candidates survived at all
+            # (v is None), or v=0 only "won" because every v>0 candidate
+            # collided (blocked) -- not "v stayed near 0 for a while," which
+            # is often completely legitimate (slowing near a goal) and was
+            # exactly the ambiguity that caused most of the trouble with the
+            # old reverse-hysteresis approach.
             self.failed_count += 1
-            self.get_logger().warning(
-                f"control_loop: no valid trajectory found "
-                f"({self.failed_count}/{self.stuck_cycle_threshold} consecutive), stopping"
+            reason = (
+                "no valid trajectory" if v is None
+                else f"every v>0 candidate collided ({num_positive_v} sampled)"
+            )
+            self._log_mode(
+                "STUCK",
+                f"{reason} ({self.failed_count}/{self.stuck_cycle_threshold} consecutive)",
+                level='warning',
             )
             self.Ackermann_cmd_publisher(0.0, 0.0)
             if self.failed_count > self.stuck_cycle_threshold:
                 self.start_recovery(state)
             return
 
-        if self.min_scan_dist >= 0.3:
+        self._log_mode(
+            "FOLLOW",
+            f"state=({state.x:.2f},{state.y:.2f},{state.theta:.2f}) goal={goal} v={v} steer={steer}"
+        )
+        # Throttled, not edge-triggered -- unlike _log_mode above, this prints
+        # on a fixed cadence regardless of whether the mode name changed, so
+        # v/steer staying flat (or ramping) across many ticks in the same
+        # FOLLOW mode is actually visible instead of hidden after the first.
+        map_drift_x = state.x - self.world_map_pose_x if self.world_map_pose_x is not None else None
+        map_drift_y = state.y - self.world_map_pose_y if self.world_map_pose_y is not None else None
+        self.get_logger().info(
+            f"[v] state=({state.x:.2f},{state.y:.2f},{state.theta:.2f}) v={v} steer={steer} last_v={self.last_v} "
+            f"map_drift=({map_drift_x},{map_drift_y})",
+            throttle_duration_sec=1.0,
+        )
+
+        if self.min_scan_dist is not None and self.min_scan_dist >= 0.3:
             self.failed_count = 0
             self.Ackermann_cmd_publisher(v, steer)
         else:
+            self._log_mode(
+                "STOPPED",
+                f"obstacle at {self.min_scan_dist}m -- DWA picked v={v} steer={steer} but obstacle gate zeroed it",
+                level='warning',
+            )
             self.Ackermann_cmd_publisher(0.0, 0.0)
             self.failed_count += 1
+            # Without this, the obstacle gate can zero a perfectly valid
+            # DWA pick forever -- v isn't None and no v>0 candidate
+            # collided, so the "blocked" stuck-detection above never sees
+            # this as stuck at all, and it can oscillate FOLLOW/STOPPED
+            # indefinitely without ever triggering recovery.
+            if self.failed_count > self.stuck_cycle_threshold:
+                self.start_recovery(state)
 
+    def publish_candidates(self, candidates, chosen_v, chosen_s):
+        """Visualize every (v, steer) rollout DWA evaluated this tick as a
+        MarkerArray -- one LINE_STRIP per candidate, colored red (collided),
+        gray (valid but not picked), or green (the one actually chosen).
+        Add a Marker display on /dwa_candidates in RViz to see this."""
+        marker_array = MarkerArray()
+        now = self.get_clock().now().to_msg()
+
+        clear = Marker()
+        clear.header.frame_id = 'map'
+        clear.header.stamp = now
+        clear.ns = 'dwa_candidates'
+        clear.id = -1  # distinct from every candidate's id (0..N-1) so RViz doesn't see a duplicate (ns, id) pair
+        clear.action = Marker.DELETEALL
+        marker_array.markers.append(clear)
+
+        for i, (v, s, traj, valid) in enumerate(candidates):
+            marker = Marker()
+            marker.header.frame_id = 'map'
+            marker.header.stamp = now
+            marker.ns = 'dwa_candidates'
+            marker.id = i
+            marker.type = Marker.LINE_STRIP
+            marker.action = Marker.ADD
+            marker.pose.orientation.w = 1.0
+            marker.points = [Point(x=st.x, y=st.y, z=0.0) for st in traj.states]
+
+            if valid and v == chosen_v and s == chosen_s:
+                marker.scale.x = 0.05
+                marker.color = ColorRGBA(r=0.0, g=1.0, b=0.0, a=1.0)
+            elif valid:
+                marker.scale.x = 0.02
+                marker.color = ColorRGBA(r=0.6, g=0.6, b=0.6, a=0.4)
+            else:
+                marker.scale.x = 0.02
+                marker.color = ColorRGBA(r=1.0, g=0.0, b=0.0, a=0.3)
+
+            marker_array.markers.append(marker)
+
+        self.candidates_pub.publish(marker_array)
 
     def pure_pursuit_steer(self, state, goal) -> float:
         """Standard pure-pursuit steering angle toward `goal` (already at
@@ -588,20 +803,22 @@ class DWAController(Node):
         steer = math.atan(self.dwa.config.wheelbase * curvature)
         return max(self.dwa.config.min_steer, min(self.dwa.config.max_steer, steer))
 
-    def start_recovery(self, state):
+    def start_recovery(self, state, reason=None):
         """Begin a bounded backup recovery: pick a steering direction once
         (whichever of left/straight/right has the most clearance right now),
         then back away in that fixed direction until either
         recovery_distance is covered or recovery_time_cap is hit."""
+        self.recovery_v = -self.recovery_speed
         self.recovery_steer = self.choose_recovery_steer(state)
         self.recovery_start_pos = (state.x, state.y)
         self.recovery_start_time = self.get_clock().now()
         self.recovery_state = True
         self.failed_count = 0
+        reason = reason or f"stuck for {self.stuck_cycle_threshold}+ cycles"
         self.get_logger().warning(
-            f"control_loop: stuck for {self.stuck_cycle_threshold}+ cycles, "
-            f"starting recovery backup (steer={self.recovery_steer:.3f})"
+            f"[RECOVER] {reason}, starting recovery backup (steer={self.recovery_steer:.3f})"
         )
+        self.last_logged_mode = "RECOVER"
 
     def choose_recovery_steer(self, state):
         """Pick the steering angle for the recovery backup, once, by rolling
@@ -650,44 +867,76 @@ class DWAController(Node):
         elapsed = (self.get_clock().now() - self.recovery_start_time).nanoseconds / 1e9
 
         if traveled >= self.recovery_distance:
-            self.get_logger().info(f"control_loop: recovery complete, travelled {traveled:.2f}m")
+            self.get_logger().info(f"[RECOVER] complete, travelled {traveled:.2f}m")
             self.recovery_state = False
+            self.recovery_attempts = 0
             return
 
         if elapsed >= self.recovery_time_cap:
-            # TODO (escalation): only travelled `traveled` of
-            # self.recovery_distance before timing out -- a single straight
-            # backup didn't solve it. Right now this just gives up and
-            # returns to normal planning, which will likely re-detect
-            # "stuck" and retry the same backup again. Options, not
-            # mutually exclusive:
-            #   - A second recovery tier (e.g. spin in place for a fresh
-            #     scan) or a max-attempts counter that eventually reports
-            #     failure upward instead of retrying the same thing forever.
-            #   - Trigger a full global replan: nothing currently does this
-            #     anywhere -- a_star_planner only ever plans on receiving a
-            #     fresh /goal_pose, and dwa_controller doesn't publish to
-            #     that topic at all today. If the issue is that the
-            #     existing /plan is fundamentally bad (routes through a
-            #     corridor that's now blocked), no amount of local backing
-            #     up fixes that; only a fresh global path from the current
-            #     position would. Worth working out: who initiates this --
-            #     does dwa_controller republish /goal_pose itself, reusing
-            #     self.path's final pose as the goal? Should it be tried
-            #     before local backup attempts (in case backing up can't
-            #     help at all) or only after they're exhausted (to avoid
-            #     replanning for what might just be a one-frame transient
-            #     blockage)? And if a survey course is running, does
-            #     goal_bridge need to know a replan happened, or is it
-            #     transparent since /plan just updates underneath it?
+            # Straight backup didn't clear it -- rather than give up and let
+            # normal planning immediately re-detect "stuck" and retry the
+            # exact same backup direction again, escalate after a couple of
+            # failed attempts: search every direction (forward and reverse,
+            # full steer range, no path/heading preference at all -- just
+            # "is this collision-free") and commit to whichever has the most
+            # clearance. This is deliberately not a good path back onto
+            # /plan -- it's a last resort to stop being fully stuck, on the
+            # assumption that once it's moved at all, normal DWA planning
+            # gets another real shot at finding its way back.
+            self.recovery_attempts += 1
+            if self.recovery_attempts >= 2:
+                escape_v, escape_s = self.find_any_escape(state)
+                if escape_v is None:
+                    self.get_logger().error(
+                        f"[RECOVER] no escape direction found at all after "
+                        f"{self.recovery_attempts} failed attempts -- genuinely boxed in, giving up"
+                    )
+                    self.recovery_state = False
+                    self.recovery_attempts = 0
+                    return
+                self.get_logger().warning(
+                    f"[RECOVER] backup failed {self.recovery_attempts} times -- "
+                    f"escalating to best-available direction (v={escape_v:.2f}, steer={escape_s:.3f})"
+                )
+                self.recovery_v = escape_v
+                self.recovery_steer = escape_s
+                self.recovery_start_pos = (state.x, state.y)
+                self.recovery_start_time = self.get_clock().now()
+                self.recovery_attempts = 0
+                return
             self.get_logger().warning(
-                f"control_loop: recovery timed out after {elapsed:.1f}s, only "
-                f"travelled {traveled:.2f}m of {self.recovery_distance}m -- giving up this attempt"
+                f"[RECOVER] timed out after {elapsed:.1f}s, only "
+                f"travelled {traveled:.2f}m of {self.recovery_distance}m -- retrying backup"
             )
             self.recovery_state = False
             return
 
-        self.Ackermann_cmd_publisher(-self.recovery_speed, self.recovery_steer)
+        self.Ackermann_cmd_publisher(self.recovery_v, self.recovery_steer)
+
+    def find_any_escape(self, state):
+        """Last resort after bounded backup recovery has failed repeatedly:
+        search forward AND reverse across the full steer range for any
+        collision-free short rollout, ignoring path/heading cost entirely,
+        and return whichever has the most clearance. Returns (None, None)
+        if truly nothing around the robot is collision-free at all."""
+        distance_map = build_distance_map(self.world_map)
+        best_v = None
+        best_s = None
+        best_clearance = -math.inf
+        for v in (self.recovery_speed, -self.recovery_speed):
+            for s in np.arange(self.dwa.config.min_steer, self.dwa.config.max_steer, self.dwa.config.steer_resolution):
+                traj = rollout_trajectory(
+                    state, v, s, self.dwa.config.predict_time, self.dwa.config.dt, self.dwa.config.wheelbase,
+                )
+                cost = clearance_cost(traj, self.world_map, distance_map, self.map_info)
+                if cost == math.inf:
+                    continue
+                clearance = -cost
+                if clearance > best_clearance:
+                    best_clearance = clearance
+                    best_v = v
+                    best_s = s
+        return best_v, best_s
 
     def Ackermann_cmd_publisher(self, speed:float, steer:float):
         msg = AckermannDriveStamped()
@@ -707,9 +956,18 @@ class DWAController(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = DWAController()
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
+    # MultiThreadedExecutor, not the default single-threaded one -- lets
+    # scan_callback's bounded lookup_transform() wait (above) actually work:
+    # the TF listener's own subscription callback needs to run concurrently
+    # to deliver the transform being waited on, which a single-threaded
+    # executor can't do while stuck inside that same wait.
+    executor = MultiThreadedExecutor()
+    executor.add_node(node)
+    try:
+        executor.spin()
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
 
 
 if __name__ == '__main__':
