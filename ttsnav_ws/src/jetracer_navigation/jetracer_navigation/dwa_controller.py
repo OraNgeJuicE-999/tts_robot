@@ -62,8 +62,16 @@ class DWAController(Node):
         self.lookahead_distance = 1.2  # meters; tune above the vehicle's min turning radius (~0.78m)
         self.last_v = 0.0
         self.last_steer = 0.0
-        self.goal_tolerance = 1.0      # meters; how close to the final path point counts as "reached" (widened from 0.3 -> 0.5 -> 1.0 -- fussing over exact precision was taking too long; matches slowdown_distance below)
+        # meters; how close to the final path point counts as "reached".
+        # Widened 0.3 -> 0.5 -> 1.0 -> 1.5: at 1.0 it was barely larger than
+        # the car's own minimum turning radius (wheelbase / tan(max_steer)
+        # = 0.32 / tan(0.322) ~= 0.96m), so depending on approach angle it
+        # often couldn't curve tightly enough to actually enter the circle
+        # in one pass -- it had to loop around and retry repeatedly. 1.5m
+        # gives real margin over that radius.
+        self.goal_tolerance = 0.5
         self.goal_reached_published = False  # edge-trigger: only publish once per path, not every cycle
+        self.min_dist_to_goal = math.inf  # closest approach so far this path -- see check_goal_reached
         self.last_logged_mode = None  # edge-trigger for _log_mode: only print control_loop's mode on change
         self.was_on_obstacle_cell = False  # edge-trigger for the [ON_OBSTACLE] diagnostic, kept separate from last_logged_mode
         self.world_map_pose_x = None  # pose scan_callback was at when it last built self.world_map -- see control_loop's staleness diagnostic
@@ -128,6 +136,7 @@ class DWAController(Node):
 
         self.path = msg.poses
         self.goal_reached_published = False  # new goal in play -- allow /goal_reached to fire again
+        self.min_dist_to_goal = math.inf  # reset closest-approach tracking for the new path
         self.get_logger().info(f"path_callback: received {len(self.path)} waypoints")
 
         # A fresh path's very first control_loop tick sees world_map built
@@ -522,25 +531,28 @@ class DWAController(Node):
         return (last.x, last.y)
 
     def check_goal_reached(self, state):
-        """Publish True on /goal_reached, once, when the robot gets within
-        self.goal_tolerance of the final point in self.path.
-
-        TODO:
-          1. last = self.path[-1].pose.position
-          2. dist = math.hypot(state.x - last.x, state.y - last.y) -- plain
-             float math, NOT PathNode/PixelCoords (those round to whole
-             pixels/meters, see get_local_goal's own history of that bug).
-          3. if dist <= self.goal_tolerance and not self.goal_reached_published:
-                 self.goal_reached_pub.publish(Bool(data=True))
-                 self.goal_reached_published = True
-             (the self.goal_reached_published flag is what stops this from
-             publishing every single cycle once the robot is parked at the
-             goal -- it only resets to False in path_callback, when a new
-             /plan arrives.)
+        """Publish True on /goal_reached, once, when the robot is
+        (a) currently within self.goal_tolerance of the final point, or
+        (b) has already gotten that close at some point and is now moving
+        away from its closest approach -- a non-holonomic car isn't
+        guaranteed to be able to curve tightly enough to sit inside
+        goal_tolerance from every approach angle (its minimum turning
+        radius can exceed goal_tolerance), so requiring a literal re-entry
+        can make it loop past the goal repeatedly instead of accepting
+        "that was as close as it's going to get." self.min_dist_to_goal is
+        reset to inf in path_callback whenever a fresh /plan arrives.
         """
+        if self.goal_reached_published:
+            return
         last = self.path[-1].pose.position
         dist = math.hypot(state.x - last.x, state.y - last.y)
-        if dist <= self.goal_tolerance and not self.goal_reached_published:
+        self.min_dist_to_goal = min(self.min_dist_to_goal, dist)
+
+        directly_close = dist <= self.goal_tolerance
+        passed_closest_approach = (
+            self.min_dist_to_goal <= self.goal_tolerance and dist > self.min_dist_to_goal + 0.05
+        )
+        if directly_close or passed_closest_approach:
             self.goal_reached_pub.publish(Bool(data=True))
             self.goal_reached_published = True
 
@@ -646,7 +658,21 @@ class DWAController(Node):
         # stalling before actually reaching goal_tolerance.
         final_point = self.path[-1].pose.position
         dist_to_final = math.hypot(state.x - final_point.x, state.y - final_point.y)
-        slowdown_distance = 1.0
+
+        # check_goal_reached() only publishes a notification for
+        # goal_bridge (course advancement) -- it never commands a stop.
+        # The pure-pursuit branch above has its own explicit "close enough,
+        # publish zero speed" check; DWA never got the equivalent, so
+        # regardless of goal_tolerance the car just kept crawling forward
+        # forever at at least min_approach_speed once near the goal. Stop
+        # outright once actually reached, before ever calling dwa.plan().
+        if self.goal_reached_published:
+            self._log_mode("STOPPED", f"goal reached (dist={dist_to_final:.2f}m)")
+            self.failed_count = 0
+            self.Ackermann_cmd_publisher(0.0, 0.0)
+            return
+
+        slowdown_distance = 1.5  # must stay > goal_tolerance -- otherwise "reached" can fire before deceleration even starts
         min_approach_speed = 0.2
         if dist_to_final < slowdown_distance:
             target_speed = max(min_approach_speed, self.dwa.config.max_speed * (dist_to_final / slowdown_distance))
